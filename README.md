@@ -1,75 +1,48 @@
-# React + TypeScript + Vite
+# Mosaic Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Mosaic Portfolio پروژه‌ی پایانی مشترک تیم Mosaic در بوت‌کمپ فرانت‌اند است. سایت، اعضای تیم و کارهایشان را معرفی می‌کند و به هر عضو یک صفحه‌ی رزومه با آدرس قابل‌اشتراک و فایل PDF قابل‌دانلود می‌دهد. صفحه‌های اعضا، پروژه‌ها و نوشته‌ها از داده‌ها و قالب‌های مشترک تیم استفاده خواهند کرد.
 
-Currently, two official plugins are available:
+این نسخه اسکلت اولیه‌ی سایت با Vite، React، TypeScript در حالت strict و TanStack Router است. مسیرها آماده‌اند و فعلاً عنوان موقت نمایش می‌دهند.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## اجرای محلی
 
-## React Compiler
+با Node.js نسخه‌ی 22.x به‌روز، از ریشه‌ی مخزن اجرا کنید:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+آدرسی را که Vite در ترمینال چاپ می‌کند باز کنید.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## مسیرهای سایت
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| مسیر | محتوای نسخه‌ی نهایی |
+| --- | --- |
+| `/` | معرفی تیم، پروژه‌ها و نوشته‌های منتخب و راه تماس |
+| `/team` و `/team/:slug` | فهرست اعضا و رزومه‌ی هر عضو با لینک دانلود PDF |
+| `/projects` و `/projects/:id` | فهرست پروژه‌ها با جست‌وجو و فیلتر در URL، و صفحه‌ی جزئیات هر پروژه |
+| `/blog` و `/blog/:slug` | فهرست و صفحه‌ی جداگانه‌ی چهار نوشته‌ی تیم |
+| مسیرهای ناشناخته | صفحه‌ی «پیدا نشد» |
 
+## بررسی‌ها
+
+```bash
+npm run lint
+npx vitest run
+npm run build
 ```
+
+فایل‌های مسیر در `src/routes/` قرار دارند. بعد از افزودن یا تغییر مسیر، Vite فایل `src/routeTree.gen.ts` را تولید می‌کند. نسخه‌ی به‌روز این فایل را همراه تغییر مسیرها ثبت کنید.
+
+## سایت زنده
+
+لینک عمومی سایت پس از دیپلوی در PR انتشار اضافه می‌شود.
+
+## سهم اعضای تیم
+
+تغییرها از طریق Pull Request وارد `main` می‌شوند و هر PR را یک هم‌تیمی بازبینی می‌کند. جدول را با نام اعضا، بخش‌هایی که ساخته‌اند و لینک PRهایشان کامل می‌کنیم.
+
+| نام عضو | بخش‌های ساخته‌شده | لینک Pull Requestها |
+| --- | --- | --- |
+| در انتظار ثبت سهم اعضا | — | — |
