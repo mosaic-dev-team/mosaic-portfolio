@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -28,3 +32,34 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: docker build -t mosaic-portfolio .
+
+  deploy:
+    needs: [check, docker]
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      TARGET: ${{ github.event_name == 'push' && 'production' || 'preview' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm install --global vercel@latest
+      - name: Pull Vercel settings
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment="$TARGET" --token="$VERCEL_TOKEN"
+      - name: Build and deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          flags=()
+          if [ "$TARGET" = production ]; then
+            flags+=(--prod)
+          fi
+
+          vercel build "${flags[@]}" --token="$VERCEL_TOKEN"
+          url=$(vercel deploy --prebuilt "${flags[@]}" --token="$VERCEL_TOKEN")
+          echo "### $TARGET: $url" >> "$GITHUB_STEP_SUMMARY"
