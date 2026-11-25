@@ -11,3 +11,34 @@
 - **ابزار:** Codex
 - **انجام‌دهنده:** Alireza
 - **توضیح:** ستاپ اولیه روتر و یک نمونه روت توسط خودم انجام شد بقیه روت‌های سمپل و کار تکرار شونده توسط هوش مصنوعی انجام گرفت.
+
+## Issue #4 — Base Styles & Shared UI Components
+
+**مسئول توسعه:** Person B
+
+
+
+**ابزار کمکی:** Codex
+
+### بخش‌های توسعه‌یافته
+
+- `src/styles/`: تعریف Design Tokens، پالت رنگی و استایل‌های Light/Dark.
+- `src/index.css`: تنظیم استایل‌های سراسری، CSS Reset و Typography.
+- `src/context/`: مدیریت تم، زبان و ذخیره تنظیمات کاربر.
+- `src/components/layout/`: توسعه کامپوننت‌های مشترک Header و Footer.
+- `src/components/ui/`: توسعه کامپوننت قابل استفاده مجدد Card.
+- `src/components/home/`: ساخت اسکلت اولیه صفحه اصلی با چیدمان Bento Grid.
+- `src/routes/`: اتصال کامپوننت‌های مشترک به ساختار Routing موجود.
+- `src/main.tsx`: اتصال استایل‌ها و Providerها به برنامه.
+
+### نحوه استفاده از AI
+
+استفاده از Codex به‌عنوان ابزار کمکی در پیاده‌سازی، سازمان‌دهی فایل‌ها، بررسی ساختار کد، بهبود استایل‌ها و شناسایی مشکلات احتمالی.
+
+### بررسی خروجی
+
+- ESLint
+- Vitest
+- Production Build
+- بررسی Responsive Design
+- بررسی عملکرد Light/Dark و RTL/LTR در Chromium
