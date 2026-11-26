@@ -5,24 +5,20 @@ import { ThemeContext, type Theme } from './theme'
 const storageKey = 'mosaic-theme'
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [preference, setPreference] = useState<Theme | null>(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
     const stored = readPreference(storageKey)
-    return stored === 'light' || stored === 'dark' ? stored : null
+    if (stored === 'light' || stored === 'dark') return stored
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
-  const [systemTheme] = useState<Theme>(() =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
-  )
-  const theme = preference ?? systemTheme
 
   useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme
-    if (preference !== null) savePreference(storageKey, preference)
-  }, [preference, theme])
+  }, [theme])
 
   function toggleTheme() {
-    setPreference((previous) =>
-      (previous ?? systemTheme) === 'light' ? 'dark' : 'light',
-    )
+    const nextTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(nextTheme)
+    savePreference(storageKey, nextTheme)
   }
 
   return (

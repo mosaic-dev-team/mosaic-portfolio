@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { useLanguage } from '../../context/language'
-import { Card, type CardVariant } from '../ui/Card'
-import styles from './HomeSkeleton.module.css'
+import { Card } from '../ui/Card'
+import styles from './HomePage.module.css'
 
-const copy = {
+const homeCopy = {
   en: {
     eyebrow: 'Frontend Development Team',
     title: 'Different pieces. One vision.',
@@ -17,12 +17,6 @@ const copy = {
     about: 'About MOSAIC',
     aboutText: 'MOSAIC is our shared portfolio for team and individual work.',
     projects: 'Selected Projects',
-    idempotency: 'Idempotency',
-    idempotencyText: 'Person B’s frontend e-commerce project.',
-    sharding: 'Sharding',
-    shardingText: 'Person A’s frontend e-commerce project.',
-    mosaic: 'MOSAIC',
-    mosaicText: 'Our shared team portfolio project.',
     journal: 'Our Journal',
     journalText: 'A space for future technical articles from the team.',
     visitJournal: 'Visit the Blog',
@@ -42,12 +36,6 @@ const copy = {
     about: 'دربارهٔ موزاییک',
     aboutText: 'موزاییک نمونه‌کار مشترک ما برای معرفی کارهای تیمی و فردی است.',
     projects: 'پروژه‌های منتخب',
-    idempotency: 'آیدمپوتنسی',
-    idempotencyText: 'پروژهٔ فرانت‌اند فروشگاهی نفر دوم.',
-    sharding: 'شاردینگ',
-    shardingText: 'پروژهٔ فرانت‌اند فروشگاهی نفر اول.',
-    mosaic: 'موزاییک',
-    mosaicText: 'پروژهٔ نمونه‌کار مشترک تیم.',
     journal: 'نوشته‌های ما',
     journalText: 'جایی برای نوشته‌های فنی آیندهٔ تیم.',
     visitJournal: 'رفتن به وبلاگ',
@@ -57,18 +45,29 @@ const copy = {
 }
 
 const projects = [
-  { name: 'idempotency', description: 'idempotencyText', variant: 'burgundy' },
-  { name: 'sharding', description: 'shardingText', variant: 'forest' },
-  { name: 'mosaic', description: 'mosaicText', variant: 'velvet' },
-] as const satisfies readonly {
-  name: keyof typeof copy.en
-  description: keyof typeof copy.en
-  variant: CardVariant
-}[]
+  {
+    id: 'idempotency',
+    variant: 'burgundy',
+    en: { title: 'Idempotency', description: 'Person B’s frontend e-commerce project.' },
+    fa: { title: 'آیدمپوتنسی', description: 'پروژهٔ فرانت‌اند فروشگاهی نفر دوم.' },
+  },
+  {
+    id: 'sharding',
+    variant: 'forest',
+    en: { title: 'Sharding', description: 'Person A’s frontend e-commerce project.' },
+    fa: { title: 'شاردینگ', description: 'پروژهٔ فرانت‌اند فروشگاهی نفر اول.' },
+  },
+  {
+    id: 'mosaic',
+    variant: 'velvet',
+    en: { title: 'MOSAIC', description: 'Our shared team portfolio project.' },
+    fa: { title: 'موزاییک', description: 'پروژهٔ نمونه‌کار مشترک تیم.' },
+  },
+] as const
 
-export function HomeSkeleton() {
+export function HomePage() {
   const { language } = useLanguage()
-  const text = copy[language]
+  const text = homeCopy[language]
 
   return (
     <div className={styles.home}>
@@ -108,17 +107,17 @@ export function HomeSkeleton() {
         </div>
       </section>
 
-      <section aria-labelledby="home-projects">
+      <section className={styles.projects} aria-labelledby="home-projects">
         <h2 id="home-projects">{text.projects}</h2>
         <div className={styles.grid}>
-          {projects.map(({ name, description, variant }, index) => (
-            <Card key={name} variant={variant} className={index === 0 ? styles.wide : undefined}>
-              <h3>{text[name]}</h3>
-              <p>{text[description]}</p>
-              {index === 0 && <Link to="/projects">{text.exploreProjects}</Link>}
+          {projects.map((project) => (
+            <Card key={project.id} variant={project.variant}>
+              <h3>{project[language].title}</h3>
+              <p>{project[language].description}</p>
             </Card>
           ))}
         </div>
+        <Link className={styles.projectsLink} to="/projects">{text.exploreProjects}</Link>
       </section>
 
       <div className={styles.grid}>

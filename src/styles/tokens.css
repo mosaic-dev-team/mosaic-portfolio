@@ -37,6 +37,4 @@
   --container-width: 72rem;
   --shadow-light: 0 2px 8px rgb(36 21 29 / 10%);
   --shadow-dark: 0 2px 8px rgb(0 0 0 / 30%);
-  --duration-fast: 120ms;
-  --duration-normal: 200ms;
 }

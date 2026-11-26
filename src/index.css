@@ -7,12 +7,6 @@
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
-  min-block-size: 100vh;
-}
-
 body {
   margin: 0;
   background-color: var(--page-bg);
@@ -50,12 +44,4 @@ button:enabled {
 :focus-visible {
   outline: 2px solid var(--focus-ring-color);
   outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --duration-fast: 0ms;
-    --duration-normal: 0ms;
-    scroll-behavior: auto;
-  }
 }

@@ -41,7 +41,7 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.45fr);
   align-items: center;
   gap: var(--space-8);
-  padding: clamp(var(--space-6), 5vw, 4rem);
+  --card-padding: clamp(var(--space-6), 5vw, 4rem);
 }
 
 .hero h1 {
@@ -107,8 +107,14 @@
   gap: var(--space-4);
 }
 
-.wide {
+.wide,
+.projects .grid > :first-child {
   grid-column: span 2;
+}
+
+.projectsLink {
+  display: inline-block;
+  margin-block-start: var(--space-3);
 }
 
 .avatar {
@@ -141,7 +147,8 @@
     inline-size: 5rem;
   }
 
-  .wide {
+  .wide,
+  .projects .grid > :first-child {
     grid-column: auto;
   }
 }

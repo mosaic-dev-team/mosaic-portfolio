@@ -3,13 +3,7 @@ import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../context/language'
 import { useTheme } from '../../context/theme'
 import styles from './Header.module.css'
-
-const navigation = [
-  { to: '/', en: 'Home', fa: 'خانه' },
-  { to: '/team', en: 'Team', fa: 'تیم' },
-  { to: '/projects', en: 'Projects', fa: 'پروژه‌ها' },
-  { to: '/blog', en: 'Blog', fa: 'وبلاگ' },
-] as const
+import { navigation } from './navigation'
 
 const labels = {
   en: {

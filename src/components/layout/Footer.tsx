@@ -1,13 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { useLanguage } from '../../context/language'
 import styles from './Footer.module.css'
-
-const navigation = [
-  { to: '/', en: 'Home', fa: 'خانه' },
-  { to: '/team', en: 'Team', fa: 'تیم' },
-  { to: '/projects', en: 'Projects', fa: 'پروژه‌ها' },
-  { to: '/blog', en: 'Blog', fa: 'وبلاگ' },
-] as const
+import { navigation } from './navigation'
 
 const copy = {
   en: {
