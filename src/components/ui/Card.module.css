@@ -7,7 +7,7 @@
   min-inline-size: 0;
   padding: var(--card-padding, var(--space-6));
   border: 1px solid var(--card-accent);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius);
   background: var(--card-bg);
   color: var(--card-text);
   box-shadow: var(--shadow);
