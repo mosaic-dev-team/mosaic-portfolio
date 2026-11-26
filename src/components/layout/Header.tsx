@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useId, useRef, useState } from 'react'
+import logo from '../../assets/brand/mosaic-logo.svg'
 import { useLanguage } from '../../context/language'
 import { useTheme } from '../../context/theme'
 import styles from './Header.module.css'
@@ -37,62 +38,25 @@ export function Header() {
   const copy = labels[language]
   const nextTheme = theme === 'light' ? 'dark' : 'light'
 
+  function closeMenu() {
+    if (menuOpen && menuButton.current?.getClientRects().length) {
+      menuButton.current.focus()
+    }
+    setMenuOpen(false)
+  }
+
   return (
     <header
       className={styles.header}
       onKeyDown={(event) => {
-        if (event.key === 'Escape' && menuOpen && menuButton.current?.getClientRects().length) {
-          setMenuOpen(false)
-          menuButton.current.focus()
-        }
+        if (event.key === 'Escape' && menuOpen) closeMenu()
       }}
     >
       <div className={styles.inner}>
         <Link to="/" className={styles.brand} onClick={() => setMenuOpen(false)}>
-          <span className={styles.mark} aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <span />
-          </span>
+          <img className={styles.mark} src={logo} alt="" width="32" height="32" />
           <bdi lang="en">MOSAIC</bdi>
         </Link>
-
-        <button
-          type="button"
-          ref={menuButton}
-          className={`${styles.iconButton} ${styles.menuButton}`}
-          aria-label={menuOpen ? copy.closeMenu : copy.openMenu}
-          aria-expanded={menuOpen}
-          aria-controls={navId}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d={menuOpen ? 'm6 6 12 12M18 6 6 18' : 'M4 6h16M4 12h16M4 18h16'} />
-          </svg>
-        </button>
-
-        <nav id={navId} className={styles.nav} data-open={menuOpen} aria-label={copy.navigation}>
-          <ul className={styles.navList}>
-            {navigation.map(({ to, ...name }) => (
-              <li key={to}>
-                <Link
-                  to={to}
-                  className={styles.navLink}
-                  activeOptions={{ exact: to === '/', includeSearch: false }}
-                  onClick={() => {
-                    if (menuOpen && menuButton.current?.getClientRects().length) {
-                      menuButton.current.focus()
-                    }
-                    setMenuOpen(false)
-                  }}
-                >
-                  {name[language]}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
 
         <div className={styles.controls}>
           <button type="button" className={styles.iconButton} aria-label={copy[nextTheme]} onClick={toggleTheme}>
@@ -122,6 +86,37 @@ export function Header() {
             ))}
           </div>
         </div>
+
+        <button
+          type="button"
+          ref={menuButton}
+          className={`${styles.iconButton} ${styles.menuButton}`}
+          aria-label={menuOpen ? copy.closeMenu : copy.openMenu}
+          aria-expanded={menuOpen}
+          aria-controls={navId}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d={menuOpen ? 'm6 6 12 12M18 6 6 18' : 'M4 6h16M4 12h16M4 18h16'} />
+          </svg>
+        </button>
+
+        <nav id={navId} className={styles.nav} data-open={menuOpen} aria-label={copy.navigation}>
+          <ul className={styles.navList}>
+            {navigation.map(({ to, ...name }) => (
+              <li key={to}>
+                <Link
+                  to={to}
+                  className={styles.navLink}
+                  activeOptions={{ exact: to === '/', includeSearch: false }}
+                  onClick={closeMenu}
+                >
+                  {name[language]}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </header>
   )

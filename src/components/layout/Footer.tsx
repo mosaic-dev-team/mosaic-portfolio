@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import logo from '../../assets/brand/mosaic-logo.svg'
 import { useLanguage } from '../../context/language'
 import styles from './Footer.module.css'
 import { navigation } from './navigation'
@@ -36,12 +37,7 @@ export function Footer() {
       <div className={styles.inner}>
         <div className={styles.invitation}>
           <p>{labels.invitation}</p>
-          <span className={styles.mark} aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <span />
-          </span>
+          <img className={styles.mark} src={logo} alt="" width="40" height="40" />
         </div>
 
         <div className={styles.columns}>

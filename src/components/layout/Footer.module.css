@@ -19,8 +19,17 @@
   border-radius: var(--radius-lg);
   background: var(--color-midnight-blue);
   color: var(--color-buttermilk);
-  font-size: clamp(var(--font-size-lg), 3vw, var(--font-size-xl));
+  font-size: clamp(var(--font-size-lg), 4vw, var(--font-size-xl));
   font-weight: var(--font-weight-bold);
+}
+
+.invitation:lang(en),
+.wordmark {
+  font-family: var(--font-display);
+}
+
+.invitation:lang(en) {
+  line-height: var(--line-height-tight);
 }
 
 .footer p {
@@ -28,24 +37,17 @@
 }
 
 .mark {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-1);
   flex: none;
-  inline-size: 2rem;
-  block-size: 2rem;
-}
-
-.mark span {
-  background: currentColor;
-  border-radius: var(--radius-sm) 50% var(--radius-sm) var(--radius-sm);
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--color-buttermilk);
 }
 
 .columns {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-6);
-  padding-block: var(--space-6);
+  padding-block: var(--space-4);
 }
 
 .wordmark {
@@ -77,6 +79,10 @@
   display: inline-block;
   padding-block: var(--space-1);
   text-underline-offset: 0.2em;
+}
+
+.columns a[aria-current='page'] {
+  font-weight: var(--font-weight-semibold);
 }
 
 .credits {

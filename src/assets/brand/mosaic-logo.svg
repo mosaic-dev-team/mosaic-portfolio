@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title id="title">MOSAIC emblem</title>
+  <defs>
+    <clipPath id="arch"><path d="M115 105V55a50 50 0 0 1 100 0v50Z"/></clipPath>
+    <clipPath id="curve"><path d="M115 115H215V115A100 100 0 0 1 115 215Z"/></clipPath>
+  </defs>
+  <path d="M5 105A100 100 0 0 1 105 5V105Z" fill="#0F3C65"/>
+  <path d="M65 26 70 51 89 36 78 57 103 64 78 71 89 91 70 78 65 103 59 78 40 91 51 71 26 64 51 57 40 36 59 51Z" fill="#FFF2BA" transform="translate(6 7) scale(.88)"/>
+  <path d="M115 105V55a50 50 0 0 1 100 0v50Z" fill="#ED7D33"/>
+  <g clip-path="url(#arch)">
+    <path d="M136 105V57a29 29 0 0 1 58 0v48Z" fill="#FFF2BA"/>
+    <path d="M125 105V90h22V76h19V61h19V46h19v59Z" fill="#E36887"/>
+    <path d="M125 105V90h22v15Z" fill="#FFD7DF"/>
+  </g>
+  <rect x="5" y="115" width="100" height="100" rx="3" fill="#003631"/>
+  <path d="M57 215v-28C54 166 32 173 22 148c-5-12-9-17-13-20 27-4 49 9 52 38l2 13c6-23 19-33 38-35-1 22-12 33-27 43-9 6-12 15-12 28Z" fill="#FFF2BA"/>
+  <g clip-path="url(#curve)">
+    <path d="M115 115h100v100H115Z" fill="#E36887"/>
+    <path d="M123 215a102 102 0 0 1 102-88v88Z" fill="#E9D8B4"/>
+    <path d="M148 215a77 77 0 0 1 77-63v63Z" fill="#6B1F2F"/>
+  </g>
+</svg>
