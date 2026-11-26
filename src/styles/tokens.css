@@ -1,0 +1,40 @@
+:root {
+  /* Brand pairs, in palette order. */
+  --color-midnight-blue: #0f3c65;
+  --color-buttermilk: #fff2ba;
+  --color-deep-blush: #e36887;
+  --color-soft-marigold: #ffe08c;
+  --color-dark-green: #003631;
+  --color-butter-yellow: #ffeda8;
+  --color-burgundy: #6b1f2f;
+  --color-champagne: #e9d8b4;
+  --color-forest-green: #1a5632;
+  --color-soft-pink: #ffd7df;
+  --color-velvet: #50000b;
+  --color-sunfire-orange: #ed7d33;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 2rem;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.25;
+  --line-height-body: 1.6;
+
+  --container-width: 72rem;
+  --shadow-light: 0 2px 8px rgb(36 21 29 / 10%);
+  --shadow-dark: 0 2px 8px rgb(0 0 0 / 30%);
+}

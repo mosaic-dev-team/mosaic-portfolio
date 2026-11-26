@@ -1,0 +1,55 @@
+.card {
+  --card-bg: var(--surface-bg);
+  --card-text: var(--text-primary);
+  --card-accent: var(--border-color);
+  --focus-ring-color: var(--card-text);
+
+  min-inline-size: 0;
+  padding: var(--card-padding, var(--space-6));
+  border: 1px solid var(--card-accent);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  color: var(--card-text);
+  box-shadow: var(--shadow);
+  overflow-wrap: anywhere;
+}
+
+.card a {
+  color: inherit;
+}
+
+.card[data-variant='midnight'] {
+  --card-bg: var(--color-midnight-blue);
+  --card-text: var(--color-buttermilk);
+  --card-accent: var(--color-buttermilk);
+}
+
+.card[data-variant='blush'] {
+  --card-bg: var(--color-soft-marigold);
+  --card-text: var(--color-velvet);
+  --card-accent: var(--color-deep-blush);
+}
+
+.card[data-variant='deep-green'] {
+  --card-bg: var(--color-dark-green);
+  --card-text: var(--color-butter-yellow);
+  --card-accent: var(--color-butter-yellow);
+}
+
+.card[data-variant='burgundy'] {
+  --card-bg: var(--color-burgundy);
+  --card-text: var(--color-champagne);
+  --card-accent: var(--color-champagne);
+}
+
+.card[data-variant='forest'] {
+  --card-bg: var(--color-forest-green);
+  --card-text: var(--color-soft-pink);
+  --card-accent: var(--color-soft-pink);
+}
+
+.card[data-variant='velvet'] {
+  --card-bg: var(--color-velvet);
+  --card-text: var(--color-sunfire-orange);
+  --card-accent: var(--color-sunfire-orange);
+}

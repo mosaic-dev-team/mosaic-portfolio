@@ -1,0 +1,23 @@
+:root {
+  color-scheme: light;
+  --page-bg: #fbf3e3;
+  --surface-bg: #fffaf2;
+  --text-primary: #24151d;
+  --text-secondary: #5e4a51;
+  --border-color: #9e827d;
+  --accent-color: var(--color-midnight-blue);
+  --focus-ring-color: var(--color-midnight-blue);
+  --shadow: var(--shadow-light);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page-bg: #24151d;
+  --surface-bg: #35242e;
+  --text-primary: #fbf3e3;
+  --text-secondary: #d5c1c8;
+  --border-color: #9b7d8b;
+  --accent-color: var(--color-soft-marigold);
+  --focus-ring-color: var(--color-soft-marigold);
+  --shadow: var(--shadow-dark);
+}
