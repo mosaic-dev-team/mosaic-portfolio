@@ -1,0 +1,41 @@
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.illustration {
+  inline-size: 100%;
+  border-radius: var(--radius-md);
+}
+
+.title,
+.card p {
+  margin: 0;
+}
+
+.title {
+  font-size: var(--font-size-lg);
+}
+
+.title:lang(en) {
+  font-family: var(--font-display);
+  line-height: var(--line-height-tight);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: var(--font-size-sm);
+}
+
+.tags li {
+  max-inline-size: 100%;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}

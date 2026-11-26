@@ -1,0 +1,30 @@
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+}
+
+.portrait {
+  inline-size: 100%;
+  border-radius: var(--radius-md);
+  margin-block-end: var(--space-2);
+}
+
+.name,
+.card p {
+  margin: 0;
+}
+
+.name {
+  font-size: var(--font-size-lg);
+}
+
+.name:lang(en) {
+  font-family: var(--font-display);
+  line-height: var(--line-height-tight);
+}
+
+.role,
+.card a {
+  font-weight: var(--font-weight-semibold);
+}

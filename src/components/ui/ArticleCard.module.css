@@ -1,0 +1,32 @@
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.cover {
+  inline-size: 100%;
+  border-radius: var(--radius-md);
+}
+
+.title,
+.card p {
+  margin: 0;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+}
+
+.title:lang(en) {
+  font-family: var(--font-display);
+  line-height: var(--line-height-tight);
+}
+
+.metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
