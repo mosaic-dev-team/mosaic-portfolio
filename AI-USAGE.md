@@ -33,3 +33,43 @@
 - **چیزی که از AI گرفتیم و اعمال کردیم:**  
   نام صفحه خانه درست شد، داده‌های دوزبانه کارت‌ها اضافه شد، ناوبری مشترک یکدست شد، تم ساده‌تر شد و چند مورد CSS اصلاح شد.  
 - **بررسی:** خودمان دستی ریویو کردیم (فقط diff را دیدیم؛ lint و تست و build دوباره اجرا نشد).
+
+## Issue #7 — Visual Identity, Shared Components & Homepage
+
+**مسئول توسعه:** Person B
+
+
+
+**ابزارهای کمکی:** ChatGPT و Codex
+
+### بخش‌های توسعه‌یافته
+
+- `src/assets/fonts/`: افزودن فونت‌های محلی Fraunces، Inter و Vazirmatn.
+- `src/assets/brand/`: طراحی و آماده‌سازی لوگوی اختصاصی MOSAIC.
+- `src/assets/illustrations/`: آماده‌سازی تصویر اصلی صفحه Home.
+- `src/assets/portraits/`: طراحی پرتره‌های اختصاصی اعضای تیم.
+- `src/assets/projects/`: طراحی و بهینه‌سازی تصاویر پروژه‌ها.
+- `src/styles/` و `src/index.css`: بهبود Design Tokens و Typography.
+- `src/components/layout/`: بهبود طراحی Header و Footer.
+- `src/components/ui/`: توسعه کامپوننت‌های قابل استفاده مجدد MemberCard، ProjectCard و ArticleCard.
+- `src/components/home/`: توسعه صفحه اصلی با چیدمان Editorial Bento Grid.
+- `index.html`: تنظیم عنوان سایت و Favicon اختصاصی.
+
+### نحوه استفاده از AI
+
+استفاده از ChatGPT برای ایده‌پردازی، انتخاب سبک بصری و تولید تصاویر اختصاصی و استفاده از Codex به‌عنوان ابزار کمکی در فرایند توسعه، بهبود استایل‌ها، بررسی ساختار و خوانایی کد و شناسایی مشکلات احتمالی.
+
+### بررسی خروجی
+
+- ESLint
+- Vitest
+- Production Build
+- Responsive Design
+- بررسی Light/Dark و RTL/LTR در Chrome
+- بررسی Accessibility و Color Contrast
+- بررسی خوانایی و سادگی کد و جلوگیری از Over-engineering
+- بهینه‌سازی حجم تصاویر با فرمت WebP
+
+### موارد باقی‌مانده
+
+تکمیل صفحات داخلی، اتصال داده‌های مشترک، تصاویر مقالات و اطلاعات تماس.
