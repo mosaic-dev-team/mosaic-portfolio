@@ -204,6 +204,29 @@ test('renders URL filters and the matching project in the public listing', async
   expect(markup).not.toContain('href="/projects/mosaic-portfolio"')
 })
 
+test('shows four coming-soon cards without publishing the sample article', async () => {
+  const markup = await renderRoute('/blog')
+
+  for (const number of ['۱', '۲', '۳', '۴']) {
+    expect(markup).toContain(`<h2>مقاله ${number}</h2>`)
+  }
+  expect(markup.match(/>به‌زودی<\/p>/g)).toHaveLength(4)
+  expect(markup).not.toContain('href="/blog/')
+  expect(markup).not.toContain('چرا از مدل دادهٔ مشترک استفاده می‌کنیم؟')
+})
+
+test('renders the sample article, date and author link without an absent cover', async () => {
+  const markup = await renderRoute('/blog/why-a-shared-data-model')
+  const article = markup.match(/<article\b[\s\S]*?<\/article>/)?.[0]
+
+  expect(article).toContain('<h1>چرا از مدل دادهٔ مشترک استفاده می‌کنیم؟</h1>')
+  expect(article).toMatch(/<time datetime="2026-11-27">/i)
+  expect(article).toContain('href="/team/demo"')
+  expect(article).toContain('data-modeling')
+  expect(article).toContain('هر پروژه اعضای سازنده را با شناسهٔ آن‌ها معرفی می‌کند.')
+  expect(article).not.toContain('<img')
+})
+
 test.each([
   {
     slug: 'idempotency',
@@ -267,10 +290,14 @@ test('renders associated work and omits unavailable résumé fields', async () =
   expect(markup).not.toContain('زبان‌ها و مدارک')
 })
 
-test.each(['/team/missing', '/projects/missing', '/blog/missing', '/missing'])('renders the root layout and a 404 for %s', async (pathname) => {
+test.each(['/team/missing', '/projects/missing', '/blog/missing', '/missing-page'])('renders the root layout and a 404 for %s', async (pathname) => {
   const markup = await renderRoute(pathname)
+  const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0]
 
   expect(markup).toContain('<header')
-  expect(markup).toContain('<h1>صفحه پیدا نشد</h1>')
+  expect(main).toMatch(/<h1>.*۴۰۴: صفحه پیدا نشد\. .*یک قطعه گمشده\.<\/h1>/)
+  expect(main).toMatch(/<img[^>]*light-404[^>]*alt=""/)
+  expect(main).toMatch(/href="\/"[^>]*>بازگشت به خانه<\/a>/)
+  expect(main).toMatch(/href="\/projects"[^>]*>مشاهده پروژه‌ها<\/a>/)
   expect(markup).toContain('<footer')
 })
