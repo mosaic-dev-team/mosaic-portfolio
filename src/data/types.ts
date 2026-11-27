@@ -41,6 +41,8 @@ export type Project = {
   liveUrl?: string
 }
 
+export type ProjectFilters = { q?: string; member?: string; tag?: string }
+
 export type Post = {
   slug: string
   title: Text
