@@ -206,32 +206,8 @@
   min-inline-size: 0;
 }
 
-.projectGrid > li[data-project='mosaic-portfolio'] {
-  --project-bg: var(--color-sunfire-orange);
-  --project-text: var(--color-velvet);
-}
-
-.projectGrid > li[data-project='idempotency'] {
-  --project-bg: var(--color-buttermilk);
-  --project-text: var(--color-midnight-blue);
-}
-
-.projectGrid > li[data-project='shard-market'] {
-  --project-bg: var(--color-midnight-blue);
-  --project-text: var(--color-buttermilk);
-}
-
 .page .projectGrid [data-variant] {
-  --card-bg: var(--project-bg, var(--surface-bg));
-  --card-text: var(--project-text, var(--text-primary));
-  --card-accent: var(--project-text, var(--border-color));
   --card-padding: clamp(var(--space-4), 3vw, var(--space-8));
-}
-
-.projectGrid img {
-  display: block;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 
 .projects > p {

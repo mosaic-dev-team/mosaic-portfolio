@@ -194,6 +194,16 @@ async function renderRoute(pathname: string) {
   )
 }
 
+test('renders URL filters and the matching project in the public listing', async () => {
+  const markup = await renderRoute('/projects?q=shard&member=alireza&tag=ecommerce')
+
+  expect(markup).toContain('type="search" value="shard"')
+  expect(markup).toContain('<option value="alireza" selected="">علیرضا عربشاهی</option>')
+  expect(markup).not.toContain('value="demo"')
+  expect(markup).toContain('href="/projects/shard-market"')
+  expect(markup).not.toContain('href="/projects/mosaic-portfolio"')
+})
+
 test.each([
   ['/team/baran', 'باران شیخ ستانی', 'BaranSheikhestaniResume.pdf', 'طراحی و تألیف تمرین‌های برنامه‌نویسی جاوا.', 'idempotency'],
   ['/team/alireza', 'علیرضا عربشاهی', 'AlirezaArabshahiResume.pdf', 'ASP.NET Core', 'shard-market'],
