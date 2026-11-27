@@ -1,34 +1,18 @@
 .home {
   display: grid;
-  gap: var(--space-8);
+  gap: clamp(var(--space-8), 5vw, 4rem);
   max-inline-size: var(--container-width);
   margin-inline: auto;
   padding: var(--space-8) var(--space-4);
 }
 
-.home h1,
-.home h2,
-.home h3,
-.home p {
-  margin-block: 0;
+.home :is(h1, h2, h3, p) {
+  margin: 0;
 }
 
-.home h2 {
-  margin-block-end: var(--space-3);
-  font-size: var(--font-size-lg);
-}
-
-.home h3 {
-  font-size: var(--font-size-lg);
-}
-
-.home h3 + p {
-  margin-block-start: var(--space-2);
-}
-
-.home p + a {
-  display: inline-block;
-  margin-block-start: var(--space-3);
+.home h3:lang(en) {
+  font-family: var(--font-display);
+  line-height: var(--line-height-tight);
 }
 
 .home a {
@@ -36,119 +20,179 @@
   text-underline-offset: 0.2em;
 }
 
-.hero {
+.home .hero {
+  --card-bg: var(--color-buttermilk);
+  --card-text: var(--color-midnight-blue);
+  --card-accent: var(--card-bg);
+  --card-padding: clamp(var(--space-4), 4vw, 3rem);
+
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.45fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: var(--space-8);
-  --card-padding: clamp(var(--space-6), 5vw, 4rem);
+  gap: var(--space-4);
+}
+
+:global([data-theme='dark']) .home .hero {
+  --card-bg: var(--color-midnight-blue);
+  --card-text: var(--color-buttermilk);
+}
+
+.hero .eyebrow {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
 }
 
 .hero h1 {
-  max-inline-size: 18ch;
   margin-block: var(--space-2) var(--space-4);
-  font-size: clamp(var(--font-size-xl), 6vw, 4.5rem);
-  line-height: var(--line-height-tight);
+  font-size: clamp(var(--font-size-xl), 5vw, 3.625rem);
 }
 
-.eyebrow {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
+.hero h1 span {
+  display: block;
+}
+
+.hero h1:lang(en) span {
+  font-style: italic;
+}
+
+.introduction {
+  max-inline-size: 43ch;
+}
+
+.heroImage {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 32rem;
+  justify-self: center;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3) var(--space-4);
+  gap: var(--space-2) var(--space-3);
   margin-block-start: var(--space-6);
 }
 
-.actions .primaryLink {
+.actions a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--color-buttermilk);
-  color: var(--color-midnight-blue);
+  border: 1px solid var(--card-text);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: box-shadow 150ms ease;
 }
 
-.mosaic {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2);
-  justify-self: end;
-  inline-size: min(100%, 13rem);
-  aspect-ratio: 1;
+.actions .primaryLink {
+  background: var(--card-text);
+  color: var(--card-bg);
 }
 
-.mosaic span {
-  border-start-end-radius: 100%;
-  background: var(--color-buttermilk);
+.actions :is(.primaryLink, .secondaryLink):hover {
+  box-shadow: 0 0 0 2px var(--card-text);
 }
 
-.mosaic span:nth-child(2) {
-  border-radius: 50%;
-  background: var(--color-deep-blush);
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-block-end: var(--space-4);
 }
 
-.mosaic span:nth-child(3) {
-  border-radius: var(--radius-md);
-  background: var(--color-sunfire-orange);
+.home .sectionTitle {
+  font-size: clamp(var(--font-size-lg), 4vw, 2.5rem);
 }
 
-.mosaic span:nth-child(4) {
-  border-radius: 0;
-  border-end-start-radius: 100%;
-  background: var(--color-soft-pink);
+.teamGrid {
+  margin-block-start: var(--space-4);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
 }
 
-.wide,
-.projects .grid > :first-child {
-  grid-column: span 2;
+.home .visualCard,
+.projectGrid > [data-variant] {
+  --card-padding: var(--space-4);
+
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
 }
 
-.projectsLink {
-  display: inline-block;
-  margin-block-start: var(--space-3);
-}
-
-.avatar {
+.home .visualCard img,
+.projectGrid img {
   display: block;
-  inline-size: 2.5rem;
-  block-size: 2.5rem;
-  margin-block-end: var(--space-3);
-  border-radius: 50%;
-  background: var(--color-deep-blush);
+  inline-size: 100%;
+  border-radius: var(--radius-md);
+  margin-block-end: var(--space-2);
 }
 
-@media (max-width: 60rem) {
-  .grid {
+.home .visualCard img {
+  aspect-ratio: 1;
+}
+
+.projectGrid img {
+  aspect-ratio: auto;
+}
+
+.home .visualCard h3 {
+  font-size: var(--font-size-lg);
+}
+
+.feature {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+.feature :is(h2, h3) {
+  font-size: clamp(var(--font-size-lg), 4vw, var(--font-size-xl));
+}
+
+.closingGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.articles {
+  display: grid;
+  gap: var(--space-4);
+  inline-size: 100%;
+}
+
+.contact {
+  border-inline-start-width: var(--space-2);
+}
+
+@media (max-width: 56rem) {
+  .teamGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about {
+    grid-column: 1 / -1;
   }
 }
 
-@media (max-width: 36rem) {
-  .grid,
-  .hero {
+@media (max-width: 44rem) {
+  .home .hero,
+  .grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .hero {
-    gap: var(--space-4);
+  .heroImage {
+    max-inline-size: 25rem;
   }
+}
 
-  .mosaic {
-    justify-self: start;
-    inline-size: 5rem;
-  }
-
-  .wide,
-  .projects .grid > :first-child {
-    grid-column: auto;
+@media (prefers-reduced-motion: reduce) {
+  .actions a {
+    transition: none;
   }
 }

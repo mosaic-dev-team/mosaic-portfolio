@@ -1,0 +1,25 @@
+.project-idempotency[data-variant] {
+  --card-bg: var(--color-buttermilk);
+  --card-text: var(--color-midnight-blue);
+  --card-accent: var(--card-text);
+}
+
+.project-shard-market[data-variant],
+.magenta[data-variant] {
+  --card-bg: #bd245f;
+  --card-text: var(--color-buttermilk);
+  --card-accent: var(--card-text);
+}
+
+.project-mosaic-portfolio[data-variant],
+.orange[data-variant] {
+  --card-bg: var(--color-sunfire-orange);
+  --card-text: var(--color-velvet);
+  --card-accent: var(--card-text);
+}
+
+.project-civilization-vi[data-variant] {
+  --card-bg: var(--color-forest-green);
+  --card-text: var(--color-buttermilk);
+  --card-accent: var(--card-text);
+}

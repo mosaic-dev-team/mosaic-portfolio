@@ -1,105 +1,106 @@
 import { Link } from '@tanstack/react-router'
+import heroImage from '../../assets/illustrations/hero.webp'
 import { useLanguage } from '../../context/language'
+import { formatDate } from '../../data/formatDate'
+import { members } from '../../data/members'
+import { publishedPosts } from '../../data/posts'
+import { projects } from '../../data/projects'
+import { usePageTitle } from '../../hooks/usePageTitle'
+import { ArticleCard } from '../ui/ArticleCard'
 import { Card } from '../ui/Card'
+import { MemberCard } from '../ui/MemberCard'
+import { MemberContacts } from '../ui/MemberContacts'
+import { ProjectCard } from '../ui/ProjectCard'
 import styles from './HomePage.module.css'
 
 const homeCopy = {
   en: {
     eyebrow: 'Frontend Development Team',
-    title: 'Different pieces. One vision.',
+    title: 'Different pieces.',
+    titleEnd: 'One vision.',
     introduction: 'We’re MOSAIC, a two-person team building frontend projects together.',
     exploreProjects: 'Explore Projects',
     meetTeam: 'Meet the Team',
     team: 'Team and About',
-    personA: 'Person A',
-    personB: 'Person B',
-    member: 'A member of the MOSAIC team.',
     about: 'About MOSAIC',
-    aboutText: 'MOSAIC is our shared portfolio for team and individual work.',
+    aboutText: 'MOSAIC is our shared frontend portfolio, bringing together individual projects, collaborative work, and our experiences as developers.',
     projects: 'Selected Projects',
+    allProjects: 'View All Projects',
+    viewProject: 'View Project',
     journal: 'Our Journal',
-    journalText: 'A space for future technical articles from the team.',
+    journalText: 'Thoughts, stories, and lessons from our development journey.',
     visitJournal: 'Visit the Blog',
     contact: 'Contact',
-    contactText: 'Contact details will be added here.',
+    contactText: 'Great things start with a conversation.',
   },
   fa: {
     eyebrow: 'تیم توسعهٔ فرانت‌اند',
-    title: 'قطعه‌های متفاوت، یک چشم‌انداز مشترک.',
+    title: 'قطعه‌های متفاوت،',
+    titleEnd: 'یک چشم‌انداز مشترک.',
     introduction: 'ما موزاییک هستیم، تیمی دونفره که با هم پروژه‌های فرانت‌اند می‌سازیم.',
     exploreProjects: 'دیدن پروژه‌ها',
     meetTeam: 'آشنایی با تیم',
     team: 'تیم و دربارهٔ ما',
-    personA: 'نفر اول',
-    personB: 'نفر دوم',
-    member: 'عضوی از تیم موزاییک.',
     about: 'دربارهٔ موزاییک',
-    aboutText: 'موزاییک نمونه‌کار مشترک ما برای معرفی کارهای تیمی و فردی است.',
+    aboutText: 'موزاییک پورتفولیوی مشترک ماست؛ فضایی برای نمایش پروژه‌های فردی، کارهای تیمی و تجربه‌های ما در مسیر توسعه نرم‌افزار.',
     projects: 'پروژه‌های منتخب',
+    allProjects: 'دیدن همهٔ پروژه‌ها',
+    viewProject: 'مشاهده پروژه',
     journal: 'نوشته‌های ما',
-    journalText: 'جایی برای نوشته‌های فنی آیندهٔ تیم.',
+    journalText: 'ایده‌ها، تجربه‌ها و آموخته‌های ما در مسیر توسعه نرم‌افزار.',
     visitJournal: 'رفتن به وبلاگ',
     contact: 'ارتباط با ما',
-    contactText: 'اطلاعات تماس اینجا اضافه می‌شود.',
+    contactText: 'کارهای بزرگ با یک گفت‌وگو آغاز می‌شوند.',
   },
 }
 
-const projects = [
-  {
-    id: 'idempotency',
-    variant: 'burgundy',
-    en: { title: 'Idempotency', description: 'Person B’s frontend e-commerce project.' },
-    fa: { title: 'آیدمپوتنسی', description: 'پروژهٔ فرانت‌اند فروشگاهی نفر دوم.' },
-  },
-  {
-    id: 'sharding',
-    variant: 'forest',
-    en: { title: 'Sharding', description: 'Person A’s frontend e-commerce project.' },
-    fa: { title: 'شاردینگ', description: 'پروژهٔ فرانت‌اند فروشگاهی نفر اول.' },
-  },
-  {
-    id: 'mosaic',
-    variant: 'velvet',
-    en: { title: 'MOSAIC', description: 'Our shared team portfolio project.' },
-    fa: { title: 'موزاییک', description: 'پروژهٔ نمونه‌کار مشترک تیم.' },
-  },
-] as const
+const homeMembers = ['alireza', 'baran']
+  .map((slug) => members.find((member) => member.slug === slug))
+  .filter((member) => member !== undefined)
+const selectedProjects = projects.filter((project) =>
+  ['idempotency', 'shard-market', 'mosaic-portfolio'].includes(project.slug),
+)
+const journalPosts = publishedPosts.slice(0, 2)
 
 export function HomePage() {
   const { language } = useLanguage()
+  usePageTitle(language === 'fa' ? 'نمونه‌کار فرانت‌اند' : 'Frontend Portfolio')
   const text = homeCopy[language]
 
   return (
     <div className={styles.home}>
-      <Card variant="midnight" className={styles.hero}>
+      <Card className={styles.hero}>
         <div>
           <p className={styles.eyebrow}>{text.eyebrow}</p>
-          <h1>{text.title}</h1>
-          <p>{text.introduction}</p>
+          <h1>
+            {text.title}{' '}
+            <span>{text.titleEnd}</span>
+          </h1>
+          <p className={styles.introduction}>{text.introduction}</p>
           <div className={styles.actions}>
             <Link to="/projects" className={styles.primaryLink}>{text.exploreProjects}</Link>
-            <Link to="/team">{text.meetTeam}</Link>
+            <Link to="/team" className={styles.secondaryLink}>{text.meetTeam}</Link>
           </div>
         </div>
-        <div className={styles.mosaic} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
+        <img className={styles.heroImage} src={heroImage} alt="" width="1000" height="667" />
       </Card>
 
       <section aria-labelledby="home-team">
-        <h2 id="home-team">{text.team}</h2>
-        <div className={styles.grid}>
-          {[text.personA, text.personB].map((member) => (
-            <Card key={member} variant="blush">
-              <span className={styles.avatar} aria-hidden="true" />
-              <h3>{member}</h3>
-              <p>{text.member}</p>
-            </Card>
+        <h2 id="home-team" className={styles.sectionTitle}>{text.team}</h2>
+        <div className={`${styles.grid} ${styles.teamGrid}`}>
+          {homeMembers.map((member) => (
+            <MemberCard
+              key={member.slug}
+              className={styles.visualCard}
+              slug={member.slug}
+              name={member.name[language]}
+              role={member.role[language]}
+              portraitSrc={member.portrait?.src}
+              portraitAlt={member.portrait?.alt[language]}
+              variant={member.slug === 'baran' ? 'team-forest' : 'team-burgundy'}
+            />
           ))}
-          <Card className={styles.wide}>
+          <Card variant="midnight" className={`${styles.feature} ${styles.about}`}>
             <h3>{text.about}</h3>
             <p>{text.aboutText}</p>
             <Link to="/team">{text.meetTeam}</Link>
@@ -107,28 +108,51 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className={styles.projects} aria-labelledby="home-projects">
-        <h2 id="home-projects">{text.projects}</h2>
-        <div className={styles.grid}>
-          {projects.map((project) => (
-            <Card key={project.id} variant={project.variant}>
-              <h3>{project[language].title}</h3>
-              <p>{project[language].description}</p>
-            </Card>
+      <section aria-labelledby="home-projects">
+        <div className={styles.sectionHeader}>
+          <h2 id="home-projects" className={styles.sectionTitle}>{text.projects}</h2>
+          <Link to="/projects" search={{}}>{text.allProjects}</Link>
+        </div>
+        <div className={`${styles.grid} ${styles.projectGrid}`}>
+          {selectedProjects.map((project) => (
+            <ProjectCard
+              key={project.slug}
+              slug={project.slug}
+              title={project.title[language]}
+              description={project.summary[language]}
+              imageSrc={project.image?.src}
+              imageAlt={project.image?.alt[language]}
+              linkLabel={text.viewProject}
+            />
           ))}
         </div>
-        <Link className={styles.projectsLink} to="/projects">{text.exploreProjects}</Link>
       </section>
 
-      <div className={styles.grid}>
-        <Card variant="deep-green" className={styles.wide}>
+      <div className={`${styles.grid} ${styles.closingGrid}`}>
+        <Card variant="team-forest" className={styles.feature}>
           <h2>{text.journal}</h2>
           <p>{text.journalText}</p>
           <Link to="/blog">{text.visitJournal}</Link>
+          {journalPosts.length > 0 && (
+            <div className={styles.articles}>
+              {journalPosts.map((post) => (
+                <ArticleCard
+                  key={post.slug}
+                  slug={post.slug}
+                  title={post.title[language]}
+                  summary={post.summary[language]}
+                  cover={post.cover && { src: post.cover.src, alt: post.cover.alt[language] }}
+                  author={members.find((member) => member.slug === post.authorSlug)?.name[language]}
+                  publishedOn={formatDate(post.publishedAt, language)}
+                />
+              ))}
+            </div>
+          )}
         </Card>
-        <Card className={styles.wide}>
+        <Card variant="midnight" className={`${styles.feature} ${styles.contact}`}>
           <h2>{text.contact}</h2>
           <p>{text.contactText}</p>
+          <MemberContacts />
         </Card>
       </div>
     </div>

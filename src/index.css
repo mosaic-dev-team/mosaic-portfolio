@@ -1,5 +1,6 @@
 @import './styles/tokens.css';
 @import './styles/themes.css';
+@import './styles/fonts.css';
 
 *,
 *::before,
@@ -11,14 +12,19 @@ body {
   margin: 0;
   background-color: var(--page-bg);
   color: var(--text-primary);
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body);
 }
 
 body:lang(fa) {
-  font-family: Tahoma, Arial, sans-serif;
+  font-family: var(--font-persian);
+}
+
+main :is(h1, h2):lang(en) {
+  font-family: var(--font-display);
+  line-height: var(--line-height-tight);
 }
 
 img {

@@ -12,6 +12,7 @@
   --color-soft-pink: #ffd7df;
   --color-velvet: #50000b;
   --color-sunfire-orange: #ed7d33;
+  --color-berry-burgundy: #8c193b;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -23,7 +24,11 @@
   --radius-sm: 0.375rem;
   --radius-md: 0.75rem;
   --radius-lg: 1.25rem;
+  --card-radius: 24px;
 
+  --font-display: Fraunces, Georgia, serif;
+  --font-body: Inter, system-ui, sans-serif;
+  --font-persian: Vazirmatn, Tahoma, Arial, sans-serif;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.25rem;

@@ -15,7 +15,9 @@ export type Member = {
   bio: Text
   skills: readonly string[]
   education: readonly { title: Text; institution: Text; period: Text }[]
-  experience: readonly { title: Text; organization: Text; period: Text }[]
+  experience: readonly { title: Text; organization: Text; period: Text; responsibilities?: readonly Text[] }[]
+  languages?: readonly { name: Text; level: Text }[]
+  ielts?: { overallBand: number; date: string }
   contact?: {
     email?: string
     githubUrl?: string
@@ -44,6 +46,7 @@ export type Project = {
 export type ProjectFilters = { q?: string; member?: string; tag?: string }
 
 export type Post = {
+  status: 'draft' | 'published'
   slug: string
   title: Text
   summary: Text

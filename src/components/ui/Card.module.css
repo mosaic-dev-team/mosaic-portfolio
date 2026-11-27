@@ -7,7 +7,7 @@
   min-inline-size: 0;
   padding: var(--card-padding, var(--space-6));
   border: 1px solid var(--card-accent);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius);
   background: var(--card-bg);
   color: var(--card-text);
   box-shadow: var(--shadow);
@@ -28,6 +28,19 @@
   --card-bg: var(--color-soft-marigold);
   --card-text: var(--color-velvet);
   --card-accent: var(--color-deep-blush);
+}
+
+.card[data-variant='team-forest'] {
+  --card-bg: var(--color-dark-green);
+}
+
+.card[data-variant='team-burgundy'] {
+  --card-bg: var(--color-berry-burgundy);
+}
+
+.card:is([data-variant='team-forest'], [data-variant='team-burgundy']) {
+  --card-text: var(--color-buttermilk);
+  --card-accent: var(--card-text);
 }
 
 .card[data-variant='deep-green'] {
