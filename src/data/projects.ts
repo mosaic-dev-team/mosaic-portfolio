@@ -20,6 +20,12 @@ export const projects: readonly Project[] = [
       en: 'Stable slugs let us link related content across pages.',
       fa: 'شناسه‌های ثابت کمک می‌کنند محتوای مرتبط را بین صفحه‌ها به هم وصل کنیم.',
     },
+    achievements: [
+      {
+        en: 'Added linked sample records for members, projects, and posts.',
+        fa: 'داده‌های نمونهٔ مرتبط برای اعضا، پروژه‌ها و نوشته‌ها اضافه شدند.',
+      },
+    ],
     tools: ['React', 'TypeScript', 'TanStack Router'],
     tags: ['react', 'typescript'],
     memberSlugs: ['demo'],
