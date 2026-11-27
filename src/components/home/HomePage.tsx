@@ -1,12 +1,15 @@
 import { Link } from '@tanstack/react-router'
 import heroImage from '../../assets/illustrations/hero.webp'
-import alirezaPortrait from '../../assets/portraits/alireza.webp'
-import baranPortrait from '../../assets/portraits/baran.webp'
-import idempotencyImage from '../../assets/projects/idempotency.webp'
-import mosaicImage from '../../assets/projects/mosaic.webp'
-import shardingImage from '../../assets/projects/sharding.webp'
 import { useLanguage } from '../../context/language'
+import { formatDate } from '../../data/formatDate'
+import { members } from '../../data/members'
+import { posts } from '../../data/posts'
+import { projects } from '../../data/projects'
+import { ArticleCard } from '../ui/ArticleCard'
 import { Card } from '../ui/Card'
+import { MemberCard } from '../ui/MemberCard'
+import { MemberContacts } from '../ui/MemberContacts'
+import { ProjectCard } from '../ui/ProjectCard'
 import styles from './HomePage.module.css'
 
 const homeCopy = {
@@ -18,19 +21,16 @@ const homeCopy = {
     exploreProjects: 'Explore Projects',
     meetTeam: 'Meet the Team',
     team: 'Team and About',
-    personA: 'Person A',
-    personB: 'Person B',
-    member: 'A member of the MOSAIC team.',
-    teamProfiles: 'Team profiles are coming soon.',
     about: 'About MOSAIC',
-    aboutText: 'MOSAIC is our shared frontend portfolio for team and individual work.',
+    aboutText: 'MOSAIC is our shared frontend portfolio, bringing together individual projects, collaborative work, and our experiences as developers.',
     projects: 'Selected Projects',
     allProjects: 'View All Projects',
+    viewProject: 'View Project',
     journal: 'Our Journal',
-    journalText: 'A space for future technical articles from the team.',
+    journalText: 'Thoughts, stories, and lessons from our development journey.',
     visitJournal: 'Visit the Blog',
     contact: 'Contact',
-    contactText: 'Contact details will be added here.',
+    contactText: 'Great things start with a conversation.',
   },
   fa: {
     eyebrow: 'تیم توسعهٔ فرانت‌اند',
@@ -40,54 +40,30 @@ const homeCopy = {
     exploreProjects: 'دیدن پروژه‌ها',
     meetTeam: 'آشنایی با تیم',
     team: 'تیم و دربارهٔ ما',
-    personA: 'نفر اول',
-    personB: 'نفر دوم',
-    member: 'عضوی از تیم موزاییک.',
-    teamProfiles: 'معرفی کامل اعضای تیم به‌زودی اضافه می‌شود.',
     about: 'دربارهٔ موزاییک',
-    aboutText: 'موزاییک نمونه‌کار مشترک فرانت‌اند ما برای معرفی کارهای تیمی و فردی است.',
+    aboutText: 'موزاییک پورتفولیوی مشترک ماست؛ فضایی برای نمایش پروژه‌های فردی، کارهای تیمی و تجربه‌های ما در مسیر توسعه نرم‌افزار.',
     projects: 'پروژه‌های منتخب',
     allProjects: 'دیدن همهٔ پروژه‌ها',
+    viewProject: 'مشاهده پروژه',
     journal: 'نوشته‌های ما',
-    journalText: 'جایی برای نوشته‌های فنی آیندهٔ تیم.',
+    journalText: 'ایده‌ها، تجربه‌ها و آموخته‌های ما در مسیر توسعه نرم‌افزار.',
     visitJournal: 'رفتن به وبلاگ',
     contact: 'ارتباط با ما',
-    contactText: 'اطلاعات تماس اینجا اضافه می‌شود.',
+    contactText: 'کارهای بزرگ با یک گفت‌وگو آغاز می‌شوند.',
   },
 }
 
-const projects = [
-  {
-    image: idempotencyImage,
-    height: 750,
-    variant: 'burgundy',
-    en: { title: 'Idempotency', description: 'Person B’s frontend e-commerce project.' },
-    fa: { title: 'آیدمپوتنسی', description: 'پروژهٔ فرانت‌اند فروشگاهی نفر دوم.' },
-  },
-  {
-    image: shardingImage,
-    height: 715,
-    variant: 'forest',
-    en: { title: 'Sharding', description: 'Person A’s frontend e-commerce project.' },
-    fa: { title: 'شاردینگ', description: 'پروژهٔ فرانت‌اند فروشگاهی نفر اول.' },
-  },
-  {
-    image: mosaicImage,
-    height: 667,
-    variant: 'velvet',
-    en: { title: 'MOSAIC', description: 'Our shared team portfolio project.' },
-    fa: { title: 'موزاییک', description: 'پروژهٔ نمونه‌کار مشترک تیم.' },
-  },
-] as const
+const homeMembers = ['alireza', 'baran']
+  .map((slug) => members.find((member) => member.slug === slug))
+  .filter((member) => member !== undefined)
+const selectedProjects = projects.filter((project) =>
+  ['idempotency', 'shard-market', 'mosaic-portfolio'].includes(project.slug),
+)
+const journalPosts = posts.filter((post) => post.authorSlug !== 'demo').slice(0, 2)
 
 export function HomePage() {
   const { language } = useLanguage()
   const text = homeCopy[language]
-  // Replace these previews with MemberCard once shared member records are available.
-  const members = [
-    { name: text.personA, portrait: alirezaPortrait, variant: 'midnight' },
-    { name: text.personB, portrait: baranPortrait, variant: 'blush' },
-  ] as const
 
   return (
     <div className={styles.home}>
@@ -110,17 +86,21 @@ export function HomePage() {
       <section aria-labelledby="home-team">
         <h2 id="home-team" className={styles.sectionTitle}>{text.team}</h2>
         <div className={`${styles.grid} ${styles.teamGrid}`}>
-          {members.map(({ name, portrait, variant }) => (
-            <Card key={name} variant={variant} className={styles.visualCard}>
-              <img src={portrait} alt={name} width="1000" height="1000" loading="lazy" />
-              <h3>{name}</h3>
-              <p>{text.member}</p>
-            </Card>
+          {homeMembers.map((member) => (
+            <MemberCard
+              key={member.slug}
+              className={styles.visualCard}
+              slug={member.slug}
+              name={member.name[language]}
+              role={member.role[language]}
+              portraitSrc={member.portrait?.src}
+              portraitAlt={member.portrait?.alt[language]}
+              variant={member.slug === 'baran' ? 'team-forest' : 'team-burgundy'}
+            />
           ))}
-          <Card variant="deep-green" className={`${styles.feature} ${styles.about}`}>
+          <Card variant="midnight" className={`${styles.feature} ${styles.about}`}>
             <h3>{text.about}</h3>
             <p>{text.aboutText}</p>
-            <p>{text.teamProfiles}</p>
             <Link to="/team">{text.meetTeam}</Link>
           </Card>
         </div>
@@ -129,28 +109,48 @@ export function HomePage() {
       <section aria-labelledby="home-projects">
         <div className={styles.sectionHeader}>
           <h2 id="home-projects" className={styles.sectionTitle}>{text.projects}</h2>
-          <Link to="/projects">{text.allProjects}</Link>
+          <Link to="/projects" search={{}}>{text.allProjects}</Link>
         </div>
-        <div className={styles.grid}>
-          {projects.map(({ image, height, variant, [language]: project }) => (
-            <Card key={image} variant={variant} className={styles.visualCard}>
-              <img src={image} alt="" width="1000" height={height} loading="lazy" />
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-            </Card>
+        <div className={`${styles.grid} ${styles.projectGrid}`}>
+          {selectedProjects.map((project) => (
+            <ProjectCard
+              key={project.slug}
+              slug={project.slug}
+              title={project.title[language]}
+              description={project.summary[language]}
+              imageSrc={project.image?.src}
+              imageAlt={project.image?.alt[language]}
+              linkLabel={text.viewProject}
+            />
           ))}
         </div>
       </section>
 
       <div className={`${styles.grid} ${styles.closingGrid}`}>
-        <Card className={styles.feature}>
+        <Card variant="team-forest" className={styles.feature}>
           <h2>{text.journal}</h2>
           <p>{text.journalText}</p>
           <Link to="/blog">{text.visitJournal}</Link>
+          {journalPosts.length > 0 && (
+            <div className={styles.articles}>
+              {journalPosts.map((post) => (
+                <ArticleCard
+                  key={post.slug}
+                  slug={post.slug}
+                  title={post.title[language]}
+                  summary={post.summary[language]}
+                  cover={post.cover && { src: post.cover.src, alt: post.cover.alt[language] }}
+                  author={members.find((member) => member.slug === post.authorSlug)?.name[language]}
+                  publishedOn={formatDate(post.publishedAt, language)}
+                />
+              ))}
+            </div>
+          )}
         </Card>
         <Card variant="midnight" className={`${styles.feature} ${styles.contact}`}>
           <h2>{text.contact}</h2>
           <p>{text.contactText}</p>
+          <MemberContacts />
         </Card>
       </div>
     </div>

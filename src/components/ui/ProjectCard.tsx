@@ -10,7 +10,7 @@ interface ProjectCardProps {
   imageAlt?: string
   slug: string
   variant?: CardVariant
-  tools: readonly string[]
+  tools?: readonly string[]
   linkLabel: string
   contributors?: string
 }
@@ -25,7 +25,7 @@ export function ProjectCard({
       {imageSrc && <img className={styles.illustration} src={imageSrc} alt={imageAlt ?? ''} />}
       <h3 className={styles.title}>{title}</h3>
       <p>{description}</p>
-      {tools.length > 0 && (
+      {!!tools?.length && (
         <ul className={styles.tools} role="list">
           {tools.map((tool) => <li key={tool}><bdi lang="en">{tool}</bdi></li>)}
         </ul>

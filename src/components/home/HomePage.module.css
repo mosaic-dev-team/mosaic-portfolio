@@ -116,7 +116,8 @@
   gap: var(--space-4);
 }
 
-.visualCard {
+.home .visualCard,
+.projectGrid > [data-variant] {
   --card-padding: var(--space-4);
 
   display: grid;
@@ -124,14 +125,23 @@
   gap: var(--space-2);
 }
 
-.visualCard img {
+.home .visualCard img,
+.projectGrid img {
   display: block;
   inline-size: 100%;
   border-radius: var(--radius-md);
   margin-block-end: var(--space-2);
 }
 
-.visualCard h3 {
+.home .visualCard img {
+  aspect-ratio: 1;
+}
+
+.projectGrid img {
+  aspect-ratio: auto;
+}
+
+.home .visualCard h3 {
   font-size: var(--font-size-lg);
 }
 
@@ -148,6 +158,12 @@
 
 .closingGrid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.articles {
+  display: grid;
+  gap: var(--space-4);
+  inline-size: 100%;
 }
 
 .contact {

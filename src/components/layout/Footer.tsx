@@ -1,8 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import logo from '../../assets/brand/mosaic-logo.svg'
 import { useLanguage } from '../../context/language'
+import { projects } from '../../data/projects'
+import { MemberContacts } from '../ui/MemberContacts'
 import styles from './Footer.module.css'
 import { navigation } from './navigation'
+
+const repositoryUrl = projects.find((project) => project.slug === 'mosaic-portfolio')?.repositoryUrl
 
 const copy = {
   en: {
@@ -11,7 +15,7 @@ const copy = {
     explore: 'Explore',
     navigation: 'Footer navigation',
     connect: 'Connect',
-    contact: 'Contact and social links coming soon.',
+    repository: 'MOSAIC Repository',
     attribution: 'Designed and built together.',
   },
   fa: {
@@ -20,7 +24,7 @@ const copy = {
     explore: 'دسترسی سریع',
     navigation: 'ناوبری پانوشت',
     connect: 'ارتباط با ما',
-    contact: 'راه‌های تماس و پیوندهای شبکه‌های اجتماعی به‌زودی اضافه می‌شوند.',
+    repository: 'مخزن موزاییک',
     attribution: 'طراحی و توسعه توسط تیم موزاییک.',
   },
 }
@@ -35,9 +39,9 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <div className={styles.invitation}>
-          <p>{labels.invitation}</p>
-          <img className={styles.mark} src={logo} alt="" width="40" height="40" />
+        <div className={styles.invitationRow}>
+          <h2 className={styles.invitation}>{labels.invitation}</h2>
+          <img src={logo} alt="" width="40" height="40" />
         </div>
 
         <div className={styles.columns}>
@@ -61,7 +65,8 @@ export function Footer() {
 
           <div>
             <h2>{labels.connect}</h2>
-            <p>{labels.contact}</p>
+            <MemberContacts />
+            {repositoryUrl && <a className={styles.repository} href={repositoryUrl}>{labels.repository}</a>}
           </div>
         </div>
 

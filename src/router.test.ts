@@ -9,6 +9,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { expect, test } from 'vitest'
 import { LanguageContext } from './context/language'
 import { ThemeContext } from './context/theme'
+import { members } from './data/members'
 import { filterProjects, projects } from './data/projects'
 import { useProjectFilters } from './hooks/useProjectFilters'
 import { routeTree } from './routeTree.gen'
@@ -202,6 +203,33 @@ test('renders URL filters and the matching project in the public listing', async
   expect(markup).not.toContain('value="demo"')
   expect(markup).toContain('href="/projects/shard-market"')
   expect(markup).not.toContain('href="/projects/mosaic-portfolio"')
+})
+
+test('links Homepage and Footer content to the shared public profiles and projects', async () => {
+  const markup = await renderRoute('/')
+  const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0]
+  const footer = markup.match(/<footer\b[\s\S]*?<\/footer>/)?.[0]
+
+  for (const { slug, name, contact } of members.filter((member) => member.slug !== 'demo')) {
+    expect(main).toContain(`href="/team/${slug}"`)
+    expect(main).toContain(name.fa)
+    expect(footer).toContain(name.fa)
+    for (const href of [contact?.email && `mailto:${contact.email}`, contact?.githubUrl, contact?.linkedinUrl]) {
+      if (href) {
+        expect(main).toContain(`href="${href}"`)
+        expect(footer).toContain(`href="${href}"`)
+      }
+    }
+  }
+
+  expect(main).toContain('href="/projects/idempotency"')
+  expect(main).toContain('href="/projects/shard-market"')
+  expect(main).toContain('href="/projects/mosaic-portfolio"')
+  const repository = projects.find((project) => project.slug === 'mosaic-portfolio')?.repositoryUrl
+  expect(repository).toBeDefined()
+  expect(footer).toContain(`href="${repository}"`)
+  expect(main).not.toContain('href="/blog/why-a-shared-data-model"')
+  expect(markup).not.toContain('sara@example.com')
 })
 
 test('shows four coming-soon cards without publishing the sample article', async () => {

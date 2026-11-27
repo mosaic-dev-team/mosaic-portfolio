@@ -10,15 +10,19 @@
   padding: var(--space-6) var(--space-4) var(--space-4);
 }
 
-.invitation {
+.invitationRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-6);
-  border-radius: var(--radius-lg);
-  background: var(--color-midnight-blue);
-  color: var(--color-buttermilk);
+}
+
+.invitationRow img {
+  flex: none;
+}
+
+.invitation {
+  margin: 0;
   font-size: clamp(var(--font-size-lg), 4vw, var(--font-size-xl));
   font-weight: var(--font-weight-bold);
 }
@@ -34,13 +38,6 @@
 
 .footer p {
   margin: 0;
-}
-
-.mark {
-  flex: none;
-  padding: var(--space-1);
-  border-radius: var(--radius-sm);
-  background: var(--color-buttermilk);
 }
 
 .columns {
@@ -66,7 +63,7 @@
   color: var(--text-secondary);
 }
 
-.columns ul {
+.columns nav ul {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-4);
@@ -85,6 +82,10 @@
   font-weight: var(--font-weight-semibold);
 }
 
+.repository {
+  margin-block-start: var(--space-2);
+}
+
 .credits {
   display: flex;
   flex-wrap: wrap;
@@ -98,9 +99,5 @@
   .columns {
     grid-template-columns: 1fr;
     gap: var(--space-4);
-  }
-
-  .invitation {
-    padding: var(--space-4);
   }
 }
