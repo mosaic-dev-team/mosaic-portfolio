@@ -1,0 +1,28 @@
+import type { Project } from './types'
+
+export const projects: readonly Project[] = [
+  {
+    slug: 'mosaic-portfolio',
+    title: { en: 'Mosaic Portfolio', fa: 'نمونه‌کار موزاییک' },
+    summary: {
+      en: 'A bilingual portfolio for the Mosaic team.',
+      fa: 'سایت نمونه‌کار دوزبانه برای تیم موزاییک.',
+    },
+    problem: {
+      en: 'Each team member needs a shareable résumé, while the team needs a common home for its work.',
+      fa: 'هر عضو به رزومه‌ای قابل اشتراک نیاز دارد و تیم هم به یک سایت مشترک برای معرفی کارهایش.',
+    },
+    solution: {
+      en: 'Use a shared data model and page templates for member profiles, projects, and posts.',
+      fa: 'از مدل داده و قالب‌های مشترک برای معرفی اعضا، پروژه‌ها و نوشته‌ها استفاده کنیم.',
+    },
+    lessons: {
+      en: 'Stable slugs let us link related content across pages.',
+      fa: 'شناسه‌های ثابت کمک می‌کنند محتوای مرتبط را بین صفحه‌ها به هم وصل کنیم.',
+    },
+    tools: ['React', 'TypeScript', 'TanStack Router'],
+    tags: ['react', 'typescript'],
+    memberSlugs: ['demo'],
+    repositoryUrl: 'https://github.com/mosaic-dev-team/mosaic-portfolio',
+  },
+]
