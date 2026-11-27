@@ -1,12 +1,18 @@
 .card {
-  display: grid;
-  align-content: start;
-  gap: var(--space-2);
+  --card-padding: clamp(var(--space-4), 3vw, var(--space-8));
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
 .portrait {
+  display: block;
   inline-size: 100%;
-  border-radius: var(--radius-md);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center 38%;
+  border-radius: var(--radius-lg);
   margin-block-end: var(--space-2);
 }
 
@@ -15,16 +21,63 @@
   margin: 0;
 }
 
-.name {
-  font-size: var(--font-size-lg);
+.card .name {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: var(--line-height-tight);
 }
 
 .name:lang(en) {
   font-family: var(--font-display);
-  line-height: var(--line-height-tight);
 }
 
 .role,
 .card a {
   font-weight: var(--font-weight-semibold);
+}
+
+.skills,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.skills {
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.skills li {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--card-text);
+  border-radius: 999px;
+  font-size: var(--font-size-sm);
+}
+
+.actions {
+  gap: var(--space-2) var(--space-4);
+  margin-block-start: auto;
+  padding-block-start: var(--space-3);
+}
+
+.actions a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  text-underline-offset: 0.2em;
+}
+
+.actions .resume {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--card-text);
+  border-radius: 999px;
+  background: var(--card-text);
+  color: var(--card-bg);
+  text-decoration: none;
+}
+
+.actions .resume:hover {
+  text-decoration: underline;
 }

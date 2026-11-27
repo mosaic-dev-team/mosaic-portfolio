@@ -1,0 +1,97 @@
+.page {
+  display: grid;
+  gap: clamp(var(--space-6), 4vw, 3rem);
+  max-inline-size: var(--container-width);
+  margin-inline: auto;
+  padding: clamp(var(--space-8), 6vw, 5rem) var(--space-4);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-3);
+  max-inline-size: 50rem;
+}
+
+.intro :is(h1, p),
+.philosophy :is(h2, p) {
+  margin: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--accent-color);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.eyebrow:lang(en) {
+  letter-spacing: 0.12em;
+}
+
+.eyebrow::before {
+  content: '';
+  inline-size: var(--space-8);
+  block-size: 2px;
+  background: currentColor;
+}
+
+.intro h1 {
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+.intro h1:lang(fa) {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.35;
+}
+
+.intro p:last-child {
+  color: var(--text-secondary);
+  font-size: clamp(var(--font-size-base), 2vw, var(--font-size-lg));
+}
+
+.members {
+  display: grid;
+  gap: clamp(var(--space-4), 3vw, var(--space-8));
+}
+
+@media (min-width: 48rem) {
+  .members {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.page .philosophy[data-variant] {
+  --card-bg: var(--color-sunfire-orange);
+  --card-text: var(--color-velvet);
+  --card-accent: var(--card-text);
+}
+
+.philosophy {
+  --card-padding: clamp(var(--space-6), 4vw, 3rem);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-8);
+}
+
+.philosophy h2 {
+  font-size: clamp(1.5rem, 3vw, var(--font-size-xl));
+  margin-block-end: var(--space-2);
+}
+
+.philosophy a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-weight: var(--font-weight-semibold);
+  text-underline-offset: 0.2em;
+}

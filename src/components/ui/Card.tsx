@@ -5,6 +5,8 @@ export type CardVariant =
   | 'neutral'
   | 'midnight'
   | 'blush'
+  | 'team-forest'
+  | 'team-burgundy'
   | 'deep-green'
   | 'burgundy'
   | 'forest'
