@@ -1,0 +1,310 @@
+.page {
+  display: grid;
+  gap: clamp(var(--space-4), 3vw, var(--space-8));
+  max-inline-size: var(--container-width);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-4) clamp(var(--space-8), 6vw, 5rem);
+}
+
+.page a {
+  text-underline-offset: 0.2em;
+}
+
+.back {
+  grid-column: 1 / -1;
+  justify-self: start;
+  font-weight: var(--font-weight-semibold);
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.card[data-variant] {
+  --card-padding: clamp(var(--space-4), 3vw, var(--space-8));
+}
+
+.card :is(h1, h2, h3, p) {
+  margin: 0;
+}
+
+.card h2,
+.projects h2 {
+  margin-block-start: 0;
+  margin-block-end: var(--space-4);
+  font-size: clamp(1.4rem, 2.6vw, var(--font-size-xl));
+}
+
+.card h3 {
+  font-size: var(--font-size-base);
+}
+
+.hero {
+  display: grid;
+  align-items: center;
+  gap: clamp(var(--space-4), 4vw, 3rem);
+}
+
+.portrait {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center 38%;
+  border-radius: var(--radius-lg);
+}
+
+.profile {
+  min-inline-size: 0;
+}
+
+.profile h1 {
+  font-size: clamp(2rem, 5vw, 4.25rem);
+  line-height: var(--line-height-tight);
+  text-wrap: balance;
+}
+
+.card .role {
+  margin-block-start: var(--space-2);
+  font-size: clamp(var(--font-size-base), 2vw, var(--font-size-lg));
+}
+
+.profile .download {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  margin-block-start: var(--space-6);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--card-text);
+  border-radius: 999px;
+  background: var(--card-text);
+  color: var(--card-bg);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+.profile .download:hover {
+  text-decoration: underline;
+}
+
+.heroLinks {
+  margin-block-start: var(--space-4);
+}
+
+.heroLinks > p {
+  margin-block-end: var(--space-1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.links,
+.skills,
+.entries {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links,
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.skills {
+  gap: var(--space-2);
+}
+
+.links {
+  gap: var(--space-2) var(--space-6);
+}
+
+.links li,
+.skills li {
+  max-inline-size: 100%;
+}
+
+.skills li {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: var(--font-size-sm);
+}
+
+.entries > li + li {
+  margin-block-start: var(--space-4);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid currentColor;
+}
+
+.period {
+  font-size: var(--font-size-sm);
+}
+
+.responsibilities {
+  margin-block: var(--space-2) 0;
+  padding-inline-start: var(--space-6);
+}
+
+.related {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.languages {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.languages div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+
+.languages dt {
+  font-weight: var(--font-weight-semibold);
+}
+
+.languages dd {
+  margin: 0;
+}
+
+.card .ielts {
+  margin-block-start: var(--space-4);
+}
+
+.page .about[data-variant] {
+  --card-bg: var(--color-buttermilk);
+  --card-text: var(--color-midnight-blue);
+  --card-accent: var(--card-text);
+}
+
+.page .education[data-variant] {
+  --card-bg: var(--color-sunfire-orange);
+  --card-text: var(--color-velvet);
+  --card-accent: var(--card-text);
+}
+
+.page .experience[data-variant] {
+  --card-bg: var(--color-champagne);
+  --card-text: var(--color-burgundy);
+  --card-accent: var(--card-text);
+}
+
+.projectGrid {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.projectGrid > li {
+  min-inline-size: 0;
+}
+
+.projectGrid > li[data-project='mosaic-portfolio'] {
+  --project-bg: var(--color-sunfire-orange);
+  --project-text: var(--color-velvet);
+}
+
+.projectGrid > li[data-project='idempotency'] {
+  --project-bg: var(--color-buttermilk);
+  --project-text: var(--color-midnight-blue);
+}
+
+.projectGrid > li[data-project='shard-market'] {
+  --project-bg: var(--color-midnight-blue);
+  --project-text: var(--color-buttermilk);
+}
+
+.page .projectGrid [data-variant] {
+  --card-bg: var(--project-bg, var(--surface-bg));
+  --card-text: var(--project-text, var(--text-primary));
+  --card-accent: var(--project-text, var(--border-color));
+  --card-padding: clamp(var(--space-4), 3vw, var(--space-8));
+}
+
+.projectGrid img {
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.projects > p {
+  margin: 0;
+}
+
+@media (min-width: 48rem) {
+  .page {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .hero:has(.portrait) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+
+  .projectGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media print {
+  :global(body):has(.page) {
+    color-scheme: light;
+    background: white;
+    color: #222;
+  }
+
+  :global(body):has(.page) :is(:global(header), :global(footer)) {
+    display: none;
+  }
+
+  .page {
+    display: block;
+    padding: 0;
+  }
+
+  .page :is(.back, .profile .download) {
+    display: none;
+  }
+
+  .page .card[data-variant],
+  .page .projectGrid [data-variant],
+  .page .related [data-variant] {
+    --card-bg: white;
+    --card-text: #222;
+    --card-accent: #888;
+    --text-secondary: #333;
+    --card-padding: var(--space-3);
+
+    margin-block-end: var(--space-3);
+    box-shadow: none;
+  }
+
+  .page .hero {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .hero,
+  .projectGrid > li,
+  .entries > li {
+    break-inside: avoid;
+  }
+
+  .portrait {
+    max-inline-size: 7rem;
+  }
+
+  .projectGrid {
+    display: block;
+  }
+
+  .page :is(h2, h3) {
+    break-after: avoid;
+  }
+}

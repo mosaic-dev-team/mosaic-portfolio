@@ -44,14 +44,14 @@ test.each([
 test('reads shareable project filters from the URL', async () => {
   const router = createRouter({
     routeTree,
-    history: createMemoryHistory({ initialEntries: ['/projects?q=mosaic&member=demo&tag=react'] }),
+    history: createMemoryHistory({ initialEntries: ['/projects?q=mosaic&member=baran&tag=react'] }),
   })
 
   await router.load()
 
   const search = router.state.matches.at(-1)?.search
-  expect(search).toEqual({ q: 'mosaic', member: 'demo', tag: 'react' })
-  expect(filterProjects(projects, search ?? {})).toEqual(projects)
+  expect(search).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
+  expect(filterProjects(projects, search ?? {}).map((project) => project.slug)).toEqual(['mosaic-portfolio'])
 })
 
 function createProjectSearchRouter() {
@@ -108,23 +108,23 @@ test('preserves member and tag history when searching and clearing filters', asy
   const { history, router, readFilters } = createProjectSearchRouter()
   await router.load()
 
-  await readFilters().onChange({ member: 'demo' })
+  await readFilters().onChange({ member: 'baran' })
   await readFilters().onChange({ tag: 'react' })
   expect(history.length).toBe(3)
   const beforeSearch = history.location.href
 
   await readFilters().onChange({ q: 'mosaic' })
   expect(history.length).toBe(4)
-  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'demo', tag: 'react' })
+  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
 
   history.back()
   await router.load()
   expect(history.location.href).toBe(beforeSearch)
-  expect(readFilters().filters).toEqual({ member: 'demo', tag: 'react' })
+  expect(readFilters().filters).toEqual({ member: 'baran', tag: 'react' })
 
   history.forward()
   await router.load()
-  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'demo', tag: 'react' })
+  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
 
   await readFilters().onClear()
   expect(history.location.href).toBe('/projects')
@@ -133,7 +133,7 @@ test('preserves member and tag history when searching and clearing filters', asy
 
   history.back()
   await router.load()
-  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'demo', tag: 'react' })
+  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
 })
 
 test('normalizes numeric searches while ignoring repeated and blank filters', async () => {
@@ -150,12 +150,12 @@ test('normalizes numeric searches while ignoring repeated and blank filters', as
 test.each([
   ['/team/demo', {
     member: { slug: 'demo' },
-    projects: [{ slug: 'mosaic-portfolio' }],
+    projects: [],
     posts: [{ slug: 'why-a-shared-data-model' }],
   }],
   ['/projects/mosaic-portfolio', {
     project: { slug: 'mosaic-portfolio' },
-    makers: [{ slug: 'demo' }],
+    makers: [{ slug: 'baran' }, { slug: 'alireza' }],
   }],
   ['/blog/why-a-shared-data-model', {
     post: { slug: 'why-a-shared-data-model' },
@@ -173,7 +173,7 @@ test.each([
   expect(router.state.matches.at(-1)?.loaderData).toMatchObject(data)
 })
 
-test.each(['/team/missing', '/projects/missing', '/blog/missing', '/missing'])('renders the root layout and a 404 for %s', async (pathname) => {
+async function renderRoute(pathname: string) {
   const router = createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: [pathname] }),
@@ -181,7 +181,7 @@ test.each(['/team/missing', '/projects/missing', '/blog/missing', '/missing'])('
 
   await router.load()
 
-  const markup = renderToStaticMarkup(
+  return renderToStaticMarkup(
     createElement(
       ThemeContext.Provider,
       { value: { theme: 'light', toggleTheme() {} } },
@@ -192,6 +192,36 @@ test.each(['/team/missing', '/projects/missing', '/blog/missing', '/missing'])('
       ),
     ),
   )
+}
+
+test.each([
+  ['/team/baran', 'باران شیخ ستانی', 'BaranSheikhestaniResume.pdf', 'طراحی و تألیف تمرین‌های برنامه‌نویسی جاوا.', 'idempotency'],
+  ['/team/alireza', 'علیرضا عربشاهی', 'AlirezaArabshahiResume.pdf', 'ASP.NET Core', 'shard-market'],
+])('renders the shared résumé for %s', async (pathname, name, pdf, detail, bootcampProject) => {
+  const markup = await renderRoute(pathname)
+
+  expect(markup).toContain(`<h1>${name}</h1>`)
+  expect(markup).toContain(`/resumes/${pdf}`)
+  expect(markup).toContain('download=""')
+  expect(markup).toContain(detail)
+  const projectLinks = Array.from(markup.matchAll(/href="\/projects\/([^"]+)"/g), (match) => match[1])
+  expect(projectLinks).toEqual([bootcampProject, 'mosaic-portfolio'])
+  expect(markup).toContain('مشاهده پروژه')
+  expect(markup).not.toContain('هنوز پروژه‌ای ثبت نشده است.')
+  expect(markup).toContain('هنوز مقاله‌ای ثبت نشده است.')
+})
+
+test('renders associated work and omits unavailable résumé fields', async () => {
+  const markup = await renderRoute('/team/demo')
+
+  expect(markup).toContain('هنوز پروژه‌ای ثبت نشده است.')
+  expect(markup).toContain('href="/blog/why-a-shared-data-model"')
+  expect(markup).not.toContain('download=""')
+  expect(markup).not.toContain('زبان‌ها و مدارک')
+})
+
+test.each(['/team/missing', '/projects/missing', '/blog/missing', '/missing'])('renders the root layout and a 404 for %s', async (pathname) => {
+  const markup = await renderRoute(pathname)
 
   expect(markup).toContain('<header')
   expect(markup).toContain('<h1>صفحه پیدا نشد</h1>')

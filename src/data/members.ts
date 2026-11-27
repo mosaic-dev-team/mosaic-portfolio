@@ -11,14 +11,12 @@ export const members: readonly Member[] = [
       fa: 'توسعه‌دهنده فرانت‌اند و دانشجوی ریاضیات کاربردی',
     },
     bio: {
-      en: "I'm an Applied Mathematics student at Sharif University of Technology with an interest in frontend development, software engineering, and creative design. I enjoy exploring the intersection of mathematics and computer science while building thoughtful digital experiences.",
-      fa: 'دانشجوی ریاضیات کاربردی دانشگاه صنعتی شریف هستم و به توسعه فرانت‌اند، مهندسی نرم‌افزار و طراحی خلاقانه علاقه دارم. از کشف ارتباط میان ریاضیات و علوم کامپیوتر و خلق تجربه‌های دیجیتال هدفمند لذت می‌برم.',
+      en: "I'm an Applied Mathematics student at Sharif University of Technology, a frontend developer, and an aspiring software engineer with a passion for creative design. I enjoy exploring the intersection of mathematics and computer science while building thoughtful digital experiences.",
+      fa: 'دانشجوی ریاضیات کاربردی دانشگاه صنعتی شریف و توسعه‌دهنده فرانت‌اند هستم و به دنبال پیشرفت در مسیر مهندسی نرم‌افزار و طراحی خلاقانه‌ام. از کشف ارتباط میان ریاضیات و علوم کامپیوتر و خلق تجربه‌های دیجیتال هدفمند لذت می‌برم.',
     },
     skills: [
       'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Java', 'Python', 'Responsive Web Design',
-      'Git', 'GitHub', 'Vite', 'npm', 'Java Swing', 'SQL',
-      'TanStack Router', 'Docker', 'Data Analysis', 'Object-Oriented Programming',
-      'Problem Solving', 'Team Collaboration',
+      'Git', 'Java Swing', 'Docker', 'Data Analysis', 'Object-Oriented Programming', 'Problem Solving',
     ],
     education: [
       {
@@ -43,6 +41,10 @@ export const members: readonly Member[] = [
         },
         organization: { en: 'Sharif University of Technology', fa: 'دانشگاه صنعتی شریف' },
         period: { en: 'Present', fa: 'تاکنون' },
+        responsibilities: [
+          { en: 'Designing Java programming exercises.', fa: 'طراحی و تألیف تمرین‌های برنامه‌نویسی جاوا.' },
+          { en: 'Grading programming assignments.', fa: 'تصحیح تکالیف دانشجویان.' },
+        ],
       },
       {
         title: { en: 'Frontend Development Bootcamp', fa: 'بوت‌کمپ توسعه فرانت‌اند' },
@@ -58,6 +60,12 @@ export const members: readonly Member[] = [
         period: { en: '2026', fa: '۱۴۰۵' },
       },
     ],
+    languages: [
+      { name: { en: 'Persian', fa: 'فارسی' }, level: { en: 'Native', fa: 'زبان مادری' } },
+      { name: { en: 'English', fa: 'انگلیسی' }, level: { en: 'Advanced', fa: 'پیشرفته' } },
+    ],
+    ielts: { overallBand: 7.0, date: '2023-12-25' },
+    resumePdfUrl: 'resumes/BaranSheikhestaniResume.pdf',
     contact: {
       email: 'baran.sheikhestani@gmail.com',
       githubUrl: 'https://github.com/Baran-06',
@@ -110,6 +118,11 @@ export const members: readonly Member[] = [
         period: { en: 'January 2024 – January 2025', fa: 'ژانویه ۲۰۲۴ تا ژانویه ۲۰۲۵' },
       },
     ],
+    languages: [
+      { name: { en: 'Persian', fa: 'فارسی' }, level: { en: 'Native', fa: 'زبان مادری' } },
+      { name: { en: 'English', fa: 'انگلیسی' }, level: { en: 'Intermediate', fa: 'متوسط' } },
+    ],
+    resumePdfUrl: 'resumes/AlirezaArabshahiResume.pdf',
     contact: {
       email: 'arabshahii.alireza@gmail.com',
       githubUrl: 'https://github.com/AlirezaArabshahi',

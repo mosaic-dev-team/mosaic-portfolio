@@ -3,8 +3,13 @@ import { formatDate } from './formatDate'
 import { members } from './members'
 import { posts } from './posts'
 import { filterProjects, projects } from './projects'
+import type { ProjectFilters } from './types'
 
-test('sample project contributors and post authors resolve to members', () => {
+function filteredSlugs(filters: ProjectFilters) {
+  return filterProjects(projects, filters).map((project) => project.slug)
+}
+
+test('project contributors and post authors resolve to members', () => {
   expect(members.length).toBeGreaterThan(0)
   expect(projects.length).toBeGreaterThan(0)
   expect(posts.length).toBeGreaterThan(0)
@@ -24,17 +29,18 @@ test('formats date-only values in English and Persian', () => {
 })
 
 test('searches both titles and tags with case-insensitive, trimmed queries', () => {
-  expect(filterProjects(projects, { q: '  MOSAIC ' })).toEqual(projects)
-  expect(filterProjects(projects, { q: 'موزاییک' })).toEqual(projects)
-  expect(filterProjects(projects, { q: 'TYPESCRIPT' })).toEqual(projects)
+  expect(filteredSlugs({ q: '  MOSAIC ' })).toEqual(['mosaic-portfolio'])
+  expect(filteredSlugs({ q: 'شارد' })).toEqual(['shard-market'])
+  expect(filteredSlugs({ q: 'ECOMMERCE' })).toEqual(['idempotency', 'shard-market'])
+  expect(filteredSlugs({ tag: 'portfolio' })).toEqual(['mosaic-portfolio'])
   expect(filterProjects(projects, { q: ' ' })).toEqual(projects)
 })
 
 test('requires the query, member and tag filters to all match', () => {
-  const filters = { q: 'mosaic', member: 'demo', tag: 'react' }
+  const filters = { q: 'shard', member: 'alireza', tag: 'ecommerce' }
 
-  expect(filterProjects(projects, filters)).toEqual(projects)
-  expect(filterProjects(projects, { ...filters, q: 'missing' })).toEqual([])
-  expect(filterProjects(projects, { ...filters, member: 'missing' })).toEqual([])
-  expect(filterProjects(projects, { ...filters, tag: 'missing' })).toEqual([])
+  expect(filteredSlugs(filters)).toEqual(['shard-market'])
+  expect(filteredSlugs({ ...filters, q: 'idempotency' })).toEqual([])
+  expect(filteredSlugs({ ...filters, member: 'baran' })).toEqual([])
+  expect(filteredSlugs({ ...filters, tag: 'portfolio' })).toEqual([])
 })

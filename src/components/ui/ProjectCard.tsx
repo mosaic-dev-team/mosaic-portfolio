@@ -5,26 +5,33 @@ import styles from './ProjectCard.module.css'
 interface ProjectCardProps {
   title: string
   description: string
-  imageSrc: string
-  imageAlt: string
+  imageSrc?: string
+  imageAlt?: string
   slug: string
   variant?: CardVariant
-  tags?: readonly string[]
+  tools: readonly string[]
+  linkLabel: string
 }
 
-export function ProjectCard({ title, description, imageSrc, imageAlt, slug, variant, tags }: ProjectCardProps) {
+export function ProjectCard({ title, description, imageSrc, imageAlt, slug, variant, tools, linkLabel }: ProjectCardProps) {
   return (
     <Card variant={variant} className={styles.card}>
-      <img className={styles.illustration} src={imageSrc} alt={imageAlt} />
-      <h3 className={styles.title}>
-        <Link to="/projects/$slug" params={{ slug }}>{title}</Link>
-      </h3>
+      {imageSrc && <img className={styles.illustration} src={imageSrc} alt={imageAlt ?? ''} />}
+      <h3 className={styles.title}>{title}</h3>
       <p>{description}</p>
-      {!!tags?.length && (
-        <ul className={styles.tags} role="list">
-          {tags.map((tag) => <li key={tag}><bdi>{tag}</bdi></li>)}
+      {tools.length > 0 && (
+        <ul className={styles.tools} role="list">
+          {tools.map((tool) => <li key={tool}><bdi lang="en">{tool}</bdi></li>)}
         </ul>
       )}
+      <Link
+        to="/projects/$slug"
+        params={{ slug }}
+        className={styles.projectLink}
+        aria-label={`${linkLabel} · ${title}`}
+      >
+        {linkLabel}
+      </Link>
     </Card>
   )
 }
