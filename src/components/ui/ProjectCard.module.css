@@ -4,24 +4,6 @@
   gap: var(--space-3);
 }
 
-.card.project-idempotency {
-  --card-bg: var(--color-buttermilk);
-  --card-text: var(--color-midnight-blue);
-  --card-accent: var(--card-text);
-}
-
-.card.project-shard-market {
-  --card-bg: #bd245f;
-  --card-text: var(--color-buttermilk);
-  --card-accent: var(--card-text);
-}
-
-.card.project-mosaic-portfolio {
-  --card-bg: var(--color-sunfire-orange);
-  --card-text: var(--color-velvet);
-  --card-accent: var(--card-text);
-}
-
 .illustration {
   display: block;
   inline-size: 100%;

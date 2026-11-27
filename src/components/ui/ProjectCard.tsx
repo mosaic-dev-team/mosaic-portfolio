@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Card, type CardVariant } from './Card'
 import styles from './ProjectCard.module.css'
+import palettes from './ProjectPalette.module.css'
 
 interface ProjectCardProps {
   title: string
@@ -17,7 +18,7 @@ interface ProjectCardProps {
 export function ProjectCard({
   title, description, imageSrc, imageAlt, slug, variant, tools, linkLabel, contributors,
 }: ProjectCardProps) {
-  const palette = styles[`project-${slug}`]
+  const palette = palettes[`project-${slug}`]
 
   return (
     <Card variant={variant} className={palette ? `${styles.card} ${palette}` : styles.card}>

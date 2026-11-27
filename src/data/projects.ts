@@ -49,6 +49,7 @@ export const projects: readonly Project[] = [
       alt: { en: 'Illustration for the Idempotency (Tazeh Khaneh) online store', fa: 'تصویرسازی فروشگاه آنلاین ایدمپوتنسی (تازه‌خانه)' },
     },
     liveUrl: 'https://shop.baranbuilds.com/',
+    repositoryUrl: 'https://github.com/Baran-06/idempotency-shop',
   },
   {
     slug: 'shard-market',

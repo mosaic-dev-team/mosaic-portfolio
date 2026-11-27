@@ -205,6 +205,43 @@ test('renders URL filters and the matching project in the public listing', async
 })
 
 test.each([
+  {
+    slug: 'idempotency',
+    title: 'ایدمپوتنسی — تازه‌خانه',
+    makers: ['baran'],
+    live: 'https://shop.baranbuilds.com/',
+    source: 'https://github.com/Baran-06/idempotency-shop',
+  },
+  {
+    slug: 'shard-market',
+    title: 'شارد مارکت',
+    makers: ['alireza'],
+    live: 'https://shardmarket.ir/',
+    source: 'https://github.com/AlirezaArabshahi/sharding-shop',
+  },
+  {
+    slug: 'mosaic-portfolio',
+    title: 'موزاییک',
+    makers: ['baran', 'alireza'],
+    live: undefined,
+    source: 'https://github.com/mosaic-dev-team/mosaic-portfolio',
+  },
+])('renders the project details and available links for $slug', async ({ slug, title, makers, live, source }) => {
+  const markup = await renderRoute(`/projects/${slug}`)
+
+  expect(markup).toContain(`<h1>${title}</h1>`)
+  expect(markup).toContain('<h2>فناوری‌ها و ابزارها</h2>')
+  expect(markup).toContain('<h2>سازندگان پروژه</h2>')
+  const resumeLinks = Array.from(markup.matchAll(/href="\/team\/([^"]+)"/g), (match) => match[1])
+  expect(resumeLinks).toEqual(makers)
+
+  if (live) expect(markup).toContain(`href="${live}">مشاهده سایت</a>`)
+  else expect(markup).not.toContain('مشاهده سایت')
+
+  expect(markup).toContain(`href="${source}">کد منبع</a>`)
+})
+
+test.each([
   ['/team/baran', 'باران شیخ ستانی', 'BaranSheikhestaniResume.pdf', 'طراحی و تألیف تمرین‌های برنامه‌نویسی جاوا.', 'idempotency'],
   ['/team/alireza', 'علیرضا عربشاهی', 'AlirezaArabshahiResume.pdf', 'ASP.NET Core', 'shard-market'],
 ])('renders the shared résumé for %s', async (pathname, name, pdf, detail, bootcampProject) => {
