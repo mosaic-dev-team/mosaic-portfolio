@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest'
+import { sampleMember } from './fixtures'
 import { formatDate } from './formatDate'
 import { members } from './members'
-import { posts } from './posts'
+import { posts, publishedPosts } from './posts'
 import { filterProjects, projects } from './projects'
 import type { ProjectFilters } from './types'
 
@@ -12,15 +13,22 @@ function filteredSlugs(filters: ProjectFilters) {
 test('project contributors and post authors resolve to members', () => {
   expect(members.length).toBeGreaterThan(0)
   expect(projects.length).toBeGreaterThan(0)
-  expect(posts.length).toBeGreaterThan(0)
 
   const memberSlugs = new Set(members.map((member) => member.slug))
   const contributorSlugs = projects.flatMap((project) => project.memberSlugs)
-  const authorSlugs = posts.map((post) => post.authorSlug)
+  const authorSlugs = publishedPosts.map((post) => post.authorSlug)
 
   for (const slug of [...contributorSlugs, ...authorSlugs]) {
     expect(memberSlugs.has(slug)).toBe(true)
   }
+})
+
+test('keeps the upcoming article as a draft outside the published list', () => {
+  const draft = posts.find((post) => post.slug === 'why-a-shared-data-model')
+
+  expect(draft).toMatchObject({ status: 'draft', authorSlug: sampleMember.slug })
+  expect(members.some((member) => member.slug === sampleMember.slug)).toBe(false)
+  expect(publishedPosts).not.toContain(draft)
 })
 
 test('formats date-only values in English and Persian', () => {

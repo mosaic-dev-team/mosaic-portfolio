@@ -3,6 +3,7 @@ import darkIllustration from '../../assets/illustrations/dark-404.webp'
 import lightIllustration from '../../assets/illustrations/light-404.webp'
 import { useLanguage } from '../../context/language'
 import { useTheme } from '../../context/theme'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './NotFoundPage.module.css'
 
 const copy = {
@@ -28,6 +29,7 @@ export function NotFoundPage() {
   const { language } = useLanguage()
   const { theme } = useTheme()
   const text = copy[language]
+  usePageTitle(text.error)
   const dark = theme === 'dark'
 
   return (

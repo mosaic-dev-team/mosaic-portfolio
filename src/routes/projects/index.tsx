@@ -5,6 +5,7 @@ import { ProjectCard } from '../../components/ui/ProjectCard'
 import { useLanguage } from '../../context/language'
 import { projects, validateProjectFilters } from '../../data/projects'
 import { useProjectFilters } from '../../hooks/useProjectFilters'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './ProjectsPage.module.css'
 
 const contributorSlugs = new Set(projects.flatMap((project) => project.memberSlugs))
@@ -55,6 +56,7 @@ export const Route = createFileRoute('/projects/')({
     const { filters, members, tags, results, count, onChange, onClear } = useProjectFilters()
     const searchInput = useRef<HTMLInputElement>(null)
     const text = copy[language]
+    usePageTitle(language === 'fa' ? 'پروژه‌ها' : 'Projects')
     const memberOptions = members.filter((member) => contributorSlugs.has(member.slug))
     const nameList = new Intl.ListFormat(language === 'fa' ? 'fa-IR' : 'en')
     const resultCount = new Intl.NumberFormat(language === 'fa' ? 'fa-IR' : 'en').format(count)
@@ -138,6 +140,7 @@ export const Route = createFileRoute('/projects/')({
                       imageAlt={project.image?.alt[language]}
                       tools={project.tools}
                       linkLabel={text.view}
+                      returnFilters={filters}
                       contributors={names.length ? `${text.contributors}: ${nameList.format(names)}` : undefined}
                     />
                   </li>

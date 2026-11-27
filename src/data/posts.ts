@@ -2,6 +2,7 @@ import type { Post } from './types'
 
 export const posts: readonly Post[] = [
   {
+    status: 'draft',
     slug: 'why-a-shared-data-model',
     title: { en: 'Why share a data model?', fa: 'چرا از مدل دادهٔ مشترک استفاده می‌کنیم؟' },
     summary: {
@@ -17,3 +18,5 @@ export const posts: readonly Post[] = [
     tags: ['data-modeling'],
   },
 ]
+
+export const publishedPosts = posts.filter((post) => post.status === 'published')

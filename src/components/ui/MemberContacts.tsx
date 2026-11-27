@@ -2,8 +2,8 @@ import { useLanguage } from '../../context/language'
 import { members } from '../../data/members'
 import styles from './MemberContacts.module.css'
 
-const publicContacts = members.filter(({ slug, contact }) =>
-  slug !== 'demo' && (contact?.email || contact?.githubUrl || contact?.linkedinUrl),
+const publicContacts = members.filter(({ contact }) =>
+  contact?.email || contact?.githubUrl || contact?.linkedinUrl,
 )
 
 export function MemberContacts() {

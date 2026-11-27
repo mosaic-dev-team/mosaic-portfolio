@@ -9,13 +9,15 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { expect, test } from 'vitest'
 import { LanguageContext } from './context/language'
 import { ThemeContext } from './context/theme'
+import { sampleMember } from './data/fixtures'
 import { members } from './data/members'
 import { filterProjects, projects } from './data/projects'
+import type { ProjectFilters } from './data/types'
 import { useProjectFilters } from './hooks/useProjectFilters'
 import { routeTree } from './routeTree.gen'
 
 test.each([
-  { pathname: '/team/demo', routeId: '/team/$slug', params: { slug: 'demo' } },
+  { pathname: '/team/baran', routeId: '/team/$slug', params: { slug: 'baran' } },
   {
     pathname: '/projects/mosaic-portfolio',
     routeId: '/projects/$slug',
@@ -149,19 +151,14 @@ test('normalizes numeric searches while ignoring repeated and blank filters', as
 })
 
 test.each([
-  ['/team/demo', {
-    member: { slug: 'demo' },
-    projects: [],
-    posts: [{ slug: 'why-a-shared-data-model' }],
+  ['/team/alireza', {
+    member: { slug: 'alireza' },
+    projects: [{ slug: 'shard-market' }, { slug: 'mosaic-portfolio' }],
+    posts: [],
   }],
   ['/projects/mosaic-portfolio', {
     project: { slug: 'mosaic-portfolio' },
     makers: [{ slug: 'baran' }, { slug: 'alireza' }],
-  }],
-  ['/blog/why-a-shared-data-model', {
-    post: { slug: 'why-a-shared-data-model' },
-    author: { slug: 'demo' },
-    otherPosts: [],
   }],
 ])('loads related records for %s', async (pathname, data) => {
   const router = createRouter({
@@ -174,10 +171,13 @@ test.each([
   expect(router.state.matches.at(-1)?.loaderData).toMatchObject(data)
 })
 
-async function renderRoute(pathname: string) {
+async function renderRoute(pathname: string, projectFilters?: ProjectFilters) {
+  const history = createMemoryHistory({ initialEntries: [pathname] })
+  if (projectFilters) history.replace(pathname, { projectFilters })
+
   const router = createRouter({
     routeTree,
-    history: createMemoryHistory({ initialEntries: [pathname] }),
+    history,
   })
 
   await router.load()
@@ -205,12 +205,29 @@ test('renders URL filters and the matching project in the public listing', async
   expect(markup).not.toContain('href="/projects/mosaic-portfolio"')
 })
 
+test('returns from project details to the originating filters or to the unfiltered list', async () => {
+  const pathname = '/projects/shard-market'
+  const filters = { q: 'shard', member: 'alireza', tag: 'ecommerce' }
+  const fromListing = await renderRoute(pathname, filters)
+  const direct = await renderRoute(pathname)
+
+  const returnQuery = fromListing.match(/href="\/projects\?([^"]+)"[^>]*>بازگشت به پروژه‌ها<\/a>/)?.[1]
+  const params = new URLSearchParams(returnQuery?.replaceAll('&amp;', '&'))
+  const actualFilters: Record<string, string> = {}
+  params.forEach((value, key) => {
+    actualFilters[key] = value
+  })
+
+  expect(actualFilters).toEqual(filters)
+  expect(direct).toMatch(/href="\/projects"[^>]*>بازگشت به پروژه‌ها<\/a>/)
+})
+
 test('links Homepage and Footer content to the shared public profiles and projects', async () => {
   const markup = await renderRoute('/')
   const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0]
   const footer = markup.match(/<footer\b[\s\S]*?<\/footer>/)?.[0]
 
-  for (const { slug, name, contact } of members.filter((member) => member.slug !== 'demo')) {
+  for (const { slug, name, contact } of members) {
     expect(main).toContain(`href="/team/${slug}"`)
     expect(main).toContain(name.fa)
     expect(footer).toContain(name.fa)
@@ -242,18 +259,6 @@ test('shows four coming-soon cards without publishing the sample article', async
   expect(markup.match(/>به‌زودی<\/p>/g)).toHaveLength(4)
   expect(markup).not.toContain('href="/blog/')
   expect(markup).not.toContain('چرا از مدل دادهٔ مشترک استفاده می‌کنیم؟')
-})
-
-test('renders the sample article, date and author link without an absent cover', async () => {
-  const markup = await renderRoute('/blog/why-a-shared-data-model')
-  const article = markup.match(/<article\b[\s\S]*?<\/article>/)?.[0]
-
-  expect(article).toContain('<h1>چرا از مدل دادهٔ مشترک استفاده می‌کنیم؟</h1>')
-  expect(article).toMatch(/<time datetime="2026-11-27">/i)
-  expect(article).toContain('href="/team/demo"')
-  expect(article).toContain('data-modeling')
-  expect(article).toContain('هر پروژه اعضای سازنده را با شناسهٔ آن‌ها معرفی می‌کند.')
-  expect(article).not.toContain('<img')
 })
 
 test.each([
@@ -317,16 +322,10 @@ test.each([
   expect(markup).toContain('هنوز مقاله‌ای ثبت نشده است.')
 })
 
-test('renders associated work and omits unavailable résumé fields', async () => {
-  const markup = await renderRoute('/team/demo')
-
-  expect(markup).toContain('هنوز پروژه‌ای ثبت نشده است.')
-  expect(markup).toContain('href="/blog/why-a-shared-data-model"')
-  expect(markup).not.toContain('download=""')
-  expect(markup).not.toContain('زبان‌ها و مدارک')
-})
-
-test.each(['/team/missing', '/projects/missing', '/blog/missing', '/missing-page'])('renders the root layout and a 404 for %s', async (pathname) => {
+test.each([
+  '/team/missing', '/projects/missing', '/blog/missing', '/missing-page',
+  `/team/${sampleMember.slug}`, '/blog/why-a-shared-data-model',
+])('renders the root layout and a 404 for %s', async (pathname) => {
   const markup = await renderRoute(pathname)
   const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0]
 

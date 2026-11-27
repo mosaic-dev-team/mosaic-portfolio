@@ -5,8 +5,9 @@ import { ProjectCard } from '../../components/ui/ProjectCard'
 import { useLanguage } from '../../context/language'
 import { formatDate } from '../../data/formatDate'
 import { members } from '../../data/members'
-import { posts } from '../../data/posts'
+import { publishedPosts } from '../../data/posts'
 import { projects } from '../../data/projects'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './ResumePage.module.css'
 
 const copy = {
@@ -52,12 +53,13 @@ export const Route = createFileRoute('/team/$slug')({
     return {
       member,
       projects: projects.filter((project) => project.memberSlugs.includes(slug)),
-      posts: posts.filter((post) => post.authorSlug === slug),
+      posts: publishedPosts.filter((post) => post.authorSlug === slug),
     }
   },
   component: function ResumePage() {
     const { member, projects, posts } = Route.useLoaderData()
     const { language } = useLanguage()
+    usePageTitle(member.name[language])
     const text = copy[language]
     const { name, role, portrait, contact, resumePdfUrl, ielts } = member
     const hasContact = contact?.email || contact?.githubUrl || contact?.linkedinUrl

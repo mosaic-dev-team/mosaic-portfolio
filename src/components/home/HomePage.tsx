@@ -3,8 +3,9 @@ import heroImage from '../../assets/illustrations/hero.webp'
 import { useLanguage } from '../../context/language'
 import { formatDate } from '../../data/formatDate'
 import { members } from '../../data/members'
-import { posts } from '../../data/posts'
+import { publishedPosts } from '../../data/posts'
 import { projects } from '../../data/projects'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import { ArticleCard } from '../ui/ArticleCard'
 import { Card } from '../ui/Card'
 import { MemberCard } from '../ui/MemberCard'
@@ -59,10 +60,11 @@ const homeMembers = ['alireza', 'baran']
 const selectedProjects = projects.filter((project) =>
   ['idempotency', 'shard-market', 'mosaic-portfolio'].includes(project.slug),
 )
-const journalPosts = posts.filter((post) => post.authorSlug !== 'demo').slice(0, 2)
+const journalPosts = publishedPosts.slice(0, 2)
 
 export function HomePage() {
   const { language } = useLanguage()
+  usePageTitle(language === 'fa' ? 'نمونه‌کار فرانت‌اند' : 'Frontend Portfolio')
   const text = homeCopy[language]
 
   return (

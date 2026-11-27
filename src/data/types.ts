@@ -46,6 +46,7 @@ export type Project = {
 export type ProjectFilters = { q?: string; member?: string; tag?: string }
 
 export type Post = {
+  status: 'draft' | 'published'
   slug: string
   title: Text
   summary: Text

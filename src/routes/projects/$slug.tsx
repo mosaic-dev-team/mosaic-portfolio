@@ -1,10 +1,18 @@
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
+import { createFileRoute, Link, notFound, useLocation } from '@tanstack/react-router'
 import { Card } from '../../components/ui/Card'
 import palettes from '../../components/ui/ProjectPalette.module.css'
 import { useLanguage } from '../../context/language'
 import { members } from '../../data/members'
 import { projects } from '../../data/projects'
+import type { ProjectFilters } from '../../data/types'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './ProjectDetailsPage.module.css'
+
+declare module '@tanstack/history' {
+  interface HistoryState {
+    projectFilters?: ProjectFilters
+  }
+}
 
 const copy = {
   en: {
@@ -48,12 +56,14 @@ export const Route = createFileRoute('/projects/$slug')({
   component: function ProjectDetailsPage() {
     const { project, makers } = Route.useLoaderData()
     const { language } = useLanguage()
+    const returnFilters = useLocation({ select: (location) => location.state.projectFilters })
+    usePageTitle(project.title[language])
     const text = copy[language]
     const palette = palettes[`project-${project.slug}`]
 
     return (
       <div className={styles.page}>
-        <Link to="/projects" className={styles.back}>{text.back}</Link>
+        <Link to="/projects" search={returnFilters ?? {}} className={styles.back}>{text.back}</Link>
 
         <Card className={`${styles.full} ${styles.hero}${palette ? ` ${palette}` : ''}`}>
           <div className={styles.intro}>

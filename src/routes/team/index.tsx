@@ -3,6 +3,7 @@ import { Card } from '../../components/ui/Card'
 import { MemberCard } from '../../components/ui/MemberCard'
 import { useLanguage } from '../../context/language'
 import { members } from '../../data/members'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './TeamPage.module.css'
 
 const copy = {
@@ -24,12 +25,10 @@ const copy = {
   },
 }
 
-// The sample member still owns the sample project and article relationships.
-const team = members.filter((member) => member.slug !== 'demo')
-
 export const Route = createFileRoute('/team/')({
   component: function TeamPage() {
     const { language } = useLanguage()
+    usePageTitle(language === 'fa' ? 'اعضای تیم' : 'Team')
     const text = copy[language]
 
     return (
@@ -41,7 +40,7 @@ export const Route = createFileRoute('/team/')({
         </div>
 
         <div className={styles.members}>
-          {team.map((member) => (
+          {members.map((member) => (
             <MemberCard
               key={member.slug}
               slug={member.slug}

@@ -3,7 +3,8 @@ import { Card } from '../../components/ui/Card'
 import { useLanguage } from '../../context/language'
 import { formatDate } from '../../data/formatDate'
 import { members } from '../../data/members'
-import { posts } from '../../data/posts'
+import { publishedPosts } from '../../data/posts'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './ArticleDetailsPage.module.css'
 
 const copy = {
@@ -13,17 +14,18 @@ const copy = {
 
 export const Route = createFileRoute('/blog/$slug')({
   loader: ({ params: { slug } }) => {
-    const post = posts.find((entry) => entry.slug === slug)
+    const post = publishedPosts.find((entry) => entry.slug === slug)
     if (!post) throw notFound()
 
     const author = members.find((member) => member.slug === post.authorSlug)
     if (!author) throw new Error(`Unknown author: ${post.authorSlug}`)
 
-    return { post, author, otherPosts: posts.filter((entry) => entry.slug !== slug) }
+    return { post, author, otherPosts: publishedPosts.filter((entry) => entry.slug !== slug) }
   },
   component: function ArticleDetailsPage() {
     const { post, author } = Route.useLoaderData()
     const { language } = useLanguage()
+    usePageTitle(post.title[language])
     const text = copy[language]
     const paragraphs = post.body[language].trim().split(/\r?\n(?:[ \t]*\r?\n)+/)
 

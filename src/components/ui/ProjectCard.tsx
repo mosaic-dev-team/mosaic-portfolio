@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import type { ProjectFilters } from '../../data/types'
 import { Card, type CardVariant } from './Card'
 import styles from './ProjectCard.module.css'
 import palettes from './ProjectPalette.module.css'
@@ -13,10 +14,11 @@ interface ProjectCardProps {
   tools?: readonly string[]
   linkLabel: string
   contributors?: string
+  returnFilters?: ProjectFilters
 }
 
 export function ProjectCard({
-  title, description, imageSrc, imageAlt, slug, variant, tools, linkLabel, contributors,
+  title, description, imageSrc, imageAlt, slug, variant, tools, linkLabel, contributors, returnFilters,
 }: ProjectCardProps) {
   const palette = palettes[`project-${slug}`]
 
@@ -34,6 +36,7 @@ export function ProjectCard({
       <Link
         to="/projects/$slug"
         params={{ slug }}
+        state={returnFilters && { projectFilters: returnFilters }}
         className={styles.projectLink}
         aria-label={`${linkLabel} · ${title}`}
       >

@@ -5,10 +5,9 @@ import palettes from '../../components/ui/ProjectPalette.module.css'
 import { useLanguage } from '../../context/language'
 import { formatDate } from '../../data/formatDate'
 import { members } from '../../data/members'
-import { posts } from '../../data/posts'
+import { publishedPosts } from '../../data/posts'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './BlogPage.module.css'
-
-const publishedPosts = posts.filter((post) => post.authorSlug !== 'demo')
 
 const placeholders: readonly Pick<CardProps, 'className' | 'variant'>[] = [
   { className: styles.buttermilk },
@@ -39,6 +38,7 @@ const copy = {
 export const Route = createFileRoute('/blog/')({
   component: function BlogPage() {
     const { language } = useLanguage()
+    usePageTitle(language === 'fa' ? 'وبلاگ' : 'Blog')
     const text = copy[language]
 
     return (
