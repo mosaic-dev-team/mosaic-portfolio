@@ -17,3 +17,9 @@
   --card-text: var(--color-velvet);
   --card-accent: var(--card-text);
 }
+
+.project-civilization-vi[data-variant] {
+  --card-bg: var(--color-forest-green);
+  --card-text: var(--color-buttermilk);
+  --card-accent: var(--card-text);
+}

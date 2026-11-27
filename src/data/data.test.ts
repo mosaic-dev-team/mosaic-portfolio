@@ -33,6 +33,8 @@ test('searches both titles and tags with case-insensitive, trimmed queries', () 
   expect(filteredSlugs({ q: 'شارد' })).toEqual(['shard-market'])
   expect(filteredSlugs({ q: 'ECOMMERCE' })).toEqual(['idempotency', 'shard-market'])
   expect(filteredSlugs({ tag: 'portfolio' })).toEqual(['mosaic-portfolio'])
+  expect(filteredSlugs({ tag: 'java' })).toEqual(['civilization-vi'])
+  expect(filteredSlugs({ tag: 'game-development' })).toEqual(['civilization-vi'])
   expect(filterProjects(projects, { q: ' ' })).toEqual(projects)
 })
 

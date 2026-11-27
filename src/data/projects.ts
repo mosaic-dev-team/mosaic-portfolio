@@ -1,3 +1,4 @@
+import civilizationCover from '../assets/projects/civilization.webp'
 import idempotencyImage from '../assets/projects/idempotency.webp'
 import mosaicImage from '../assets/projects/mosaic.webp'
 import shardMarketImage from '../assets/projects/sharding.webp'
@@ -143,6 +144,66 @@ export const projects: readonly Project[] = [
       alt: { en: 'MOSAIC team portfolio illustration', fa: 'تصویرسازی پورتفولیوی تیم موزاییک' },
     },
     repositoryUrl: 'https://github.com/mosaic-dev-team/mosaic-portfolio',
+  },
+  {
+    slug: 'civilization-vi',
+    title: {
+      en: 'Civilization VI — Multiplayer Strategy Game',
+      fa: 'Civilization VI — بازی استراتژیک چندنفره',
+    },
+    summary: {
+      en: 'A Civilization VI–inspired turn-based strategy game built with Java, featuring an interactive hex-based map, resource management, combat, diplomacy, and multiplayer client-server communication.',
+      fa: 'یک بازی استراتژیک نوبتی الهام‌گرفته از Civilization VI که با Java توسعه یافته و شامل نقشه تعاملی شش‌ضلعی، مدیریت منابع، مبارزه، دیپلماسی و ارتباط چندنفره مبتنی بر معماری کلاینت‌ـ‌سرور است.',
+    },
+    problem: {
+      en: 'Develop a Civilization VI–inspired strategy game as an academic project at Sharif University of Technology, combining complex gameplay mechanics, an interactive graphical interface, persistent game states, and multiplayer functionality.',
+      fa: 'توسعه یک بازی استراتژیک الهام‌گرفته از Civilization VI به‌عنوان پروژه دانشگاه صنعتی شریف، با ترکیب مکانیزم‌های پیچیده بازی، رابط گرافیکی تعاملی، ذخیره وضعیت بازی و قابلیت چندنفره.',
+    },
+    solution: {
+      en: 'Developed the game across multiple phases, evolving from a single-player application into a multiplayer client-server system. Built a custom graphical interface using Java Swing and implemented network communication using sockets and JSON. Applied object-oriented design, MVC architecture, and SOLID principles to improve maintainability and code organization.',
+      fa: 'بازی در چند مرحله توسعه یافت و از یک برنامه تک‌نفره به یک سیستم چندنفره مبتنی بر معماری کلاینت‌ـ‌سرور تبدیل شد. رابط گرافیکی اختصاصی با Java Swing و ارتباط شبکه با Socket Programming و JSON پیاده‌سازی شد. برای بهبود ساختار و قابلیت نگهداری کد از طراحی شیءگرا، معماری MVC و اصول SOLID استفاده شد.',
+    },
+    lessons: {
+      en: 'Gained practical experience in object-oriented software development, MVC architecture, SOLID principles, graphical interface design, socket programming, multiplayer communication, and collaborative version control.',
+      fa: 'کسب تجربه عملی در توسعه نرم‌افزار شیءگرا، معماری MVC، اصول SOLID، طراحی رابط گرافیکی، برنامه‌نویسی سوکت، ارتباط چندنفره و کنترل نسخه مشارکتی.',
+    },
+    achievements: [
+      {
+        en: 'Developed an interactive hex-based game map.',
+        fa: 'نقشهٔ تعاملی بازی با خانه‌های شش‌ضلعی توسعه یافت.',
+      },
+      {
+        en: 'Implemented turn-based gameplay, unit management, and resource management.',
+        fa: 'گیم‌پلی نوبتی و مدیریت واحدها و منابع پیاده‌سازی شدند.',
+      },
+      {
+        en: 'Implemented combat, diplomacy, trading, and building systems.',
+        fa: 'سیستم‌های مبارزه، دیپلماسی، تجارت و ساخت‌وساز پیاده‌سازی شدند.',
+      },
+      {
+        en: 'Developed persistent game states.',
+        fa: 'امکان ذخیرهٔ پایدار وضعیت بازی توسعه یافت.',
+      },
+      {
+        en: 'Built a custom graphical interface using Java Swing.',
+        fa: 'رابط گرافیکی اختصاصی با Java Swing ساخته شد.',
+      },
+      {
+        en: 'Extended the single-player game into a multiplayer client-server application using sockets and JSON.',
+        fa: 'بازی تک‌نفره با استفاده از سوکت‌ها و JSON به برنامه‌ای چندنفره با معماری کلاینت‌ـ‌سرور گسترش یافت.',
+      },
+    ],
+    tools: ['Java', 'Java Swing', 'Socket Programming', 'JSON', 'OOP', 'MVC', 'SOLID', 'Git', 'GitHub'],
+    tags: ['java', 'swing', 'game-development', 'multiplayer', 'socket-programming', 'oop', 'mvc', 'solid', 'json', 'academic'],
+    memberSlugs: ['baran'],
+    image: {
+      src: civilizationCover,
+      alt: {
+        en: 'Illustration of a hex-tile landscape with a winding river, a castle, and a soldier in a helmet.',
+        fa: 'تصویرسازی چشم‌اندازی با خانه‌های شش‌ضلعی، رودخانه‌ای پرپیچ‌وخم، قلعه و سربازی با کلاه‌خود.',
+      },
+    },
+    repositoryUrl: 'https://github.com/Baran-06/civilization-vi-simulation',
   },
 ]
 

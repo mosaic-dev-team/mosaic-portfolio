@@ -225,6 +225,7 @@ test('links Homepage and Footer content to the shared public profiles and projec
   expect(main).toContain('href="/projects/idempotency"')
   expect(main).toContain('href="/projects/shard-market"')
   expect(main).toContain('href="/projects/mosaic-portfolio"')
+  expect(main).not.toContain('href="/projects/civilization-vi"')
   const repository = projects.find((project) => project.slug === 'mosaic-portfolio')?.repositoryUrl
   expect(repository).toBeDefined()
   expect(footer).toContain(`href="${repository}"`)
@@ -277,6 +278,13 @@ test.each([
     live: undefined,
     source: 'https://github.com/mosaic-dev-team/mosaic-portfolio',
   },
+  {
+    slug: 'civilization-vi',
+    title: 'Civilization VI — بازی استراتژیک چندنفره',
+    makers: ['baran'],
+    live: undefined,
+    source: 'https://github.com/Baran-06/civilization-vi-simulation',
+  },
 ])('renders the project details and available links for $slug', async ({ slug, title, makers, live, source }) => {
   const markup = await renderRoute(`/projects/${slug}`)
 
@@ -293,9 +301,9 @@ test.each([
 })
 
 test.each([
-  ['/team/baran', 'باران شیخ ستانی', 'BaranSheikhestaniResume.pdf', 'طراحی و تألیف تمرین‌های برنامه‌نویسی جاوا.', 'idempotency'],
-  ['/team/alireza', 'علیرضا عربشاهی', 'AlirezaArabshahiResume.pdf', 'ASP.NET Core', 'shard-market'],
-])('renders the shared résumé for %s', async (pathname, name, pdf, detail, bootcampProject) => {
+  ['/team/baran', 'باران شیخ ستانی', 'BaranSheikhestaniResume.pdf', 'طراحی و تألیف تمرین‌های برنامه‌نویسی جاوا.', ['idempotency', 'mosaic-portfolio', 'civilization-vi']],
+  ['/team/alireza', 'علیرضا عربشاهی', 'AlirezaArabshahiResume.pdf', 'ASP.NET Core', ['shard-market', 'mosaic-portfolio']],
+])('renders the shared résumé for %s', async (pathname, name, pdf, detail, expectedProjects) => {
   const markup = await renderRoute(pathname)
 
   expect(markup).toContain(`<h1>${name}</h1>`)
@@ -303,7 +311,7 @@ test.each([
   expect(markup).toContain('download=""')
   expect(markup).toContain(detail)
   const projectLinks = Array.from(markup.matchAll(/href="\/projects\/([^"]+)"/g), (match) => match[1])
-  expect(projectLinks).toEqual([bootcampProject, 'mosaic-portfolio'])
+  expect(projectLinks).toEqual(expectedProjects)
   expect(markup).toContain('مشاهده پروژه')
   expect(markup).not.toContain('هنوز پروژه‌ای ثبت نشده است.')
   expect(markup).toContain('هنوز مقاله‌ای ثبت نشده است.')
