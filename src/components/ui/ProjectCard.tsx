@@ -7,17 +7,17 @@ interface ProjectCardProps {
   description: string
   imageSrc: string
   imageAlt: string
-  id: string
+  slug: string
   variant?: CardVariant
   tags?: readonly string[]
 }
 
-export function ProjectCard({ title, description, imageSrc, imageAlt, id, variant, tags }: ProjectCardProps) {
+export function ProjectCard({ title, description, imageSrc, imageAlt, slug, variant, tags }: ProjectCardProps) {
   return (
     <Card variant={variant} className={styles.card}>
       <img className={styles.illustration} src={imageSrc} alt={imageAlt} />
       <h3 className={styles.title}>
-        <Link to="/projects/$id" params={{ id }}>{title}</Link>
+        <Link to="/projects/$slug" params={{ slug }}>{title}</Link>
       </h3>
       <p>{description}</p>
       {!!tags?.length && (
