@@ -17,12 +17,16 @@ export function useProjectFilters() {
     tags,
     results,
     count: results.length,
-    onChange: (patch: ProjectFilters) =>
-      navigate({
+    onChange: (patch: ProjectFilters) => {
+      const onlyQueryChanges = 'q' in patch && !('member' in patch) && !('tag' in patch)
+      const startsSearch = !filters.q?.trim() && Boolean(patch.q?.trim())
+
+      return navigate({
         search: (previous) => validateProjectFilters({ ...previous, ...patch }),
-        replace: 'q' in patch && !('member' in patch) && !('tag' in patch),
+        replace: onlyQueryChanges && !startsSearch,
         resetScroll: false,
-      }),
+      })
+    },
     onClear: () => navigate({ search: {}, resetScroll: false }),
   }
 }
