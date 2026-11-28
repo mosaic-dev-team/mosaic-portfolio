@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState, type ReactNode } from 'react'
-import { LanguageContext, type Language } from './language'
+import type { Language } from '../data/types'
+import { LanguageContext } from './language'
 import { readPreference, savePreference } from './preferences'
 
 const storageKey = 'mosaic-language'

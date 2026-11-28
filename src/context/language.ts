@@ -1,8 +1,6 @@
 import { createContext, useContext } from 'react'
 import type { Language } from '../data/types'
 
-export type { Language }
-
 export const LanguageContext = createContext<{
   language: Language
   setLanguage: (language: Language) => void

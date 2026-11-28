@@ -3,6 +3,7 @@ import { Card } from '../../components/ui/Card'
 import { MemberCard } from '../../components/ui/MemberCard'
 import { useLanguage } from '../../context/language'
 import { members } from '../../data/members'
+import { mosaicProjectSlug } from '../../data/projects'
 import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './TeamPage.module.css'
 
@@ -54,12 +55,12 @@ function TeamPage() {
         ))}
       </div>
 
-      <Card variant="orange" className={styles.philosophy}>
+      <Card color="orange" className={styles.philosophy}>
         <div>
           <h2>{text.philosophy}</h2>
           <p>{text.philosophyDescription}</p>
         </div>
-        <Link to="/projects/$slug" params={{ slug: 'mosaic-portfolio' }}>
+        <Link to="/projects/$slug" params={{ slug: mosaicProjectSlug }}>
           {text.projectLink}
         </Link>
       </Card>

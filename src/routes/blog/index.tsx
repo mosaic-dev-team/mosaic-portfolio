@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ArticleCard } from '../../components/ui/ArticleCard'
+import { PostCard } from '../../components/ui/PostCard'
 import { Card } from '../../components/ui/Card'
 import { useLanguage } from '../../context/language'
-import { publishedPosts } from '../../data/posts'
+import { publishedPosts } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
-import type { CardColor } from '../../styles/cardColors'
+import type { CardColor } from '../../data/types'
 import styles from './BlogPage.module.css'
 
-const placeholders: readonly CardColor[] = ['cream', 'magenta', 'orange', 'green']
+const placeholders: readonly CardColor[] = ['cream', 'magenta', 'orange', 'darkGreen']
 
 const copy = {
   en: {
@@ -41,7 +41,7 @@ function BlogPage() {
 
   return (
     <div className={styles.page}>
-      <Card variant="midnight" className={styles.hero}>
+      <Card color="midnight" className={styles.hero}>
         <p className={styles.eyebrow}>{text.eyebrow}</p>
         <h1>{text.heading}</h1>
         <p>{text.description}</p>
@@ -53,7 +53,7 @@ function BlogPage() {
           <ul className={styles.grid} role="list">
             {publishedPosts.map((post) => (
               <li key={post.slug}>
-                <ArticleCard post={post} />
+                <PostCard post={post} />
               </li>
             ))}
           </ul>
@@ -62,7 +62,7 @@ function BlogPage() {
         <ul className={styles.grid} role="list">
           {placeholders.map((color, index) => (
             <li key={color}>
-              <Card variant={color} className={styles.placeholder}>
+              <Card color={color} className={styles.placeholder}>
                 <span className={styles.document} aria-hidden="true" />
                 <h2>{text.article} {(index + 1).toLocaleString(language)}</h2>
                 <p>{text.comingSoon}</p>

@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { useLanguage } from '../../context/language'
-import { members } from '../../data/members'
+import { membersOf } from '../../lib/relations'
 import type { Project, ProjectFilters } from '../../data/types'
 import { Card } from './Card'
+import { TagList } from './TagList'
 import styles from './ProjectCard.module.css'
 
 interface ProjectCardProps {
@@ -25,19 +26,15 @@ export function ProjectCard({
   const { slug, image, tools, color } = project
   const title = project.title[language]
   const contributorNames = showContributors
-    ? members.filter((member) => project.memberSlugs.includes(member.slug)).map((member) => member.name[language])
+    ? membersOf(project).map((member) => member.name[language])
     : []
 
   return (
-    <Card variant={color} className={styles.card}>
+    <Card color={color} className={styles.card}>
       {image && <img className={styles.illustration} src={image.src} alt={image.alt[language]} />}
       <h3 className={styles.title}>{title}</h3>
       <p>{project.summary[language]}</p>
-      {!compact && tools.length > 0 && (
-        <ul className={styles.tools} role="list">
-          {tools.map((tool) => <li key={tool}><bdi lang="en">{tool}</bdi></li>)}
-        </ul>
-      )}
+      {!compact && <TagList items={tools} compact />}
       {contributorNames.length > 0 && (
         <p className={styles.contributors}>
           {text.contributors}: {new Intl.ListFormat(language === 'fa' ? 'fa-IR' : 'en').format(contributorNames)}

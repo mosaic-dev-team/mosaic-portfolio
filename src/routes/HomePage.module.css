@@ -10,11 +10,6 @@
   margin: 0;
 }
 
-.home h3:lang(en) {
-  font-family: var(--font-display);
-  line-height: var(--line-height-tight);
-}
-
 .home a {
   font-weight: var(--font-weight-semibold);
   text-underline-offset: 0.2em;
@@ -109,7 +104,7 @@
 }
 
 .home .visualCard,
-.projectGrid > [data-variant] {
+.projectGrid > [data-color] {
   --card-padding: var(--space-4);
 
   display: grid;

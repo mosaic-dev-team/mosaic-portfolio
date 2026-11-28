@@ -18,11 +18,6 @@
   font-size: var(--font-size-xl);
 }
 
-.title:lang(en) {
-  font-family: var(--font-display);
-  line-height: var(--line-height-tight);
-}
-
 .metadata {
   display: flex;
   flex-wrap: wrap;

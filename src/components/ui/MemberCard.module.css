@@ -26,37 +26,15 @@
   line-height: var(--line-height-tight);
 }
 
-.name:lang(en) {
-  font-family: var(--font-display);
-}
-
 .role,
 .card a {
   font-weight: var(--font-weight-semibold);
 }
 
-.skills,
 .actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-}
-
-.skills {
-  gap: var(--space-2);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.skills li {
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--card-text);
-  border-radius: 999px;
-  font-size: var(--font-size-sm);
-}
-
-.actions {
   gap: var(--space-2) var(--space-4);
   margin-block-start: auto;
   padding-block-start: var(--space-3);

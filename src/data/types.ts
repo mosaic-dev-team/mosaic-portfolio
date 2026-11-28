@@ -1,7 +1,19 @@
-import type { CardColor } from '../styles/cardColors'
-
 export type Language = 'fa' | 'en'
+/** Text in every supported language, e.g. { fa: 'سارا', en: 'Sara' }. */
 export type Localized = Record<Language, string>
+
+export type CardColor =
+  | 'neutral'
+  | 'midnight'
+  | 'marigold'
+  | 'darkGreen'
+  | 'berry'
+  | 'cream'
+  | 'creamAdaptive'
+  | 'magenta'
+  | 'orange'
+  | 'forestGreen'
+  | 'champagne'
 
 export type Image = {
   src: string
@@ -37,9 +49,12 @@ export type Project = {
   solution: Localized
   lessons: Localized
   achievements: readonly Localized[]
+  /** Tool display names, e.g. 'TanStack Router'. */
   tools: readonly string[]
+  /** Lowercase English keys for the URL filter, e.g. 'react'. */
   tags: readonly string[]
   memberSlugs: readonly string[]
+  featured?: boolean
   image?: Image
   repositoryUrl?: string
   liveUrl?: string

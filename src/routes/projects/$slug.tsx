@@ -1,17 +1,10 @@
 import { createFileRoute, Link, notFound, useLocation } from '@tanstack/react-router'
 import { Card } from '../../components/ui/Card'
+import { TagList } from '../../components/ui/TagList'
 import { useLanguage } from '../../context/language'
-import { members } from '../../data/members'
-import { projects } from '../../data/projects'
-import type { ProjectFilters } from '../../data/types'
+import { getProject, membersOf } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './ProjectDetailsPage.module.css'
-
-declare module '@tanstack/history' {
-  interface HistoryState {
-    projectFilters?: ProjectFilters
-  }
-}
 
 const copy = {
   en: {
@@ -44,12 +37,12 @@ const copy = {
 
 export const Route = createFileRoute('/projects/$slug')({
   loader: ({ params: { slug } }) => {
-    const project = projects.find((entry) => entry.slug === slug)
+    const project = getProject(slug)
     if (!project) throw notFound()
 
     return {
       project,
-      makers: members.filter((member) => project.memberSlugs.includes(member.slug)),
+      makers: membersOf(project),
     }
   },
   component: ProjectDetailsPage,
@@ -66,7 +59,7 @@ function ProjectDetailsPage() {
     <div className={styles.page}>
       <Link to="/projects" search={returnFilters ?? {}} className={styles.back}>{text.back}</Link>
 
-      <Card variant={project.color} className={`${styles.full} ${styles.hero}`}>
+      <Card color={project.color} className={`${styles.full} ${styles.hero}`}>
         <div className={styles.intro}>
           <p className={styles.eyebrow}>{text.showcase}</p>
           <h1>{project.title[language]}</h1>
@@ -87,30 +80,28 @@ function ProjectDetailsPage() {
         )}
       </Card>
 
-      <Card variant="berry">
+      <Card color="berry">
         <section>
           <h2>{text.problem}</h2>
           <p>{project.problem[language]}</p>
         </section>
       </Card>
 
-      <Card variant="green">
+      <Card color="darkGreen">
         <section>
           <h2>{text.solution}</h2>
           <p>{project.solution[language]}</p>
         </section>
       </Card>
 
-      <Card variant="midnight" className={styles.full}>
+      <Card color="midnight" className={styles.full}>
         <section>
           <h2>{text.tools}</h2>
-          <ul className={styles.tools} role="list">
-            {project.tools.map((tool) => <li key={tool}><bdi lang="en">{tool}</bdi></li>)}
-          </ul>
+          <TagList items={project.tools} />
         </section>
       </Card>
 
-      <Card variant="orange">
+      <Card color="orange">
         <section>
           <h2>{text.achievements}</h2>
           <ul className={styles.achievements}>
@@ -119,7 +110,7 @@ function ProjectDetailsPage() {
         </section>
       </Card>
 
-      <Card variant="marigold">
+      <Card color="marigold">
         <section>
           <h2>{text.lessons}</h2>
           <p>{project.lessons[language]}</p>
@@ -127,7 +118,7 @@ function ProjectDetailsPage() {
       </Card>
 
       {makers.length > 0 && (
-        <Card variant="magenta" className={styles.full}>
+        <Card color="magenta" className={styles.full}>
           <section>
             <h2>{text.contributors}</h2>
             <ul className={styles.makers} role="list">

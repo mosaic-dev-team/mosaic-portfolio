@@ -32,7 +32,7 @@ main {
   flex: 1;
 }
 
-main :is(h1, h2):lang(en) {
+:is(h1, h2, h3):lang(en) {
   font-family: var(--font-display);
   line-height: var(--line-height-tight);
 }
@@ -60,4 +60,20 @@ button:enabled {
 :focus-visible {
   outline: 2px solid var(--focus-ring-color);
   outline-offset: 3px;
+}
+
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    color-scheme: light;
+  }
+
+  body {
+    background: white;
+    color: #222;
+  }
+
+  #root > :is(header, footer) {
+    display: none;
+  }
 }

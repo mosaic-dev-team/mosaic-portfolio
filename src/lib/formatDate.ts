@@ -1,4 +1,4 @@
-import type { Language } from './types'
+import type { Language } from '../data/types'
 
 export function formatDate(date: string, language: Language): string {
   const locale = language === 'fa' ? 'fa-IR' : 'en-US'

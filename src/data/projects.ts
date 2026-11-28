@@ -2,11 +2,14 @@ import civilizationCover from '../assets/projects/civilization.webp'
 import idempotencyImage from '../assets/projects/idempotency.webp'
 import mosaicImage from '../assets/projects/mosaic.webp'
 import shardMarketImage from '../assets/projects/sharding.webp'
-import type { Project, ProjectFilters } from './types'
+import type { Project } from './types'
+
+export const mosaicProjectSlug = 'mosaic-portfolio'
 
 export const projects: readonly Project[] = [
   {
     slug: 'idempotency',
+    featured: true,
     color: 'cream',
     title: { en: 'Idempotency', fa: 'ایدمپوتنسی — تازه‌خانه' },
     summary: {
@@ -55,6 +58,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'shard-market',
+    featured: true,
     color: 'magenta',
     title: { en: 'Shard Market', fa: 'شارد مارکت' },
     summary: {
@@ -102,7 +106,8 @@ export const projects: readonly Project[] = [
     repositoryUrl: 'https://github.com/AlirezaArabshahi/sharding-shop',
   },
   {
-    slug: 'mosaic-portfolio',
+    slug: mosaicProjectSlug,
+    featured: true,
     color: 'orange',
     title: { en: 'MOSAIC', fa: 'موزاییک' },
     summary: {
@@ -150,7 +155,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'civilization-vi',
-    color: 'forest',
+    color: 'forestGreen',
     title: {
       en: 'Civilization VI — Multiplayer Strategy Game',
       fa: 'Civilization VI — بازی استراتژیک چندنفره',
@@ -210,34 +215,3 @@ export const projects: readonly Project[] = [
     repositoryUrl: 'https://github.com/Baran-06/civilization-vi-simulation',
   },
 ]
-
-export function validateProjectFilters(search: Record<string, unknown>): ProjectFilters {
-  const { q, member, tag } = search
-
-  return {
-    // The router parses an unquoted numeric or boolean query as a scalar.
-    q: typeof q === 'number' || typeof q === 'boolean' ? String(q) : nonBlank(q),
-    member: nonBlank(member),
-    tag: nonBlank(tag),
-  }
-}
-
-function nonBlank(value: unknown): string | undefined {
-  return typeof value === 'string' && value.trim() ? value : undefined
-}
-
-export function filterProjects(
-  list: readonly Project[],
-  { q, member, tag }: ProjectFilters,
-): Project[] {
-  const query = q?.trim().toLowerCase()
-
-  return list.filter((project) =>
-    (!member || project.memberSlugs.includes(member)) &&
-    (!tag || project.tags.includes(tag)) &&
-    (!query ||
-      [project.title.fa, project.title.en, ...project.tags].some((text) =>
-        text.toLowerCase().includes(query),
-      )),
-  )
-}

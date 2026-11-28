@@ -27,13 +27,8 @@
   font-weight: var(--font-weight-bold);
 }
 
-.invitation:lang(en),
 .wordmark {
   font-family: var(--font-display);
-}
-
-.invitation:lang(en) {
-  line-height: var(--line-height-tight);
 }
 
 .footer p {

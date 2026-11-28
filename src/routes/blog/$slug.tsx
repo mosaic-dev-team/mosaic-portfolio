@@ -1,15 +1,16 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { Card } from '../../components/ui/Card'
+import { PostCard } from '../../components/ui/PostCard'
+import { TagList } from '../../components/ui/TagList'
 import { useLanguage } from '../../context/language'
-import { formatDate } from '../../data/formatDate'
-import { members } from '../../data/members'
-import { publishedPosts } from '../../data/posts'
+import { formatDate } from '../../lib/formatDate'
+import { getMember, publishedPosts } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
-import styles from './ArticleDetailsPage.module.css'
+import styles from './PostDetailsPage.module.css'
 
 const copy = {
-  en: { back: 'Back to Blog', resume: 'View Résumé', tags: 'Article tags' },
-  fa: { back: 'بازگشت به وبلاگ', resume: 'مشاهده رزومه', tags: 'برچسب‌های مقاله' },
+  en: { back: 'Back to Blog', resume: 'View Résumé', tags: 'Article tags', related: 'Other posts' },
+  fa: { back: 'بازگشت به وبلاگ', resume: 'مشاهده رزومه', tags: 'برچسب‌های مقاله', related: 'نوشته‌های دیگر' },
 }
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -17,16 +18,16 @@ export const Route = createFileRoute('/blog/$slug')({
     const post = publishedPosts.find((entry) => entry.slug === slug)
     if (!post) throw notFound()
 
-    const author = members.find((member) => member.slug === post.authorSlug)
+    const author = getMember(post.authorSlug)
     if (!author) throw new Error(`Unknown author: ${post.authorSlug}`)
 
     return { post, author, otherPosts: publishedPosts.filter((entry) => entry.slug !== slug) }
   },
-  component: ArticleDetailsPage,
+  component: PostDetailsPage,
 })
 
-function ArticleDetailsPage() {
-  const { post, author } = Route.useLoaderData()
+function PostDetailsPage() {
+  const { post, author, otherPosts } = Route.useLoaderData()
   const { language } = useLanguage()
   usePageTitle(post.title[language])
   const text = copy[language]
@@ -37,7 +38,7 @@ function ArticleDetailsPage() {
       <Link to="/blog" className={styles.back}>{text.back}</Link>
 
       <article className={styles.article}>
-        <Card variant="berry" className={styles.hero}>
+        <Card color="berry" className={styles.hero}>
           <h1>{post.title[language]}</h1>
           <p className={styles.summary}>{post.summary[language]}</p>
 
@@ -57,11 +58,7 @@ function ArticleDetailsPage() {
             <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, language)}</time>
           </div>
 
-          {post.tags.length > 0 && (
-            <ul className={styles.tags} role="list" aria-label={text.tags}>
-              {post.tags.map((tag) => <li key={tag}><bdi>{tag}</bdi></li>)}
-            </ul>
-          )}
+          <TagList items={post.tags} label={text.tags} />
         </Card>
 
         {post.cover && <img className={styles.cover} src={post.cover.src} alt={post.cover.alt[language]} />}
@@ -72,6 +69,15 @@ function ArticleDetailsPage() {
           </div>
         </Card>
       </article>
+
+      {otherPosts.length > 0 && (
+        <section aria-labelledby="other-posts">
+          <h2 id="other-posts">{text.related}</h2>
+          <ul className={styles.related} role="list">
+            {otherPosts.map((entry) => <li key={entry.slug}><PostCard post={entry} /></li>)}
+          </ul>
+        </section>
+      )}
     </div>
   )
 }

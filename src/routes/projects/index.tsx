@@ -3,12 +3,11 @@ import { useRef } from 'react'
 import { Card } from '../../components/ui/Card'
 import { ProjectCard } from '../../components/ui/ProjectCard'
 import { useLanguage } from '../../context/language'
-import { projects, validateProjectFilters } from '../../data/projects'
+import { projectMembers, projectTags, validateProjectFilters } from '../../lib/projectFilters'
 import { useProjectFilters } from '../../hooks/useProjectFilters'
 import { usePageTitle } from '../../hooks/usePageTitle'
 import styles from './ProjectsPage.module.css'
 
-const contributorSlugs = new Set(projects.flatMap((project) => project.memberSlugs))
 
 const copy = {
   en: {
@@ -54,11 +53,11 @@ export const Route = createFileRoute('/projects/')({
 
 function ProjectsPage() {
   const { language } = useLanguage()
-  const { filters, members, tags, results, count, onChange, onClear } = useProjectFilters()
+  const { filters, results, onChange, onClear } = useProjectFilters()
   const searchInput = useRef<HTMLInputElement>(null)
   const text = copy[language]
   usePageTitle(text.pageTitle)
-  const memberOptions = members.filter((member) => contributorSlugs.has(member.slug))
+  const count = results.length
   const resultCount = new Intl.NumberFormat(language === 'fa' ? 'fa-IR' : 'en').format(count)
 
   function clearFromEmptyState() {
@@ -68,7 +67,7 @@ function ProjectsPage() {
 
   return (
     <div className={styles.page}>
-      <Card variant="green" className={styles.hero}>
+      <Card color="darkGreen" className={styles.hero}>
         <p className={styles.eyebrow}>{text.eyebrow}</p>
         <h1>{text.heading}</h1>
         <p>{text.description}</p>
@@ -92,10 +91,10 @@ function ProjectsPage() {
               onChange={(event) => void onChange({ member: event.currentTarget.value || undefined })}
             >
               <option value="">{text.allMembers}</option>
-              {filters.member && !memberOptions.some((member) => member.slug === filters.member) && (
+              {filters.member && !projectMembers.some((member) => member.slug === filters.member) && (
                 <option value={filters.member} disabled>{text.unavailable}</option>
               )}
-              {memberOptions.map((member) => (
+              {projectMembers.map((member) => (
                 <option key={member.slug} value={member.slug}>{member.name[language]}</option>
               ))}
             </select>
@@ -107,10 +106,10 @@ function ProjectsPage() {
               onChange={(event) => void onChange({ tag: event.currentTarget.value || undefined })}
             >
               <option value="">{text.allTags}</option>
-              {filters.tag && !tags.includes(filters.tag) && (
+              {filters.tag && !projectTags.includes(filters.tag) && (
                 <option value={filters.tag} disabled>{text.unavailable}</option>
               )}
-              {tags.map((tag) => <option key={tag} value={tag} lang="en">{tag}</option>)}
+              {projectTags.map((tag) => <option key={tag} value={tag} lang="en">{tag}</option>)}
             </select>
           </label>
           <button type="button" className={styles.clear} onClick={() => void onClear()}>

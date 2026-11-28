@@ -1,20 +1,21 @@
 import { Link } from '@tanstack/react-router'
 import { useLanguage } from '../../context/language'
-import { formatDate } from '../../data/formatDate'
-import { members } from '../../data/members'
+import { formatDate } from '../../lib/formatDate'
+import { getMember } from '../../lib/relations'
 import type { Post } from '../../data/types'
 import { Card } from './Card'
-import styles from './ArticleCard.module.css'
+import styles from './PostCard.module.css'
+import { TagList } from './TagList'
 
-interface ArticleCardProps {
+interface PostCardProps {
   post: Post
   showAuthor?: boolean
 }
 
-export function ArticleCard({ post, showAuthor = true }: ArticleCardProps) {
+export function PostCard({ post, showAuthor = true }: PostCardProps) {
   const { language } = useLanguage()
   const { slug, cover } = post
-  const author = showAuthor && members.find((member) => member.slug === post.authorSlug)
+  const author = showAuthor && getMember(post.authorSlug)
 
   return (
     <Card className={styles.card}>
@@ -27,6 +28,7 @@ export function ArticleCard({ post, showAuthor = true }: ArticleCardProps) {
         <bdi>{formatDate(post.publishedAt, language)}</bdi>
       </p>
       <p>{post.summary[language]}</p>
+      <TagList items={post.tags} compact />
     </Card>
   )
 }

@@ -18,5 +18,3 @@ export const posts: readonly Post[] = [
     tags: ['data-modeling'],
   },
 ]
-
-export const publishedPosts = posts.filter((post) => post.status === 'published')

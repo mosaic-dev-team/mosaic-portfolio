@@ -1,12 +1,13 @@
 import { Link } from '@tanstack/react-router'
 import logo from '../../assets/brand/mosaic-logo.svg'
 import { useLanguage } from '../../context/language'
-import { projects } from '../../data/projects'
+import { mosaicProjectSlug } from '../../data/projects'
+import { getProject } from '../../lib/relations'
 import { MemberContacts } from '../ui/MemberContacts'
 import styles from './Footer.module.css'
 import { navigation } from './navigation'
 
-const repositoryUrl = projects.find((project) => project.slug === 'mosaic-portfolio')?.repositoryUrl
+const repositoryUrl = getProject(mosaicProjectSlug)?.repositoryUrl
 
 const copy = {
   en: {

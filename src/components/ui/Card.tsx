@@ -1,18 +1,18 @@
 import type { ReactNode } from 'react'
-import type { CardColor } from '../../styles/cardColors'
+import type { CardColor } from '../../data/types'
 import styles from './Card.module.css'
 
 interface CardProps {
   children: ReactNode
-  variant?: CardColor
+  color?: CardColor
   className?: string
 }
 
-export function Card({ children, variant = 'neutral', className }: CardProps) {
+export function Card({ children, color = 'neutral', className }: CardProps) {
   return (
     <div
       className={className ? `${styles.card} ${className}` : styles.card}
-      data-variant={variant}
+      data-color={color}
     >
       {children}
     </div>

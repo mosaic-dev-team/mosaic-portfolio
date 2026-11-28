@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { useLanguage } from '../../context/language'
 import type { Member } from '../../data/types'
 import { Card } from './Card'
+import { TagList } from './TagList'
 import styles from './MemberCard.module.css'
 
 interface MemberCardProps {
@@ -13,7 +14,7 @@ interface MemberCardProps {
 
 const copy = {
   en: { resume: 'View Résumé' },
-  fa: { resume: 'دیدن رزومه' },
+  fa: { resume: 'مشاهده رزومه' },
 }
 
 export function MemberCard({
@@ -30,16 +31,12 @@ export function MemberCard({
   const NameHeading = headingLevel === 2 ? 'h2' : 'h3'
 
   return (
-    <Card variant={color} className={className ? `${styles.card} ${className}` : styles.card}>
+    <Card color={color} className={className ? `${styles.card} ${className}` : styles.card}>
       {portrait && <img className={styles.portrait} src={portrait.src} alt={portrait.alt[language]} />}
       <NameHeading className={styles.name}><bdi>{name}</bdi></NameHeading>
       {role && <p className={styles.role}>{role}</p>}
       {description && <p>{description}</p>}
-      {skills.length > 0 && (
-        <ul className={styles.skills} role="list">
-          {skills.map((skill) => <li key={skill}><bdi lang="en">{skill}</bdi></li>)}
-        </ul>
-      )}
+      <TagList items={skills} />
       <div className={styles.actions}>
         <Link className={styles.resume} to="/team/$slug" params={{ slug }} aria-label={`${text.resume} · ${name}`}>
           {text.resume}

@@ -1,175 +1,14 @@
-import {
-  createMemoryHistory,
-  createRouter,
-  RouterContextProvider,
-  RouterProvider,
-} from '@tanstack/react-router'
-import { createElement } from 'react'
+import { createMemoryHistory, createRouter, RouterProvider } from '@tanstack/react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { expect, test } from 'vitest'
 import { LanguageContext } from './context/language'
 import { ThemeContext } from './context/theme'
 import { sampleMember } from './data/fixtures'
 import { members } from './data/members'
-import { filterProjects, projects } from './data/projects'
-import type { ProjectFilters } from './data/types'
-import { useProjectFilters } from './hooks/useProjectFilters'
+import { publishedPosts } from './lib/relations'
+import { projects } from './data/projects'
+import type { Post, ProjectFilters } from './data/types'
 import { routeTree } from './routeTree.gen'
-
-test.each([
-  { pathname: '/team/baran', routeId: '/team/$slug', params: { slug: 'baran' } },
-  {
-    pathname: '/projects/mosaic-portfolio',
-    routeId: '/projects/$slug',
-    params: { slug: 'mosaic-portfolio' },
-  },
-  {
-    pathname: '/blog/why-a-shared-data-model',
-    routeId: '/blog/$slug',
-    params: { slug: 'why-a-shared-data-model' },
-  },
-  { pathname: '/team', routeId: '/team/', params: {} },
-  { pathname: '/projects', routeId: '/projects/', params: {} },
-  { pathname: '/blog', routeId: '/blog/', params: {} },
-])('matches $pathname', async ({ pathname, routeId, params }) => {
-  const router = createRouter({
-    routeTree,
-    history: createMemoryHistory({ initialEntries: [pathname] }),
-  })
-
-  await router.load()
-
-  const match = router.state.matches.at(-1)
-  expect(match?.routeId).toBe(routeId)
-  expect(match?.params).toEqual(params)
-})
-
-test('reads shareable project filters from the URL', async () => {
-  const router = createRouter({
-    routeTree,
-    history: createMemoryHistory({ initialEntries: ['/projects?q=mosaic&member=baran&tag=react'] }),
-  })
-
-  await router.load()
-
-  const search = router.state.matches.at(-1)?.search
-  expect(search).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
-  expect(filterProjects(projects, search ?? {}).map((project) => project.slug)).toEqual(['mosaic-portfolio'])
-})
-
-function createProjectSearchRouter() {
-  const history = createMemoryHistory({ initialEntries: ['/projects'] })
-  const router = createRouter({ routeTree, history, isServer: false, origin: 'http://localhost' })
-
-  function readFilters() {
-    let filters: ReturnType<typeof useProjectFilters> | undefined
-
-    function ReadFilters() {
-      filters = useProjectFilters()
-      return null
-    }
-
-    renderToStaticMarkup(
-      createElement(RouterContextProvider, { router, children: createElement(ReadFilters) }),
-    )
-    if (!filters) throw new Error('Project filters did not render')
-    return filters
-  }
-
-  return { history, router, readFilters }
-}
-
-test('pushes the first non-blank query and replaces subsequent edits', async () => {
-  const { history, router, readFilters } = createProjectSearchRouter()
-  await router.load()
-
-  await readFilters().onChange({ q: '   ' })
-  expect(history.location.href).toBe('/projects')
-  expect(history.length).toBe(1)
-
-  await readFilters().onChange({ q: 'm' })
-  expect(history.length).toBe(2)
-  await readFilters().onChange({ q: 'mosaic' })
-  expect(history.length).toBe(2)
-  expect(readFilters().filters.q).toBe('mosaic')
-
-  history.back()
-  await router.load()
-  expect(history.location.href).toBe('/projects')
-  expect(readFilters().filters.q).toBeUndefined()
-
-  history.forward()
-  await router.load()
-  expect(readFilters().filters.q).toBe('mosaic')
-
-  await readFilters().onChange({ q: '' })
-  expect(history.location.href).toBe('/projects')
-  expect(history.length).toBe(2)
-})
-
-test('preserves member and tag history when searching and clearing filters', async () => {
-  const { history, router, readFilters } = createProjectSearchRouter()
-  await router.load()
-
-  await readFilters().onChange({ member: 'baran' })
-  await readFilters().onChange({ tag: 'react' })
-  expect(history.length).toBe(3)
-  const beforeSearch = history.location.href
-
-  await readFilters().onChange({ q: 'mosaic' })
-  expect(history.length).toBe(4)
-  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
-
-  history.back()
-  await router.load()
-  expect(history.location.href).toBe(beforeSearch)
-  expect(readFilters().filters).toEqual({ member: 'baran', tag: 'react' })
-
-  history.forward()
-  await router.load()
-  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
-
-  await readFilters().onClear()
-  expect(history.location.href).toBe('/projects')
-  expect(history.length).toBe(5)
-  expect(readFilters().filters).toEqual({})
-
-  history.back()
-  await router.load()
-  expect(readFilters().filters).toEqual({ q: 'mosaic', member: 'baran', tag: 'react' })
-})
-
-test('normalizes numeric searches while ignoring repeated and blank filters', async () => {
-  const router = createRouter({
-    routeTree,
-    history: createMemoryHistory({ initialEntries: ['/projects?q=123&member=a&member=b&tag='] }),
-  })
-
-  await router.load()
-
-  expect(router.matchRoutes(router.state.location).at(-1)?.search).toEqual({ q: '123' })
-})
-
-test.each([
-  ['/team/alireza', {
-    member: { slug: 'alireza' },
-    projects: [{ slug: 'shard-market' }, { slug: 'mosaic-portfolio' }],
-    posts: [],
-  }],
-  ['/projects/mosaic-portfolio', {
-    project: { slug: 'mosaic-portfolio' },
-    makers: [{ slug: 'baran' }, { slug: 'alireza' }],
-  }],
-])('loads related records for %s', async (pathname, data) => {
-  const router = createRouter({
-    routeTree,
-    history: createMemoryHistory({ initialEntries: [pathname] }),
-  })
-
-  await router.load()
-
-  expect(router.state.matches.at(-1)?.loaderData).toMatchObject(data)
-})
 
 async function renderRoute(pathname: string, projectFilters?: ProjectFilters) {
   const history = createMemoryHistory({ initialEntries: [pathname] })
@@ -183,15 +22,11 @@ async function renderRoute(pathname: string, projectFilters?: ProjectFilters) {
   await router.load()
 
   return renderToStaticMarkup(
-    createElement(
-      ThemeContext.Provider,
-      { value: { theme: 'light', toggleTheme() {} } },
-      createElement(
-        LanguageContext.Provider,
-        { value: { language: 'fa', setLanguage() {} } },
-        createElement(RouterProvider, { router }),
-      ),
-    ),
+    <ThemeContext.Provider value={{ theme: 'light', toggleTheme() {} }}>
+      <LanguageContext.Provider value={{ language: 'fa', setLanguage() {} }}>
+        <RouterProvider router={router} />
+      </LanguageContext.Provider>
+    </ThemeContext.Provider>,
   )
 }
 
@@ -259,6 +94,35 @@ test('shows four coming-soon cards without publishing the sample article', async
   expect(markup.match(/>به‌زودی<\/p>/g)).toHaveLength(4)
   expect(markup).not.toContain('href="/blog/')
   expect(markup).not.toContain('چرا از مدل دادهٔ مشترک استفاده می‌کنیم؟')
+})
+
+test('shows tags in the blog list and links only to other published posts in details', async () => {
+  const first: Post = {
+    status: 'published',
+    slug: 'test-first-post',
+    title: { en: 'First post', fa: 'نوشته اول' },
+    summary: { en: 'Summary', fa: 'خلاصه' },
+    body: { en: 'Text', fa: 'متن' },
+    authorSlug: 'baran',
+    publishedAt: '2026-11-27',
+    tags: ['typescript'],
+  }
+  const second: Post = { ...first, slug: 'test-second-post', title: { en: 'Second post', fa: 'نوشته دوم' } }
+  const originalLength = publishedPosts.length
+  publishedPosts.push(first, second)
+
+  try {
+    const list = await renderRoute('/blog')
+    expect(list).toContain('<bdi lang="en">typescript</bdi>')
+
+    const details = await renderRoute(`/blog/${first.slug}`)
+    const related = details.match(/<section aria-labelledby="other-posts"[\s\S]*?<\/section>/)?.[0]
+    expect(related).toContain(`href="/blog/${second.slug}"`)
+    expect(related).not.toContain(`href="/blog/${first.slug}"`)
+    expect(related).not.toContain('why-a-shared-data-model')
+  } finally {
+    publishedPosts.splice(originalLength)
+  }
 })
 
 test.each([

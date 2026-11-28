@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import heroImage from '../assets/illustrations/hero.webp'
-import { ArticleCard } from '../components/ui/ArticleCard'
+import { PostCard } from '../components/ui/PostCard'
 import { Card } from '../components/ui/Card'
 import { MemberCard } from '../components/ui/MemberCard'
 import { MemberContacts } from '../components/ui/MemberContacts'
 import { ProjectCard } from '../components/ui/ProjectCard'
 import { useLanguage } from '../context/language'
 import { members } from '../data/members'
-import { publishedPosts } from '../data/posts'
+import { publishedPosts } from '../lib/relations'
 import { projects } from '../data/projects'
 import { usePageTitle } from '../hooks/usePageTitle'
 import styles from './HomePage.module.css'
@@ -57,12 +57,7 @@ const copy = {
   },
 }
 
-const homeMembers = ['alireza', 'baran']
-  .map((slug) => members.find((member) => member.slug === slug))
-  .filter((member) => member !== undefined)
-const selectedProjects = projects.filter((project) =>
-  ['idempotency', 'shard-market', 'mosaic-portfolio'].includes(project.slug),
-)
+const selectedProjects = projects.filter((project) => project.featured)
 const journalPosts = publishedPosts.slice(0, 2)
 
 function HomePage() {
@@ -72,7 +67,7 @@ function HomePage() {
 
   return (
     <div className={styles.home}>
-      <Card variant="creamAdaptive" className={styles.hero}>
+      <Card color="creamAdaptive" className={styles.hero}>
         <div>
           <p className={styles.eyebrow}>{text.eyebrow}</p>
           <h1>
@@ -91,7 +86,7 @@ function HomePage() {
       <section aria-labelledby="home-team">
         <h2 id="home-team" className={styles.sectionTitle}>{text.team}</h2>
         <div className={`${styles.grid} ${styles.teamGrid}`}>
-          {homeMembers.map((member) => (
+          {members.map((member) => (
             <MemberCard
               key={member.slug}
               className={styles.visualCard}
@@ -99,7 +94,7 @@ function HomePage() {
               compact
             />
           ))}
-          <Card variant="midnight" className={`${styles.feature} ${styles.about}`}>
+          <Card color="midnight" className={`${styles.feature} ${styles.about}`}>
             <h3>{text.about}</h3>
             <p>{text.aboutText}</p>
             <Link to="/team">{text.meetTeam}</Link>
@@ -120,19 +115,19 @@ function HomePage() {
       </section>
 
       <div className={`${styles.grid} ${styles.closingGrid}`}>
-        <Card variant="green" className={styles.feature}>
+        <Card color="darkGreen" className={styles.feature}>
           <h2>{text.journal}</h2>
           <p>{text.journalText}</p>
           <Link to="/blog">{text.visitJournal}</Link>
           {journalPosts.length > 0 && (
             <div className={styles.articles}>
               {journalPosts.map((post) => (
-                <ArticleCard key={post.slug} post={post} />
+                <PostCard key={post.slug} post={post} />
               ))}
             </div>
           )}
         </Card>
-        <Card variant="midnight" className={`${styles.feature} ${styles.contact}`}>
+        <Card color="midnight" className={`${styles.feature} ${styles.contact}`}>
           <h2>{text.contact}</h2>
           <p>{text.contactText}</p>
           <MemberContacts />

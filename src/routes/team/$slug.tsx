@@ -1,13 +1,12 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { ArticleCard } from '../../components/ui/ArticleCard'
+import { PostCard } from '../../components/ui/PostCard'
 import { Card } from '../../components/ui/Card'
 import { ProjectCard } from '../../components/ui/ProjectCard'
 import { useLanguage } from '../../context/language'
-import { formatDate } from '../../data/formatDate'
-import { members } from '../../data/members'
-import { publishedPosts } from '../../data/posts'
-import { projects } from '../../data/projects'
+import { formatDate } from '../../lib/formatDate'
+import { getMember, postsBy, projectsOf } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import { TagList } from '../../components/ui/TagList'
 import styles from './ResumePage.module.css'
 
 const copy = {
@@ -45,13 +44,13 @@ const copy = {
 
 export const Route = createFileRoute('/team/$slug')({
   loader: ({ params: { slug } }) => {
-    const member = members.find((entry) => entry.slug === slug)
+    const member = getMember(slug)
     if (!member) throw notFound()
 
     return {
       member,
-      projects: projects.filter((project) => project.memberSlugs.includes(slug)),
-      posts: publishedPosts.filter((post) => post.authorSlug === slug),
+      projects: projectsOf(slug),
+      posts: postsBy(slug),
     }
   },
   component: ResumePage,
@@ -66,10 +65,10 @@ function ResumePage() {
   const hasContact = contact?.email || contact?.githubUrl || contact?.linkedinUrl
 
   return (
-    <div className={styles.page} data-page="resume">
+    <div className={styles.page}>
       <Link to="/team" className={styles.back}>{text.back}</Link>
 
-      <Card variant={member.color} className={`${styles.full} ${styles.card} ${styles.hero}`}>
+      <Card color={member.color} className={`${styles.full} ${styles.card} ${styles.hero}`}>
         {portrait && <img className={styles.portrait} src={portrait.src} alt={portrait.alt[language]} />}
         <div className={styles.profile}>
           <h1>{name[language]}</h1>
@@ -97,23 +96,21 @@ function ResumePage() {
         </div>
       </Card>
 
-      <Card variant="cream" className={styles.card}>
+      <Card color="cream" className={styles.card}>
         <section>
           <h2>{text.about}</h2>
           <p>{member.bio[language]}</p>
         </section>
       </Card>
 
-      <Card variant="midnight" className={styles.card}>
+      <Card color="midnight" className={styles.card}>
         <section>
           <h2>{text.skills}</h2>
-          <ul className={styles.skills} role="list">
-            {member.skills.map((skill) => <li key={skill}><bdi lang="en">{skill}</bdi></li>)}
-          </ul>
+          <TagList items={member.skills} />
         </section>
       </Card>
 
-      <Card variant="orange" className={styles.card}>
+      <Card color="orange" className={styles.card}>
         <section>
           <h2>{text.education}</h2>
           <ul className={styles.entries} role="list">
@@ -128,7 +125,7 @@ function ResumePage() {
         </section>
       </Card>
 
-      <Card variant="champagne" className={styles.card}>
+      <Card color="champagne" className={styles.card}>
         <section>
           <h2>{text.experience}</h2>
           <ul className={styles.entries} role="list">
@@ -161,13 +158,13 @@ function ResumePage() {
         ) : <p>{text.noProjects}</p>}
       </section>
 
-      <Card variant="berry" className={styles.card}>
+      <Card color="berry" className={styles.card}>
         <section>
           <h2>{text.articles}</h2>
           {posts.length ? (
             <div className={styles.related}>
               {posts.map((post) => (
-                <ArticleCard key={post.slug} post={post} showAuthor={false} />
+                <PostCard key={post.slug} post={post} showAuthor={false} />
               ))}
             </div>
           ) : <p>{text.noArticles}</p>}
@@ -175,7 +172,7 @@ function ResumePage() {
       </Card>
 
       {(!!member.languages?.length || ielts) && (
-        <Card variant="marigold" className={styles.card}>
+        <Card color="marigold" className={styles.card}>
           <section>
             <h2>{text.languages}</h2>
             {!!member.languages?.length && (
