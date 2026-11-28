@@ -54,6 +54,7 @@ export const Route = createFileRoute('/projects/')({
   component: function ProjectsPage() {
     const { language } = useLanguage()
     const { filters, members, tags, results, count, onChange, onClear } = useProjectFilters()
+    const returnFilters = validateProjectFilters(filters)
     const searchInput = useRef<HTMLInputElement>(null)
     const text = copy[language]
     usePageTitle(language === 'fa' ? 'پروژه‌ها' : 'Projects')
@@ -140,7 +141,7 @@ export const Route = createFileRoute('/projects/')({
                       imageAlt={project.image?.alt[language]}
                       tools={project.tools}
                       linkLabel={text.view}
-                      returnFilters={filters}
+                      returnFilters={returnFilters}
                       contributors={names.length ? `${text.contributors}: ${nameList.format(names)}` : undefined}
                     />
                   </li>
