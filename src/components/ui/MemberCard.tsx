@@ -3,6 +3,7 @@ import { useLanguage } from '../../context/language'
 import type { Member } from '../../data/types'
 import { Card } from './Card'
 import { TagList } from './TagList'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './MemberCard.module.css'
 
 interface MemberCardProps {
@@ -25,7 +26,6 @@ export function MemberCard({
   const { slug, color, portrait } = member
   const name = member.name[language]
   const role = member.role[language]
-  const description = !compact && member.bio[language]
   const skills = compact ? [] : member.skills.slice(0, 8)
   const contact = compact ? undefined : member.contact
   const NameHeading = headingLevel === 2 ? 'h2' : 'h3'
@@ -35,10 +35,10 @@ export function MemberCard({
       {portrait && <img className={styles.portrait} src={portrait.src} alt={portrait.alt[language]} />}
       <NameHeading className={styles.name}><bdi>{name}</bdi></NameHeading>
       {role && <p className={styles.role}>{role}</p>}
-      {description && <p>{description}</p>}
+      {!compact && <p>{member.bio[language]}</p>}
       <TagList items={skills} />
       <div className={styles.actions}>
-        <Link className={styles.resume} to="/team/$slug" params={{ slug }} aria-label={`${text.resume} · ${name}`}>
+        <Link className={`${sharedStyles.button} ${styles.resume}`} to="/team/$slug" params={{ slug }} aria-label={`${text.resume} · ${name}`}>
           {text.resume}
         </Link>
         {contact?.githubUrl && <a href={contact.githubUrl}><bdi lang="en">GitHub</bdi></a>}

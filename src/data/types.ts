@@ -15,7 +15,7 @@ export type CardColor =
   | 'forestGreen'
   | 'champagne'
 
-export type Image = {
+export type Picture = {
   src: string
   alt: Localized
 }
@@ -36,7 +36,7 @@ export type Member = {
     githubUrl?: string
     linkedinUrl?: string
   }
-  portrait?: Image
+  portrait?: Picture
   resumePdfUrl?: string
 }
 
@@ -55,7 +55,7 @@ export type Project = {
   tags: readonly string[]
   memberSlugs: readonly string[]
   featured?: boolean
-  image?: Image
+  image?: Picture
   repositoryUrl?: string
   liveUrl?: string
 }
@@ -68,7 +68,7 @@ export type Post = {
   title: Localized
   summary: Localized
   body: Localized
-  cover?: Image
+  cover?: Picture
   authorSlug: string
   /** Publication date in YYYY-MM-DD format. */
   publishedAt: string

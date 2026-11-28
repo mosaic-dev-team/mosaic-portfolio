@@ -102,8 +102,8 @@ export function Header() {
         </button>
 
         <nav id={navId} className={styles.nav} data-open={menuOpen} aria-label={text.navigation}>
-          <ul className={styles.navList}>
-            {navigation.map(({ to, ...name }) => (
+          <ul className={styles.navList} role="list">
+            {navigation.map(({ to, label }) => (
               <li key={to}>
                 <Link
                   to={to}
@@ -111,7 +111,7 @@ export function Header() {
                   activeOptions={{ exact: to === '/', includeSearch: false }}
                   onClick={closeMenu}
                 >
-                  {name[language]}
+                  {label[language]}
                 </Link>
               </li>
             ))}

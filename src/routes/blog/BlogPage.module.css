@@ -1,9 +1,5 @@
 .page {
-  display: grid;
   gap: clamp(var(--space-4), 3vw, var(--space-8));
-  max-inline-size: var(--container-width);
-  margin-inline: auto;
-  padding: var(--space-8) var(--space-4) clamp(var(--space-8), 6vw, 5rem);
 }
 
 .hero {
@@ -12,11 +8,6 @@
   display: grid;
   justify-items: start;
   gap: var(--space-3);
-}
-
-.hero :is(h1, p),
-.placeholder :is(h2, p) {
-  margin: 0;
 }
 
 .hero h1 {
@@ -29,25 +20,6 @@
   font-size: clamp(var(--font-size-base), 2vw, var(--font-size-lg));
 }
 
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-}
-
-.eyebrow:lang(en) {
-  letter-spacing: 0.12em;
-}
-
-.eyebrow::before {
-  content: '';
-  inline-size: var(--space-8);
-  block-size: 2px;
-  background: currentColor;
-}
-
 .publishedTitle {
   margin: 0 0 var(--space-4);
 }
@@ -55,9 +27,6 @@
 .grid {
   display: grid;
   gap: clamp(var(--space-4), 3vw, var(--space-8));
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .grid > li {

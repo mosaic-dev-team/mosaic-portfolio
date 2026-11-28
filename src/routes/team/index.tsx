@@ -5,6 +5,7 @@ import { useLanguage } from '../../context/language'
 import { members } from '../../data/members'
 import { mosaicProjectSlug } from '../../data/projects'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './TeamPage.module.css'
 
 const copy = {
@@ -38,9 +39,9 @@ function TeamPage() {
   usePageTitle(text.pageTitle)
 
   return (
-    <div className={styles.page}>
+    <div className={`${sharedStyles.page} ${styles.page}`}>
       <div className={styles.intro}>
-        <p className={styles.eyebrow}>{text.eyebrow}</p>
+        <p className={`${sharedStyles.eyebrow} ${styles.eyebrow}`}>{text.eyebrow}</p>
         <h1>{text.heading}</h1>
         <p>{text.description}</p>
       </div>
@@ -55,7 +56,7 @@ function TeamPage() {
         ))}
       </div>
 
-      <Card color="orange" className={styles.philosophy}>
+      <Card color="orange" className={`${sharedStyles.buttonGroup} ${styles.philosophy}`}>
         <div>
           <h2>{text.philosophy}</h2>
           <p>{text.philosophyDescription}</p>

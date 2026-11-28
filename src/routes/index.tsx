@@ -10,6 +10,7 @@ import { members } from '../data/members'
 import { publishedPosts } from '../lib/relations'
 import { projects } from '../data/projects'
 import { usePageTitle } from '../hooks/usePageTitle'
+import sharedStyles from '../styles/shared.module.css'
 import styles from './HomePage.module.css'
 
 export const Route = createFileRoute('/')({
@@ -66,7 +67,7 @@ function HomePage() {
   usePageTitle(text.pageTitle)
 
   return (
-    <div className={styles.home}>
+    <div className={`${sharedStyles.page} ${styles.home}`}>
       <Card color="creamAdaptive" className={styles.hero}>
         <div>
           <p className={styles.eyebrow}>{text.eyebrow}</p>
@@ -75,7 +76,7 @@ function HomePage() {
             <span>{text.titleEnd}</span>
           </h1>
           <p className={styles.introduction}>{text.introduction}</p>
-          <div className={styles.actions}>
+          <div className={`${sharedStyles.buttonGroup} ${styles.actions}`}>
             <Link to="/projects" className={styles.primaryLink}>{text.exploreProjects}</Link>
             <Link to="/team" className={styles.secondaryLink}>{text.meetTeam}</Link>
           </div>

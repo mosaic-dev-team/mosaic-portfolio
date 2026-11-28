@@ -5,9 +5,9 @@ import { LanguageContext } from './context/language'
 import { ThemeContext } from './context/theme'
 import { sampleMember } from './data/fixtures'
 import { members } from './data/members'
-import { publishedPosts } from './lib/relations'
-import { projects } from './data/projects'
+import { mosaicProjectSlug, projects } from './data/projects'
 import type { Post, ProjectFilters } from './data/types'
+import { getProject, membersOf, postsBy, projectsOf, publishedPosts } from './lib/relations'
 import { routeTree } from './routeTree.gen'
 
 async function renderRoute(pathname: string, projectFilters?: ProjectFilters) {
@@ -74,11 +74,9 @@ test('links Homepage and Footer content to the shared public profiles and projec
     }
   }
 
-  expect(main).toContain('href="/projects/idempotency"')
-  expect(main).toContain('href="/projects/shard-market"')
-  expect(main).toContain('href="/projects/mosaic-portfolio"')
-  expect(main).not.toContain('href="/projects/civilization-vi"')
-  const repository = projects.find((project) => project.slug === 'mosaic-portfolio')?.repositoryUrl
+  const projectLinks = Array.from(main?.matchAll(/href="\/projects\/([^"]+)"/g) ?? [], (match) => match[1])
+  expect(projectLinks).toEqual(projects.filter((project) => project.featured).map((project) => project.slug))
+  const repository = getProject(mosaicProjectSlug)?.repositoryUrl
   expect(repository).toBeDefined()
   expect(footer).toContain(`href="${repository}"`)
   expect(main).not.toContain('href="/blog/why-a-shared-data-model"')
@@ -125,65 +123,45 @@ test('shows tags in the blog list and links only to other published posts in det
   }
 })
 
-test.each([
-  {
-    slug: 'idempotency',
-    title: 'ایدمپوتنسی — تازه‌خانه',
-    makers: ['baran'],
-    live: 'https://shop.baranbuilds.com/',
-    source: 'https://github.com/Baran-06/idempotency-shop',
-  },
-  {
-    slug: 'shard-market',
-    title: 'شارد مارکت',
-    makers: ['alireza'],
-    live: 'https://shardmarket.ir/',
-    source: 'https://github.com/AlirezaArabshahi/sharding-shop',
-  },
-  {
-    slug: 'mosaic-portfolio',
-    title: 'موزاییک',
-    makers: ['baran', 'alireza'],
-    live: undefined,
-    source: 'https://github.com/mosaic-dev-team/mosaic-portfolio',
-  },
-  {
-    slug: 'civilization-vi',
-    title: 'Civilization VI — بازی استراتژیک چندنفره',
-    makers: ['baran'],
-    live: undefined,
-    source: 'https://github.com/Baran-06/civilization-vi-simulation',
-  },
-])('renders the project details and available links for $slug', async ({ slug, title, makers, live, source }) => {
-  const markup = await renderRoute(`/projects/${slug}`)
+test.each(projects)('renders the project details and available links for $slug', async (project) => {
+  const markup = await renderRoute(`/projects/${project.slug}`)
 
-  expect(markup).toContain(`<h1>${title}</h1>`)
+  expect(markup).toContain(`<h1>${project.title.fa}</h1>`)
   expect(markup).toContain('<h2>فناوری‌ها و ابزارها</h2>')
-  expect(markup).toContain('<h2>سازندگان پروژه</h2>')
+  const makers = membersOf(project).map((member) => member.slug)
+  if (makers.length) expect(markup).toContain('<h2>سازندگان پروژه</h2>')
   const resumeLinks = Array.from(markup.matchAll(/href="\/team\/([^"]+)"/g), (match) => match[1])
   expect(resumeLinks).toEqual(makers)
 
-  if (live) expect(markup).toContain(`href="${live}">مشاهده سایت</a>`)
+  if (project.liveUrl) expect(markup).toContain(`href="${project.liveUrl}">مشاهده سایت</a>`)
   else expect(markup).not.toContain('مشاهده سایت')
 
-  expect(markup).toContain(`href="${source}">کد منبع</a>`)
+  if (project.repositoryUrl) expect(markup).toContain(`href="${project.repositoryUrl}">کد منبع</a>`)
+  else expect(markup).not.toContain('کد منبع')
 })
 
-test.each([
-  ['/team/baran', 'باران شیخ ستانی', 'BaranSheikhestaniResume.pdf', 'طراحی و تألیف تمرین‌های برنامه‌نویسی جاوا.', ['idempotency', 'mosaic-portfolio', 'civilization-vi']],
-  ['/team/alireza', 'علیرضا عربشاهی', 'AlirezaArabshahiResume.pdf', 'ASP.NET Core', ['shard-market', 'mosaic-portfolio']],
-])('renders the shared résumé for %s', async (pathname, name, pdf, detail, expectedProjects) => {
-  const markup = await renderRoute(pathname)
+test.each(members)('renders the shared résumé for $slug', async (member) => {
+  const markup = await renderRoute(`/team/${member.slug}`)
 
-  expect(markup).toContain(`<h1>${name}</h1>`)
-  expect(markup).toContain(`/resumes/${pdf}`)
-  expect(markup).toContain('download=""')
-  expect(markup).toContain(detail)
+  expect(markup).toContain(`<h1>${member.name.fa}</h1>`)
+  expect(markup).toContain(member.bio.fa)
+  if (member.resumePdfUrl) {
+    expect(markup).toContain(`href="/${member.resumePdfUrl}"`)
+    expect(markup).toContain('download=""')
+  } else {
+    expect(markup).not.toContain('download=""')
+  }
+
   const projectLinks = Array.from(markup.matchAll(/href="\/projects\/([^"]+)"/g), (match) => match[1])
+  const expectedProjects = projectsOf(member.slug).map((project) => project.slug)
   expect(projectLinks).toEqual(expectedProjects)
-  expect(markup).toContain('مشاهده پروژه')
-  expect(markup).not.toContain('هنوز پروژه‌ای ثبت نشده است.')
-  expect(markup).toContain('هنوز مقاله‌ای ثبت نشده است.')
+  if (expectedProjects.length) expect(markup).toContain('مشاهده پروژه')
+  else expect(markup).toContain('هنوز پروژه‌ای ثبت نشده است.')
+
+  const postLinks = Array.from(markup.matchAll(/href="\/blog\/([^"]+)"/g), (match) => match[1])
+  const expectedPosts = postsBy(member.slug).map((post) => post.slug)
+  expect(postLinks).toEqual(expectedPosts)
+  if (!expectedPosts.length) expect(markup).toContain('هنوز مقاله‌ای ثبت نشده است.')
 })
 
 test.each([

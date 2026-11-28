@@ -1,9 +1,5 @@
 .page {
-  display: grid;
   gap: clamp(var(--space-4), 3vw, var(--space-8));
-  max-inline-size: var(--container-width);
-  margin-inline: auto;
-  padding: var(--space-8) var(--space-4) clamp(var(--space-8), 6vw, 5rem);
 }
 
 .hero {
@@ -12,31 +8,6 @@
   display: grid;
   justify-items: start;
   gap: var(--space-3);
-}
-
-.hero :is(h1, p),
-.empty :is(h2, p),
-.count {
-  margin: 0;
-}
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-}
-
-.eyebrow:lang(en) {
-  letter-spacing: 0.12em;
-}
-
-.eyebrow::before {
-  content: '';
-  inline-size: var(--space-8);
-  block-size: 2px;
-  background: currentColor;
 }
 
 .hero h1 {
@@ -81,11 +52,8 @@
 }
 
 .clear {
-  min-block-size: 2.75rem;
+  --button-display: block;
   justify-self: start;
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid currentColor;
-  border-radius: 999px;
   background: var(--card-bg);
   color: var(--card-text);
   font-weight: var(--font-weight-semibold);
@@ -104,12 +72,6 @@
 
 .count {
   font-size: var(--font-size-lg);
-}
-
-.grid {
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .grid > li {

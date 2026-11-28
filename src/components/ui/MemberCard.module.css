@@ -16,11 +16,6 @@
   margin-block-end: var(--space-2);
 }
 
-.name,
-.card p {
-  margin: 0;
-}
-
 .card .name {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
   line-height: var(--line-height-tight);
@@ -47,10 +42,11 @@
   text-underline-offset: 0.2em;
 }
 
+.resume {
+  --button-border-color: var(--card-text);
+}
+
 .actions .resume {
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--card-text);
-  border-radius: 999px;
   background: var(--card-text);
   color: var(--card-bg);
   text-decoration: none;

@@ -22,6 +22,16 @@ body:lang(fa) {
   font-family: var(--font-persian);
 }
 
+:is(h1, h2, h3, p) {
+  margin: 0;
+}
+
+:where(ul[role='list']) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 #root {
   display: flex;
   flex-direction: column;

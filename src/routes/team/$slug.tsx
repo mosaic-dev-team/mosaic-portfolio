@@ -7,6 +7,7 @@ import { formatDate } from '../../lib/formatDate'
 import { getMember, postsBy, projectsOf } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
 import { TagList } from '../../components/ui/TagList'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './ResumePage.module.css'
 
 const copy = {
@@ -65,7 +66,7 @@ function ResumePage() {
   const hasContact = contact?.email || contact?.githubUrl || contact?.linkedinUrl
 
   return (
-    <div className={styles.page}>
+    <div className={`${sharedStyles.page} ${styles.page}`}>
       <Link to="/team" className={styles.back}>{text.back}</Link>
 
       <Card color={member.color} className={`${styles.full} ${styles.card} ${styles.hero}`}>
@@ -75,7 +76,7 @@ function ResumePage() {
           <p className={styles.role}>{role[language]}</p>
           {resumePdfUrl && (
             <a
-              className={styles.download}
+              className={`${sharedStyles.button} ${styles.download}`}
               href={`${import.meta.env.BASE_URL}${resumePdfUrl}`}
               aria-label={`${text.download} · ${name[language]} (PDF)`}
               download

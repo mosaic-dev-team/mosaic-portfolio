@@ -1,6 +1,8 @@
+import type { Localized } from '../../data/types'
+
 export const navigation = [
-  { to: '/', en: 'Home', fa: 'خانه' },
-  { to: '/team', en: 'Team', fa: 'تیم' },
-  { to: '/projects', en: 'Projects', fa: 'پروژه‌ها' },
-  { to: '/blog', en: 'Blog', fa: 'وبلاگ' },
-] as const
+  { to: '/', label: { en: 'Home', fa: 'خانه' } },
+  { to: '/team', label: { en: 'Team', fa: 'تیم' } },
+  { to: '/projects', label: { en: 'Projects', fa: 'پروژه‌ها' } },
+  { to: '/blog', label: { en: 'Blog', fa: 'وبلاگ' } },
+] as const satisfies readonly { to: string; label: Localized }[]

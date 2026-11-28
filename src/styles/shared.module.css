@@ -1,0 +1,35 @@
+.page {
+  display: var(--page-display, grid);
+  max-inline-size: var(--container-width);
+  margin-inline: auto;
+  padding: var(--page-padding, var(--space-8) var(--space-4) clamp(var(--space-8), 6vw, 5rem));
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.eyebrow:lang(en) {
+  letter-spacing: 0.12em;
+}
+
+.eyebrow::before {
+  content: '';
+  inline-size: var(--space-8);
+  block-size: 2px;
+  background: currentColor;
+}
+
+.button,
+.buttonGroup > a {
+  display: var(--button-display, inline-flex);
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--button-border-color, currentColor);
+  border-radius: 999px;
+}

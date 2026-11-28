@@ -4,6 +4,7 @@ import lightIllustration from '../../assets/illustrations/light-404.webp'
 import { useLanguage } from '../../context/language'
 import { useTheme } from '../../context/theme'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './NotFoundPage.module.css'
 
 const copy = {
@@ -33,7 +34,7 @@ export function NotFoundPage() {
   const dark = theme === 'dark'
 
   return (
-    <div className={styles.page}>
+    <div className={`${sharedStyles.page} ${styles.page}`}>
       <img
         className={styles.illustration}
         src={dark ? darkIllustration : lightIllustration}
@@ -44,7 +45,7 @@ export function NotFoundPage() {
       />
       <h1><span className={styles.visuallyHidden}>{text.error} </span>{text.heading}</h1>
       <p>{text.description}</p>
-      <nav aria-label={text.actions} className={styles.actions}>
+      <nav aria-label={text.actions} className={`${sharedStyles.buttonGroup} ${styles.actions}`}>
         <Link to="/" className={styles.primary}>{text.home}</Link>
         <Link to="/projects" search={{}}>{text.projects}</Link>
       </nav>

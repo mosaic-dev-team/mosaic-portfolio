@@ -4,6 +4,7 @@ import { TagList } from '../../components/ui/TagList'
 import { useLanguage } from '../../context/language'
 import { getProject, membersOf } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './ProjectDetailsPage.module.css'
 
 const copy = {
@@ -56,7 +57,7 @@ function ProjectDetailsPage() {
   const text = copy[language]
 
   return (
-    <div className={styles.page}>
+    <div className={`${sharedStyles.page} ${styles.page}`}>
       <Link to="/projects" search={returnFilters ?? {}} className={styles.back}>{text.back}</Link>
 
       <Card color={project.color} className={`${styles.full} ${styles.hero}`}>
@@ -65,7 +66,7 @@ function ProjectDetailsPage() {
           <h1>{project.title[language]}</h1>
           <p className={styles.summary}>{project.summary[language]}</p>
           {(project.liveUrl || project.repositoryUrl) && (
-            <div className={styles.actions}>
+            <div className={`${sharedStyles.buttonGroup} ${styles.actions}`}>
               {project.liveUrl && <a href={project.liveUrl}>{text.live}</a>}
               {project.repositoryUrl && <a href={project.repositoryUrl}>{text.source}</a>}
             </div>

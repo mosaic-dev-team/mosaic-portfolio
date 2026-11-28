@@ -53,11 +53,11 @@ export function Footer() {
 
           <nav aria-label={text.navigation}>
             <h2>{text.explore}</h2>
-            <ul>
-              {navigation.map(({ to, ...name }) => (
+            <ul role="list">
+              {navigation.map(({ to, label }) => (
                 <li key={to}>
                   <Link to={to} activeOptions={{ exact: true, includeSearch: false }}>
-                    {name[language]}
+                    {label[language]}
                   </Link>
                 </li>
               ))}

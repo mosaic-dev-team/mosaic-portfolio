@@ -9,11 +9,6 @@
   border-radius: var(--radius-md);
 }
 
-.title,
-.card p {
-  margin: 0;
-}
-
 .title {
   font-size: var(--font-size-xl);
 }

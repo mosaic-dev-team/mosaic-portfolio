@@ -6,6 +6,7 @@ import { useLanguage } from '../../context/language'
 import { projectMembers, projectTags, validateProjectFilters } from '../../lib/projectFilters'
 import { useProjectFilters } from '../../hooks/useProjectFilters'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './ProjectsPage.module.css'
 
 
@@ -66,9 +67,9 @@ function ProjectsPage() {
   }
 
   return (
-    <div className={styles.page}>
+    <div className={`${sharedStyles.page} ${styles.page}`}>
       <Card color="darkGreen" className={styles.hero}>
-        <p className={styles.eyebrow}>{text.eyebrow}</p>
+        <p className={sharedStyles.eyebrow}>{text.eyebrow}</p>
         <h1>{text.heading}</h1>
         <p>{text.description}</p>
       </Card>
@@ -112,7 +113,7 @@ function ProjectsPage() {
               {projectTags.map((tag) => <option key={tag} value={tag} lang="en">{tag}</option>)}
             </select>
           </label>
-          <button type="button" className={styles.clear} onClick={() => void onClear()}>
+          <button type="button" className={`${sharedStyles.button} ${styles.clear}`} onClick={() => void onClear()}>
             {text.clear}
           </button>
         </form>
@@ -134,7 +135,7 @@ function ProjectsPage() {
           <Card className={styles.empty}>
             <h2>{text.noResults}</h2>
             <p>{text.tryAgain}</p>
-            <button type="button" className={styles.clear} onClick={clearFromEmptyState}>
+            <button type="button" className={`${sharedStyles.button} ${styles.clear}`} onClick={clearFromEmptyState}>
               {text.clear}
             </button>
           </Card>

@@ -5,6 +5,7 @@ import { useLanguage } from '../../context/language'
 import { publishedPosts } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
 import type { CardColor } from '../../data/types'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './BlogPage.module.css'
 
 const placeholders: readonly CardColor[] = ['cream', 'magenta', 'orange', 'darkGreen']
@@ -40,9 +41,9 @@ function BlogPage() {
   usePageTitle(text.pageTitle)
 
   return (
-    <div className={styles.page}>
+    <div className={`${sharedStyles.page} ${styles.page}`}>
       <Card color="midnight" className={styles.hero}>
-        <p className={styles.eyebrow}>{text.eyebrow}</p>
+        <p className={sharedStyles.eyebrow}>{text.eyebrow}</p>
         <h1>{text.heading}</h1>
         <p>{text.description}</p>
       </Card>

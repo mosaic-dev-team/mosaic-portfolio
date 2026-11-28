@@ -6,6 +6,7 @@ import { useLanguage } from '../../context/language'
 import { formatDate } from '../../lib/formatDate'
 import { getMember, publishedPosts } from '../../lib/relations'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import sharedStyles from '../../styles/shared.module.css'
 import styles from './PostDetailsPage.module.css'
 
 const copy = {
@@ -34,7 +35,7 @@ function PostDetailsPage() {
   const paragraphs = post.body[language].trim().split(/\r?\n(?:[ \t]*\r?\n)+/)
 
   return (
-    <div className={styles.page}>
+    <div className={`${sharedStyles.page} ${styles.page}`}>
       <Link to="/blog" className={styles.back}>{text.back}</Link>
 
       <article className={styles.article}>

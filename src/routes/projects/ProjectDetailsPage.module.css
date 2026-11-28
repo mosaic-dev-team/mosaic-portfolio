@@ -1,9 +1,6 @@
 .page {
-  display: grid;
+  --card-padding: clamp(var(--space-4), 3vw, var(--space-8));
   gap: clamp(var(--space-4), 3vw, var(--space-8));
-  max-inline-size: var(--container-width);
-  margin-inline: auto;
-  padding: var(--space-8) var(--space-4) clamp(var(--space-8), 6vw, 5rem);
 }
 
 .full,
@@ -18,14 +15,6 @@
 
 .back {
   justify-self: start;
-}
-
-.page [data-color] {
-  --card-padding: clamp(var(--space-4), 3vw, var(--space-8));
-}
-
-.page :is(h1, h2, h3, p) {
-  margin: 0;
 }
 
 .hero {
@@ -76,24 +65,9 @@
   margin-block-start: var(--space-2);
 }
 
-.actions a {
-  display: inline-flex;
-  align-items: center;
-  min-block-size: 2.75rem;
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid currentColor;
-  border-radius: 999px;
-}
-
 .page h2 {
   margin-block-end: var(--space-3);
   font-size: clamp(1.4rem, 2.6vw, var(--font-size-xl));
-}
-
-.makers {
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .achievements {

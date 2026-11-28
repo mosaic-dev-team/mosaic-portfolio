@@ -2,14 +2,11 @@
   --primary-bg: var(--color-dark-green);
   --primary-text: var(--page-bg);
 
-  display: grid;
   justify-items: center;
   align-content: center;
   gap: var(--space-4);
   min-block-size: min(34rem, 65svh);
-  max-inline-size: var(--container-width);
-  margin-inline: auto;
-  padding: clamp(var(--space-8), 6vw, 5rem) var(--space-4);
+  --page-padding: clamp(var(--space-8), 6vw, 5rem) var(--space-4);
   text-align: center;
 }
 
@@ -22,10 +19,6 @@
   display: block;
   inline-size: min(100%, 43.75rem);
   block-size: auto;
-}
-
-.page :is(h1, p) {
-  margin: 0;
 }
 
 .page h1 {
@@ -57,13 +50,7 @@
 }
 
 .actions a {
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
-  min-block-size: 2.75rem;
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--text-primary);
-  border-radius: 999px;
   color: var(--text-primary);
   font-weight: var(--font-weight-semibold);
   text-decoration: none;

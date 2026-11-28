@@ -29,7 +29,7 @@ npm run dev
 
 ```bash
 npm run lint
-npx vitest run
+npm test
 npm run build
 ```
 

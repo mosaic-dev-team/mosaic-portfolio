@@ -1,9 +1,6 @@
 .page {
-  display: grid;
   gap: clamp(var(--space-6), 4vw, 3rem);
-  max-inline-size: var(--container-width);
-  margin-inline: auto;
-  padding: clamp(var(--space-8), 6vw, 5rem) var(--space-4);
+  --page-padding: clamp(var(--space-8), 6vw, 5rem) var(--space-4);
 }
 
 .intro {
@@ -12,29 +9,8 @@
   max-inline-size: 50rem;
 }
 
-.intro :is(h1, p),
-.philosophy :is(h2, p) {
-  margin: 0;
-}
-
 .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
   color: var(--accent-color);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-}
-
-.eyebrow:lang(en) {
-  letter-spacing: 0.12em;
-}
-
-.eyebrow::before {
-  content: '';
-  inline-size: var(--space-8);
-  block-size: 2px;
-  background: currentColor;
 }
 
 .intro h1 {
@@ -80,12 +56,6 @@
 }
 
 .philosophy a {
-  display: inline-flex;
-  align-items: center;
-  min-block-size: 2.75rem;
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid currentColor;
-  border-radius: 999px;
   font-weight: var(--font-weight-semibold);
   text-underline-offset: 0.2em;
 }
