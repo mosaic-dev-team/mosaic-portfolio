@@ -6,7 +6,7 @@ import { useTheme } from '../../context/theme'
 import styles from './Header.module.css'
 import { navigation } from './navigation'
 
-const labels = {
+const copy = {
   en: {
     navigation: 'Main navigation',
     openMenu: 'Open navigation',
@@ -35,7 +35,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
   const navId = useId()
-  const copy = labels[language]
+  const text = copy[language]
   const nextTheme = theme === 'light' ? 'dark' : 'light'
 
   function closeMenu() {
@@ -59,7 +59,7 @@ export function Header() {
         </Link>
 
         <div className={styles.controls}>
-          <button type="button" className={styles.iconButton} aria-label={copy[nextTheme]} onClick={toggleTheme}>
+          <button type="button" className={styles.iconButton} aria-label={text[nextTheme]} onClick={toggleTheme}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               {nextTheme === 'dark' ? (
                 <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" />
@@ -72,12 +72,12 @@ export function Header() {
             </svg>
           </button>
 
-          <div className={styles.languages} role="group" aria-label={copy.language}>
+          <div className={styles.languages} role="group" aria-label={text.language}>
             {(['en', 'fa'] as const).map((option) => (
               <button
                 key={option}
                 type="button"
-                aria-label={`${option.toUpperCase()} · ${copy[option]}`}
+                aria-label={`${option.toUpperCase()} · ${text[option]}`}
                 aria-pressed={language === option}
                 onClick={() => setLanguage(option)}
               >
@@ -91,7 +91,7 @@ export function Header() {
           type="button"
           ref={menuButton}
           className={`${styles.iconButton} ${styles.menuButton}`}
-          aria-label={menuOpen ? copy.closeMenu : copy.openMenu}
+          aria-label={menuOpen ? text.closeMenu : text.openMenu}
           aria-expanded={menuOpen}
           aria-controls={navId}
           onClick={() => setMenuOpen((open) => !open)}
@@ -101,7 +101,7 @@ export function Header() {
           </svg>
         </button>
 
-        <nav id={navId} className={styles.nav} data-open={menuOpen} aria-label={copy.navigation}>
+        <nav id={navId} className={styles.nav} data-open={menuOpen} aria-label={text.navigation}>
           <ul className={styles.navList}>
             {navigation.map(({ to, ...name }) => (
               <li key={to}>

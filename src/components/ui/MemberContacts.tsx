@@ -6,9 +6,14 @@ const publicContacts = members.filter(({ contact }) =>
   contact?.email || contact?.githubUrl || contact?.linkedinUrl,
 )
 
+const copy = {
+  en: { email: 'Email' },
+  fa: { email: 'ایمیل' },
+}
+
 export function MemberContacts() {
   const { language } = useLanguage()
-  const emailLabel = language === 'fa' ? 'ایمیل' : 'Email'
+  const text = copy[language]
 
   return (
     <ul className={styles.groups} role="list">
@@ -17,7 +22,7 @@ export function MemberContacts() {
           <strong><bdi>{name[language]}</bdi></strong>
           <ul className={styles.links} role="list">
             {contact?.email && (
-              <li><a href={`mailto:${contact.email}`} aria-label={`${emailLabel} · ${name[language]}`}>{emailLabel}</a></li>
+              <li><a href={`mailto:${contact.email}`} aria-label={`${text.email} · ${name[language]}`}>{text.email}</a></li>
             )}
             {contact?.githubUrl && (
               <li><a href={contact.githubUrl} aria-label={`GitHub · ${name[language]}`}><bdi lang="en">GitHub</bdi></a></li>

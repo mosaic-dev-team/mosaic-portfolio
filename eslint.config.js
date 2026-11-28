@@ -19,4 +19,11 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['src/routes/**/*.tsx'],
+    rules: {
+      // TanStack route modules export Route and keep their page components private.
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])

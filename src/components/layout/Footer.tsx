@@ -31,7 +31,7 @@ const copy = {
 
 export function Footer() {
   const { language } = useLanguage()
-  const labels = copy[language]
+  const text = copy[language]
   const year = new Intl.NumberFormat(language, { useGrouping: false }).format(
     new Date().getFullYear(),
   )
@@ -40,18 +40,18 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.invitationRow}>
-          <h2 className={styles.invitation}>{labels.invitation}</h2>
+          <h2 className={styles.invitation}>{text.invitation}</h2>
           <img src={logo} alt="" width="40" height="40" />
         </div>
 
         <div className={styles.columns}>
           <div>
             <bdi className={styles.wordmark} lang="en">MOSAIC</bdi>
-            <p>{labels.tagline}</p>
+            <p>{text.tagline}</p>
           </div>
 
-          <nav aria-label={labels.navigation}>
-            <h2>{labels.explore}</h2>
+          <nav aria-label={text.navigation}>
+            <h2>{text.explore}</h2>
             <ul>
               {navigation.map(({ to, ...name }) => (
                 <li key={to}>
@@ -64,15 +64,15 @@ export function Footer() {
           </nav>
 
           <div>
-            <h2>{labels.connect}</h2>
+            <h2>{text.connect}</h2>
             <MemberContacts />
-            {repositoryUrl && <a className={styles.repository} href={repositoryUrl}>{labels.repository}</a>}
+            {repositoryUrl && <a className={styles.repository} href={repositoryUrl}>{text.repository}</a>}
           </div>
         </div>
 
         <div className={styles.credits}>
           <small>© {year} <bdi lang="en">MOSAIC</bdi></small>
-          <small>{labels.attribution}</small>
+          <small>{text.attribution}</small>
         </div>
       </div>
     </footer>

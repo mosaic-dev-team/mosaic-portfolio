@@ -5,6 +5,7 @@ import type { Member } from './types'
 export const members: readonly Member[] = [
   {
     slug: 'baran',
+    color: 'green',
     name: { en: 'Baran Sheikhestani', fa: 'باران شیخ ستانی' },
     role: {
       en: 'Frontend Developer & Applied Mathematics Student',
@@ -78,6 +79,7 @@ export const members: readonly Member[] = [
   },
   {
     slug: 'alireza',
+    color: 'berry',
     name: { en: 'Alireza Arabshahi', fa: 'علیرضا عربشاهی' },
     role: { en: 'Software Developer', fa: 'توسعه‌دهنده نرم‌افزار' },
     bio: {

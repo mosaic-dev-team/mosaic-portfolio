@@ -21,20 +21,12 @@
 }
 
 .home .hero {
-  --card-bg: var(--color-buttermilk);
-  --card-text: var(--color-midnight-blue);
-  --card-accent: var(--card-bg);
   --card-padding: clamp(var(--space-4), 4vw, 3rem);
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: var(--space-4);
-}
-
-:global([data-theme='dark']) .home .hero {
-  --card-bg: var(--color-midnight-blue);
-  --card-text: var(--color-buttermilk);
 }
 
 .hero .eyebrow {

@@ -2,6 +2,7 @@ import type { Member } from './types'
 
 export const sampleMember: Member = {
   slug: 'demo',
+  color: 'neutral',
   name: { en: 'Sara Demo', fa: 'سارا نمونه' },
   role: { en: 'Frontend developer', fa: 'توسعه‌دهندهٔ فرانت‌اند' },
   bio: {

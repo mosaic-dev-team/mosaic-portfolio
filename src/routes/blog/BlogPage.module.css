@@ -74,12 +74,6 @@
   gap: var(--space-2);
 }
 
-.buttermilk[data-variant] {
-  --card-bg: var(--color-buttermilk);
-  --card-text: var(--color-midnight-blue);
-  --card-accent: var(--card-text);
-}
-
 .placeholder h2 {
   font-size: clamp(1.5rem, 3vw, var(--font-size-xl));
 }

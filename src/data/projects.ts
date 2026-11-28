@@ -7,6 +7,7 @@ import type { Project, ProjectFilters } from './types'
 export const projects: readonly Project[] = [
   {
     slug: 'idempotency',
+    color: 'cream',
     title: { en: 'Idempotency', fa: 'ایدمپوتنسی — تازه‌خانه' },
     summary: {
       en: 'A responsive e-commerce application featuring product browsing, category filtering, product search, persistent shopping cart management, and light and dark themes.',
@@ -54,6 +55,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'shard-market',
+    color: 'magenta',
     title: { en: 'Shard Market', fa: 'شارد مارکت' },
     summary: {
       en: 'A modern online storefront offering responsive product exploration, category-based navigation, search functionality, persistent cart state, and customizable themes.',
@@ -101,6 +103,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'mosaic-portfolio',
+    color: 'orange',
     title: { en: 'MOSAIC', fa: 'موزاییک' },
     summary: {
       en: 'A bilingual team portfolio showcasing member profiles, interactive résumés, projects, and technical articles through a colorful and unified design system.',
@@ -147,6 +150,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'civilization-vi',
+    color: 'forest',
     title: {
       en: 'Civilization VI — Multiplayer Strategy Game',
       fa: 'Civilization VI — بازی استراتژیک چندنفره',

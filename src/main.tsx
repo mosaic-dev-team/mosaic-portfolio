@@ -1,4 +1,5 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { LanguageProvider } from './context/LanguageProvider'
 import { ThemeProvider } from './context/ThemeProvider'
@@ -17,9 +18,11 @@ const root = document.getElementById('root')
 if (!root) throw new Error('Root element not found')
 
 createRoot(root).render(
-  <ThemeProvider>
-    <LanguageProvider>
-      <RouterProvider router={router} />
-    </LanguageProvider>
-  </ThemeProvider>,
+  <StrictMode>
+    <ThemeProvider>
+      <LanguageProvider>
+        <RouterProvider router={router} />
+      </LanguageProvider>
+    </ThemeProvider>
+  </StrictMode>,
 )

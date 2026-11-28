@@ -176,24 +176,6 @@
   margin-block-start: var(--space-4);
 }
 
-.page .about[data-variant] {
-  --card-bg: var(--color-buttermilk);
-  --card-text: var(--color-midnight-blue);
-  --card-accent: var(--card-text);
-}
-
-.page .education[data-variant] {
-  --card-bg: var(--color-sunfire-orange);
-  --card-text: var(--color-velvet);
-  --card-accent: var(--card-text);
-}
-
-.page .experience[data-variant] {
-  --card-bg: var(--color-champagne);
-  --card-text: var(--color-burgundy);
-  --card-accent: var(--card-text);
-}
-
 .projectGrid {
   display: grid;
   gap: var(--space-4);
@@ -252,10 +234,6 @@
   .page .card[data-variant],
   .page .projectGrid [data-variant],
   .page .related [data-variant] {
-    --card-bg: white;
-    --card-text: #222;
-    --card-accent: #888;
-    --text-secondary: #333;
     --card-padding: var(--space-3);
 
     margin-block-end: var(--space-3);

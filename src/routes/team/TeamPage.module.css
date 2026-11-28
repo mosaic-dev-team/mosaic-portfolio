@@ -64,12 +64,6 @@
   }
 }
 
-.page .philosophy[data-variant] {
-  --card-bg: var(--color-sunfire-orange);
-  --card-text: var(--color-velvet);
-  --card-accent: var(--card-text);
-}
-
 .philosophy {
   --card-padding: clamp(var(--space-6), 4vw, 3rem);
 

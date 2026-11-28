@@ -4,14 +4,16 @@ import { Header } from '../components/layout/Header'
 import { NotFoundPage } from '../components/layout/NotFoundPage'
 
 export const Route = createRootRoute({
-  component: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', minBlockSize: '100vh' }}>
-      <Header />
-      <main style={{ flex: 1 }}>
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
-  ),
+  component: RootLayout,
   notFoundComponent: NotFoundPage,
 })
+
+function RootLayout() {
+  return (
+    <>
+      <Header />
+      <main><Outlet /></main>
+      <Footer />
+    </>
+  )
+}

@@ -1,20 +1,10 @@
 import type { ReactNode } from 'react'
+import type { CardColor } from '../../styles/cardColors'
 import styles from './Card.module.css'
 
-export type CardVariant =
-  | 'neutral'
-  | 'midnight'
-  | 'blush'
-  | 'team-forest'
-  | 'team-burgundy'
-  | 'deep-green'
-  | 'burgundy'
-  | 'forest'
-  | 'velvet'
-
-export interface CardProps {
+interface CardProps {
   children: ReactNode
-  variant?: CardVariant
+  variant?: CardColor
   className?: string
 }
 

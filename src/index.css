@@ -22,6 +22,16 @@ body:lang(fa) {
   font-family: var(--font-persian);
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100svh;
+}
+
+main {
+  flex: 1;
+}
+
 main :is(h1, h2):lang(en) {
   font-family: var(--font-display);
   line-height: var(--line-height-tight);

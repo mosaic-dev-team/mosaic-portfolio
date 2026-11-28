@@ -1,22 +1,23 @@
-export type Text = {
-  en: string
-  fa: string
-}
+import type { CardColor } from '../styles/cardColors'
+
+export type Language = 'fa' | 'en'
+export type Localized = Record<Language, string>
 
 export type Image = {
   src: string
-  alt: Text
+  alt: Localized
 }
 
 export type Member = {
   slug: string
-  name: Text
-  role: Text
-  bio: Text
+  color: CardColor
+  name: Localized
+  role: Localized
+  bio: Localized
   skills: readonly string[]
-  education: readonly { title: Text; institution: Text; period: Text }[]
-  experience: readonly { title: Text; organization: Text; period: Text; responsibilities?: readonly Text[] }[]
-  languages?: readonly { name: Text; level: Text }[]
+  education: readonly { title: Localized; institution: Localized; period: Localized }[]
+  experience: readonly { title: Localized; organization: Localized; period: Localized; responsibilities?: readonly Localized[] }[]
+  languages?: readonly { name: Localized; level: Localized }[]
   ielts?: { overallBand: number; date: string }
   contact?: {
     email?: string
@@ -29,12 +30,13 @@ export type Member = {
 
 export type Project = {
   slug: string
-  title: Text
-  summary: Text
-  problem: Text
-  solution: Text
-  lessons: Text
-  achievements: readonly Text[]
+  color: CardColor
+  title: Localized
+  summary: Localized
+  problem: Localized
+  solution: Localized
+  lessons: Localized
+  achievements: readonly Localized[]
   tools: readonly string[]
   tags: readonly string[]
   memberSlugs: readonly string[]
@@ -48,9 +50,9 @@ export type ProjectFilters = { q?: string; member?: string; tag?: string }
 export type Post = {
   status: 'draft' | 'published'
   slug: string
-  title: Text
-  summary: Text
-  body: Text
+  title: Localized
+  summary: Localized
+  body: Localized
   cover?: Image
   authorSlug: string
   /** Publication date in YYYY-MM-DD format. */

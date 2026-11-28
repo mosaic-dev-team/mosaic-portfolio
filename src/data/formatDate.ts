@@ -1,6 +1,6 @@
-import type { Text } from './types'
+import type { Language } from './types'
 
-export function formatDate(date: string, language: keyof Text): string {
+export function formatDate(date: string, language: Language): string {
   const locale = language === 'fa' ? 'fa-IR' : 'en-US'
 
   return new Intl.DateTimeFormat(locale, {

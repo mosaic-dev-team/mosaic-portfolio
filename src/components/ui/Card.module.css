@@ -24,45 +24,65 @@
   --card-accent: var(--color-buttermilk);
 }
 
-.card[data-variant='blush'] {
+.card[data-variant='marigold'] {
   --card-bg: var(--color-soft-marigold);
   --card-text: var(--color-velvet);
   --card-accent: var(--color-deep-blush);
 }
 
-.card[data-variant='team-forest'] {
+.card[data-variant='green'] {
   --card-bg: var(--color-dark-green);
 }
 
-.card[data-variant='team-burgundy'] {
+.card[data-variant='berry'] {
   --card-bg: var(--color-berry-burgundy);
-}
-
-.card:is([data-variant='team-forest'], [data-variant='team-burgundy']) {
-  --card-text: var(--color-buttermilk);
-  --card-accent: var(--card-text);
-}
-
-.card[data-variant='deep-green'] {
-  --card-bg: var(--color-dark-green);
-  --card-text: var(--color-butter-yellow);
-  --card-accent: var(--color-butter-yellow);
-}
-
-.card[data-variant='burgundy'] {
-  --card-bg: var(--color-burgundy);
-  --card-text: var(--color-champagne);
-  --card-accent: var(--color-champagne);
 }
 
 .card[data-variant='forest'] {
   --card-bg: var(--color-forest-green);
-  --card-text: var(--color-soft-pink);
-  --card-accent: var(--color-soft-pink);
 }
 
-.card[data-variant='velvet'] {
-  --card-bg: var(--color-velvet);
-  --card-text: var(--color-sunfire-orange);
-  --card-accent: var(--color-sunfire-orange);
+.card[data-variant='magenta'] {
+  --card-bg: #bd245f;
+}
+
+.card:is([data-variant='green'], [data-variant='berry'], [data-variant='forest'], [data-variant='magenta']) {
+  --card-text: var(--color-buttermilk);
+  --card-accent: var(--card-text);
+}
+
+.card:is([data-variant='cream'], [data-variant='creamAdaptive']) {
+  --card-bg: var(--color-buttermilk);
+  --card-text: var(--color-midnight-blue);
+  --card-accent: var(--card-text);
+}
+
+.card[data-variant='creamAdaptive'] {
+  --card-accent: var(--card-bg);
+}
+
+:global([data-theme='dark']) .card[data-variant='creamAdaptive'] {
+  --card-bg: var(--color-midnight-blue);
+  --card-text: var(--color-buttermilk);
+}
+
+.card[data-variant='orange'] {
+  --card-bg: var(--color-sunfire-orange);
+  --card-text: var(--color-velvet);
+  --card-accent: var(--card-text);
+}
+
+.card[data-variant='champagne'] {
+  --card-bg: var(--color-champagne);
+  --card-text: var(--color-burgundy);
+  --card-accent: var(--card-text);
+}
+
+@media print {
+  :global([data-page='resume']) .card[data-variant] {
+    --card-bg: white;
+    --card-text: #222;
+    --card-accent: #888;
+    --text-secondary: #333;
+  }
 }

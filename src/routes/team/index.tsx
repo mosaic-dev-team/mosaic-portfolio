@@ -8,6 +8,7 @@ import styles from './TeamPage.module.css'
 
 const copy = {
   en: {
+    pageTitle: 'Team',
     eyebrow: 'THE PEOPLE BEHIND MOSAIC',
     heading: 'Meet the makers.',
     description: 'Two perspectives. Different strengths. One shared vision.',
@@ -16,6 +17,7 @@ const copy = {
     projectLink: 'Explore MOSAIC',
   },
   fa: {
+    pageTitle: 'اعضای تیم',
     eyebrow: 'اعضای موزاییک',
     heading: 'با سازندگان موزاییک آشنا شوید.',
     description: 'دو نگاه متفاوت، توانایی‌های متفاوت، یک هدف مشترک.',
@@ -26,48 +28,41 @@ const copy = {
 }
 
 export const Route = createFileRoute('/team/')({
-  component: function TeamPage() {
-    const { language } = useLanguage()
-    usePageTitle(language === 'fa' ? 'اعضای تیم' : 'Team')
-    const text = copy[language]
-
-    return (
-      <div className={styles.page}>
-        <div className={styles.intro}>
-          <p className={styles.eyebrow}>{text.eyebrow}</p>
-          <h1>{text.heading}</h1>
-          <p>{text.description}</p>
-        </div>
-
-        <div className={styles.members}>
-          {members.map((member) => (
-            <MemberCard
-              key={member.slug}
-              slug={member.slug}
-              name={member.name[language]}
-              role={member.role[language]}
-              description={member.bio[language]}
-              portraitSrc={member.portrait?.src}
-              portraitAlt={member.portrait?.alt[language]}
-              skills={member.skills.slice(0, 8)}
-              githubUrl={member.contact?.githubUrl}
-              linkedinUrl={member.contact?.linkedinUrl}
-              headingLevel={2}
-              variant={member.slug === 'baran' ? 'team-forest' : 'team-burgundy'}
-            />
-          ))}
-        </div>
-
-        <Card variant="deep-green" className={styles.philosophy}>
-          <div>
-            <h2>{text.philosophy}</h2>
-            <p>{text.philosophyDescription}</p>
-          </div>
-          <Link to="/projects/$slug" params={{ slug: 'mosaic-portfolio' }}>
-            {text.projectLink}
-          </Link>
-        </Card>
-      </div>
-    )
-  },
+  component: TeamPage,
 })
+
+function TeamPage() {
+  const { language } = useLanguage()
+  const text = copy[language]
+  usePageTitle(text.pageTitle)
+
+  return (
+    <div className={styles.page}>
+      <div className={styles.intro}>
+        <p className={styles.eyebrow}>{text.eyebrow}</p>
+        <h1>{text.heading}</h1>
+        <p>{text.description}</p>
+      </div>
+
+      <div className={styles.members}>
+        {members.map((member) => (
+          <MemberCard
+            key={member.slug}
+            member={member}
+            headingLevel={2}
+          />
+        ))}
+      </div>
+
+      <Card variant="orange" className={styles.philosophy}>
+        <div>
+          <h2>{text.philosophy}</h2>
+          <p>{text.philosophyDescription}</p>
+        </div>
+        <Link to="/projects/$slug" params={{ slug: 'mosaic-portfolio' }}>
+          {text.projectLink}
+        </Link>
+      </Card>
+    </div>
+  )
+}

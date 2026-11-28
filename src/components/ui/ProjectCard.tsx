@@ -1,46 +1,56 @@
 import { Link } from '@tanstack/react-router'
-import type { ProjectFilters } from '../../data/types'
-import { Card, type CardVariant } from './Card'
+import { useLanguage } from '../../context/language'
+import { members } from '../../data/members'
+import type { Project, ProjectFilters } from '../../data/types'
+import { Card } from './Card'
 import styles from './ProjectCard.module.css'
-import palettes from './ProjectPalette.module.css'
 
 interface ProjectCardProps {
-  title: string
-  description: string
-  imageSrc?: string
-  imageAlt?: string
-  slug: string
-  variant?: CardVariant
-  tools?: readonly string[]
-  linkLabel: string
-  contributors?: string
+  project: Project
+  compact?: boolean
+  showContributors?: boolean
   returnFilters?: ProjectFilters
 }
 
+const copy = {
+  en: { view: 'View Project', contributors: 'Contributors' },
+  fa: { view: 'مشاهده پروژه', contributors: 'مشارکت‌کنندگان' },
+}
+
 export function ProjectCard({
-  title, description, imageSrc, imageAlt, slug, variant, tools, linkLabel, contributors, returnFilters,
+  project, compact = false, showContributors = false, returnFilters,
 }: ProjectCardProps) {
-  const palette = palettes[`project-${slug}`]
+  const { language } = useLanguage()
+  const text = copy[language]
+  const { slug, image, tools, color } = project
+  const title = project.title[language]
+  const contributorNames = showContributors
+    ? members.filter((member) => project.memberSlugs.includes(member.slug)).map((member) => member.name[language])
+    : []
 
   return (
-    <Card variant={variant} className={palette ? `${styles.card} ${palette}` : styles.card}>
-      {imageSrc && <img className={styles.illustration} src={imageSrc} alt={imageAlt ?? ''} />}
+    <Card variant={color} className={styles.card}>
+      {image && <img className={styles.illustration} src={image.src} alt={image.alt[language]} />}
       <h3 className={styles.title}>{title}</h3>
-      <p>{description}</p>
-      {!!tools?.length && (
+      <p>{project.summary[language]}</p>
+      {!compact && tools.length > 0 && (
         <ul className={styles.tools} role="list">
           {tools.map((tool) => <li key={tool}><bdi lang="en">{tool}</bdi></li>)}
         </ul>
       )}
-      {contributors && <p className={styles.contributors}>{contributors}</p>}
+      {contributorNames.length > 0 && (
+        <p className={styles.contributors}>
+          {text.contributors}: {new Intl.ListFormat(language === 'fa' ? 'fa-IR' : 'en').format(contributorNames)}
+        </p>
+      )}
       <Link
         to="/projects/$slug"
         params={{ slug }}
         state={returnFilters && { projectFilters: returnFilters }}
         className={styles.projectLink}
-        aria-label={`${linkLabel} · ${title}`}
+        aria-label={`${text.view} · ${title}`}
       >
-        {linkLabel}
+        {text.view}
       </Link>
     </Card>
   )

@@ -1,0 +1,12 @@
+export type CardColor =
+  | 'neutral'
+  | 'midnight'
+  | 'marigold'
+  | 'green'
+  | 'berry'
+  | 'cream'
+  | 'creamAdaptive'
+  | 'magenta'
+  | 'orange'
+  | 'forest'
+  | 'champagne'
