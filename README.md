@@ -22,7 +22,7 @@ npm run dev
 | `/` | معرفی تیم، پروژه‌ها و نوشته‌های منتخب و راه تماس |
 | `/team` و `/team/:slug` | فهرست اعضا و رزومه‌ی هر عضو با لینک دانلود PDF |
 | `/projects` و `/projects/:slug` | فهرست پروژه‌ها با جست‌وجو و فیلتر در URL، و صفحه‌ی جزئیات هر پروژه |
-| `/blog` و `/blog/:slug` | فهرست و صفحه‌ی جداگانه‌ی چهار نوشته‌ی تیم |
+| `/blog` و `/blog/:slug` | وبلاگ فعلاً چهار کارت «به‌زودی» دارد. هنوز مقاله‌ای منتشر نشده و محتوای مقاله‌ها بعداً اضافه می‌شود. |
 | مسیرهای ناشناخته | صفحه‌ی «پیدا نشد» |
 
 ## بررسی‌ها
@@ -45,5 +45,5 @@ npm run build
 
 | نام عضو | بخش‌های ساخته‌شده | لینک Pull Requestها |
 | --- | --- | --- |
-| باران شیخ ستانی | استایل‌های پایه، تم و زبان، Header و Footer و کارت‌های مشترک، هویت بصری، صفحهٔ اصلی و رابط صفحات اعضا، رزومه، پروژه‌ها، وبلاگ و ۴۰۴ | [زیرساخت UI #11](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/11)، [هویت بصری و صفحات #12](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/12) (در بازبینی) |
+| باران شیخ ستانی | استایل‌های پایه، تم و زبان، Header و Footer و کارت‌های مشترک، هویت بصری، صفحهٔ اصلی و رابط صفحات اعضا، رزومه، پروژه‌ها، وبلاگ و ۴۰۴ | [زیرساخت UI #11](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/11)، [هویت بصری و صفحات #12](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/12) |
 | علیرضا عربشاهی | راه‌اندازی مخزن و اسکلت پروژه، Docker و انتشار Vercel با GitHub Actions، مدل‌های داده و مسیرها، جست‌وجو و فیلتر پروژه‌ها در URL، و loaderهای صفحات جزئیات | [ستاپ #5](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/5)، [انتشار #10](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/10)، [داده‌ها و مسیرها #13](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/13)، [جست‌وجو و loaderها #15](https://github.com/mosaic-dev-team/mosaic-portfolio/pull/15) |

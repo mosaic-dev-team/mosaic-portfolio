@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-router'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { LanguageContext } from './context/language'
 import { ThemeContext } from './context/theme'
 import { sampleMember } from './data/fixtures'
@@ -182,6 +182,10 @@ async function renderRoute(pathname: string, projectFilters?: ProjectFilters) {
 
   await router.load()
 
+  return renderRouter(router)
+}
+
+function renderRouter(router: ReturnType<typeof createRouter<typeof routeTree>>) {
   return renderToStaticMarkup(
     createElement(
       ThemeContext.Provider,
@@ -220,6 +224,39 @@ test('returns from project details to the originating filters or to the unfilter
 
   expect(actualFilters).toEqual(filters)
   expect(direct).toMatch(/href="\/projects"[^>]*>بازگشت به پروژه‌ها<\/a>/)
+})
+
+test('returns from a project card without carrying unrelated search parameters', async () => {
+  const history = createMemoryHistory({
+    initialEntries: ['/projects?q=&member=alireza&tag=x&tag=y&extra=1'],
+  })
+  const router = createRouter({ routeTree, history, isServer: false, origin: 'http://localhost' })
+  await router.load()
+
+  const startTransition = router.startTransition
+  const buildLocation = vi.spyOn(router, 'buildLocation')
+  renderRouter(router)
+  // Follow the rendered links through memory history without waiting for DOM effects.
+  router.startTransition = startTransition
+  const card = buildLocation.mock.results.find((result) =>
+    result.type === 'return' && result.value.pathname === '/projects/shard-market',
+  )?.value
+  if (!card) throw new Error('Shard Market card link did not render')
+
+  await router.commitLocation(card)
+  expect(history.location.pathname).toBe('/projects/shard-market')
+
+  buildLocation.mockClear()
+  expect(renderRouter(router)).toMatch(/href="\/projects\?[^"]+"[^>]*>بازگشت به پروژه‌ها<\/a>/)
+  router.startTransition = startTransition
+  const backIndex = buildLocation.mock.calls.findIndex(([options]) =>
+    options.to === '/projects' && typeof options.search === 'object',
+  )
+  const back = buildLocation.mock.results[backIndex]
+  if (back?.type !== 'return') throw new Error('Back to Projects link did not render')
+
+  await router.commitLocation(back.value)
+  expect(history.location.href).toBe('/projects?member=alireza')
 })
 
 test('links Homepage and Footer content to the shared public profiles and projects', async () => {
